@@ -29,6 +29,8 @@ class Collabora {
     public function __construct() {
         $this->version = COOL_PLUGIN_VERSION;
         $this->plugin_name = COOL_PLUGIN_NAME;
+        $this->load_deps();
+        $this->init_plugin();
     }
 
     public static function plugin_activation() {
@@ -38,13 +40,19 @@ class Collabora {
     }
 
     public static function plugin_uninstall() {
-        delete_site_option( 'cool_server' );
-        delete_site_option( 'cool_wopi_base' );
-        delete_site_option( 'cool_unsecure_ssl_cert' );
+        delete_site_option( CollaboraAdmin::COOL_SERVER_OPTION );
+        delete_site_option( CollaboraAdmin::COOL_WOPI_BASE );
+        delete_site_option( CollaboraAdmin::COOL_DISABLE_CERT_CHECK );
     }
 
-    public static function init() {
+    public function load_deps() {
+        require_once COOL_PLUGIN_DIR . 'includes/class-collabora-admin.php';
+    }
 
+    public function init_plugin() {
+        $plugin_admin = new CollaboraAdmin();
+        add_action( 'admin_menu', array( $plugin_admin, 'admin_menu' ) );
+        add_action( 'admin_init', array( $plugin_admin, 'admin_init' ) );
     }
 
     public function run() {

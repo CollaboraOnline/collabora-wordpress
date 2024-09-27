@@ -35,8 +35,6 @@ register_uninstall_hook( __FILE__, array ( 'Collabora', 'plugin_uninstall' ) );
 
 require_once COOL_PLUGIN_DIR . 'includes/class-collabora.php';
 
-add_action( 'init', array ( 'Collabora', 'init' ) );
-
 function run_collabora() {
     $plugin = new Collabora();
     $plugin->run();
