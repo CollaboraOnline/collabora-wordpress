@@ -35,6 +35,12 @@ class CollaboraAdmin {
         <?php
     }
 
+    public function delete_settings() {
+        delete_site_option( self::COOL_SERVER_OPTION );
+        delete_site_option( self::COOL_WOPI_BASE );
+        delete_site_option( self::COOL_DISABLE_CERT_CHECK );
+    }
+
     public function admin_menu() {
         $hook = add_options_page(
             __( 'Collabora Online Settings', COOL_PLUGIN_NAME ),
