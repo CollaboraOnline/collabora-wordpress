@@ -34,6 +34,9 @@ register_deactivation_hook( __FILE__, array( 'Collabora', 'plugin_deactivation' 
 register_uninstall_hook( __FILE__, array ( 'Collabora', 'plugin_uninstall' ) );
 
 require_once COOL_PLUGIN_DIR . 'includes/class-collabora.php';
+if ( is_readable( COOL_PLUGIN_DIR . '/vendor/autoload.php' ) ) {
+    require_once COOL_PLUGIN_DIR . 'vendor/autoload.php';
+}
 
 function run_collabora() {
     $plugin = new Collabora();

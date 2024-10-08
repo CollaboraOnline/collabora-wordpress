@@ -1,0 +1,20 @@
+{
+    "name": "collabora/collabora-worpress",
+    "description": "Collabora Online connector for WordPress",
+    "type": "wordpress-plugin",
+    "require": {
+        "firebase/php-jwt": "^6.10"
+    },
+    "license": "MPL-2.0",
+    "autoload": {
+        "psr-4": {
+            "Collabora\\CollaboraWorpress\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hubert Figuière",
+            "email": "hub@collabora.com"
+        }
+    ]
+}

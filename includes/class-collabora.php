@@ -45,12 +45,14 @@ class Collabora {
 
     public function load_deps() {
         require_once COOL_PLUGIN_DIR . 'includes/class-collabora-admin.php';
+        require_once COOL_PLUGIN_DIR . 'includes/class-wopi.php';
     }
 
     public function init_plugin() {
         $this->plugin_admin = new CollaboraAdmin();
         add_action( 'admin_menu', array( $this->plugin_admin, 'admin_menu' ) );
         add_action( 'admin_init', array( $this->plugin_admin, 'admin_init' ) );
+        add_action( 'rest_api_init', array( CollaboraWopi::class, 'register_routes' ) );
     }
 
     public function run() {
