@@ -67,7 +67,7 @@ class CollaboraWopi {
 
     static function get( $request ) {
         $id = (string) $request['id'];
-        $token = (string) $request['token'];
+        $token = (string) $request['access_token'];
 
         $jwt_payload = CoolUtils::verify_token_for_id( $token, $id );
         if ( $jwt_payload == null ) {
@@ -85,8 +85,9 @@ class CollaboraWopi {
             return self::not_found( 'File doesn\'t exist.' );
         }
 
-        $can_write = $can_write & current_user_can( 'edit_post', $id );
+        $can_write = $jwt_payload->wri && current_user_can( 'edit_post', $id );
         $file = get_attached_file($id);
+        $is_administrator = isset($user->roles['administrator']) && $user->roles['administrator'] === true;
 
         $mtime = date_create_immutable_from_format('U', filemtime( $file ) );
         $payload = [
@@ -100,7 +101,7 @@ class CollaboraWopi {
                 'mail' => $user->get( 'user_email' ),
             ],
             'UserCanWrite' => $can_write,
-            'IsAdminUser' => $user->roles['administrator'],
+            'IsAdminUser' => $is_administrator,
             'IsAnonymousUser' => false, //$user->isAnonymous(),
         ];
 
@@ -115,7 +116,7 @@ class CollaboraWopi {
 
     static function get_content( $request ) {
         $id = (string) $request['id'];
-        $token = (string) $request['token'];
+        $token = (string) $request['access_token'];
 
         $jwt_payload = CoolUtils::verify_token_for_id( $token, $id );
         if ( $jwt_payload == null ) {
@@ -136,16 +137,26 @@ class CollaboraWopi {
         }
 
         $file = get_attached_file( $id );
-        $response = file_get_contents( $file );
         $mime_type = mime_content_type( $file );
-        return new WP_REST_Response(
-            $response,
+        $response = new WP_HTTP_Response(
+            null,
             200,
             array(
+                'Content-Transfer-Encoding' => 'binary',
                 'Access-Control-Allow-Origin' => '*',
                 'Content-Type' => $mime_type,
             )
         );
+        /*
+         * This is the tricky part. We want to return the binary content
+         * and prevent WP from making it a string
+         */
+        add_filter( 'rest_pre_serve_request', function () use( $file ) {
+            echo file_get_contents( $file );
+            return true;
+        } );
+
+        return $response;
     }
 
     static function put_content( $request ) {
@@ -165,12 +176,12 @@ class CollaboraWopi {
     static function request_parameters() {
         $params = array();
 
-        $params['token'] = array(
+        $params['access_token'] = array(
             'required' => true,
             'type' => 'string',
         );
 
-        $params['token_ttl'] = array(
+        $params['access_token_ttl'] = array(
             'required' => false,
             'type' => 'integer',
             'default' => 0,

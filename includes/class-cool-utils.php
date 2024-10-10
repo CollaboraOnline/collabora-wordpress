@@ -11,7 +11,7 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 class CoolUtils {
-    /** Obtain the signing key from the key storage */
+    /** Obtain the signing key */
     static function get_key() {
         $key = get_option( CollaboraAdmin::COOL_JWT_KEY );
         return $key;
@@ -43,6 +43,33 @@ class CoolUtils {
         }
         return null;
     }
+
+    /**
+     * Create a JWT token for the Media with id $id, a $ttl, and an
+     * eventual write permission.
+     *
+     * The token will carry the following:
+     *
+     * - fid: the post id in Wordpress.
+     * - uid: the User id for the token. Permissions should be checked
+     *   whenever.
+     * - exp: the expiration time of the token.
+     * - wri: if true, then this token has write permissions.
+     *
+     */
+    public static function token_for_file_id( $id, $ttl, $can_write = FALSE ) {
+        $payload = [
+            "fid" => $id,
+            "uid" => get_current_user_id(),
+            "exp" => $ttl,
+            "wri" => $can_write,
+        ];
+        $key = static::get_key();
+        $jwt = JWT::encode( $payload, $key, 'HS256' );
+
+        return $jwt;
+    }
+
 }
 
 ?>

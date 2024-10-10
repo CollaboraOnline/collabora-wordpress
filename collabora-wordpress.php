@@ -28,6 +28,7 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'COOL_PLUGIN_NAME', 'collabora-wordpress' );
 define( 'COOL_PLUGIN_VERSION', '0.1.0' );
 define( 'COOL_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'COOL_PLUGIN_FILE', plugin_dir_path( __FILE__ ) . '/' . basename( __FILE__ ) );
 
 register_activation_hook( __FILE__, array( 'Collabora', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'Collabora', 'plugin_deactivation' ) );

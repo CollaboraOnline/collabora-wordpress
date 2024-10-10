@@ -46,6 +46,7 @@ class Collabora {
     public function load_deps() {
         require_once COOL_PLUGIN_DIR . 'includes/class-collabora-admin.php';
         require_once COOL_PLUGIN_DIR . 'includes/class-wopi.php';
+        require_once COOL_PLUGIN_DIR . 'includes/class-collabora-frontend.php';
     }
 
     public function init_plugin() {
@@ -53,6 +54,10 @@ class Collabora {
         add_action( 'admin_menu', array( $this->plugin_admin, 'admin_menu' ) );
         add_action( 'admin_init', array( $this->plugin_admin, 'admin_init' ) );
         add_action( 'rest_api_init', array( CollaboraWopi::class, 'register_routes' ) );
+
+        $this->frontend = new CollaboraFrontend();
+        add_action( 'init', array( $this->frontend, 'shortcodes_init' ) ) ;
+        add_action( 'wp_enqueue_scripts', array( $this->frontend, 'enqueue_scripts' ) );
     }
 
     public function run() {
