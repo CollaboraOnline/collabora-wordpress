@@ -45,7 +45,7 @@ class Collabora {
 
     public function load_deps() {
         require_once COOL_PLUGIN_DIR . 'includes/class-collabora-admin.php';
-        require_once COOL_PLUGIN_DIR . 'includes/class-wopi.php';
+        require_once COOL_PLUGIN_DIR . 'includes/class-collabora-wopi.php';
         require_once COOL_PLUGIN_DIR . 'includes/class-collabora-frontend.php';
     }
 
