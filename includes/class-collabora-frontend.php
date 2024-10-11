@@ -19,12 +19,35 @@ class CollaboraFrontend {
 
     public function cool_shortcode( $atts = [], $content = null, $tag = '' ) {
         $atts = array_change_key_case( (array) $atts, CASE_LOWER );
-        if ( $atts[ 'source' ] ) {
-            return '<p>Displaying source ' . esc_html( $atts[ 'source' ] ) . '</p>'
-                . self::get_view_render( $atts[ 'source' ], false );
-        } else {
-            return '<p>Error: source is missing</p>';
+        if ( !isset( $atts['id'] ) ) {
+            return '<p>Error: file id is missing</p>';
         }
+        $id = $atts['id'];
+        $mode = "view";
+        if ( isset( $atts['mode'] ) ) {
+            $mode = $atts['mode'];
+        }
+        switch ( $mode ) {
+        case "view":
+            if ( current_user_can( 'view_post', $id ) ) {
+                return self::get_view_render( $id, false );
+            }
+            break;
+        case "edit":
+            if ( current_user_can( 'edit_post', $id ) ) {
+                return self::get_view_render( $id, true );
+            }
+            break;
+        case "button":
+            return self::get_button( $id );
+        default:
+            return '<p>Invalid mode: ' . esc_html( $mode ) . '</p>';
+        }
+        return '<p>Unauthorized</p>';
+    }
+
+    public static function get_button( string $id ) {
+        return '<p>Button for ' . esc_html( $id ) . '</p>';
     }
 
     // XXX sanitize
