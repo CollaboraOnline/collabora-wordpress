@@ -1,5 +1,39 @@
+# Collabora Online Wordpress
+
+This plugin allow the integration of Collabora Online with Wordpress.
+
+What you need is:
+
+- Wordpress.
+- Collabora Online. The latter can run on any server that is
+  accessible and that can access the Wordpress server.
 
 
+## Configuration
+
+Once the plugin is installed you can set the configuration using the
+Wordpress administration pages.
+
+- _Collabora Online server URL_: the URL of the collabora online
+  server. Note that you have to take into considerartion containers. If
+  you run Wordpress in one container and Collabora Online in another, you
+  can not use `localhost`.
+- _WOPI host base URL_: how the Collabora Online server can reach the
+  Wordpress server. Usually it is the public URL of this Wordpress server.
+- _JWT Private Key_: the secret to create the JWT private key.
+
+You can create a secret using the following shell command:
+
+```shell
+head -c 64 /dev/urandom | base64 -w 0
+```
+
+- _Disable TLS certificate check for COOL_: If you configure a
+  development server you might have self-signed certificate. Checking
+  this is **INSECURE** but allow the Wordpress server to contact the
+  Collabora Online server if the certificate doesn't check.
+- _Access Token Expiration_: In second the expiration of the token to
+  access the document. Default to 86400 seconds (24 hours).
 
 ## Upload size
 
@@ -16,3 +50,7 @@ upload_max_filesize = 30M
 ```
 
 These set the limits to a maximum of 30M. You can change as appropriate.
+
+## License
+
+This plugin is published under the MPL-2.0 license.
