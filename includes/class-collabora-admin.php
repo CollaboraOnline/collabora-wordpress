@@ -15,6 +15,8 @@ class CollaboraAdmin {
     const COOL_WOPI_BASE = COOL_PLUGIN_NAME . '-wopi_base';
     /** option to disable the certificate check */
     const COOL_DISABLE_CERT_CHECK = COOL_PLUGIN_NAME . '-disable_cert_check';
+    /** The Token TTL */
+    const COOL_TOKEN_TTL = COOL_PLUGIN_NAME . '-token-ttl';
     /** JWT key secret */
     const COOL_JWT_KEY = COOL_PLUGIN_NAME . '-jwt-key';
 
@@ -41,6 +43,7 @@ class CollaboraAdmin {
         delete_site_option( self::COOL_SERVER_OPTION );
         delete_site_option( self::COOL_WOPI_BASE );
         delete_site_option( self::COOL_DISABLE_CERT_CHECK );
+        delete_site_option( self::COOL_TOKEN_TTL );
         delete_site_option( self::COOL_JWT_KEY );
     }
 
@@ -83,6 +86,11 @@ class CollaboraAdmin {
             'type' => 'boolean',
             'description' =>  __( 'Disable the certificate check when connecting to the Collabora Online server', COOL_PLUGIN_NAME ),
         ));
+        register_setting( 'cool_options_group', self::COOL_TOKEN_TTL, array(
+            'type' => 'integer',
+            'description' => __( 'The token TTL in seconds', COOL_PLUGIN_NAME ),
+            'default' => 86400,
+        ) );
         register_setting( 'cool_options_group', self::COOL_JWT_KEY, array (
             'description' => __( 'JWT secert key to generate tokens', COOL_PLUGIN_NAME ),
         ));
@@ -124,6 +132,17 @@ class CollaboraAdmin {
             array(
                 'id' => self::COOL_DISABLE_CERT_CHECK,
                 'value' => get_option (self::COOL_DISABLE_CERT_CHECK, false),
+            )
+        );
+        add_settings_field(
+            self::COOL_TOKEN_TTL,
+            __( 'Token TTL in seconds.', COOL_PLUGIN_NAME ),
+            array( $this, 'setting_text' ),
+            'cool_options_group',
+            'cool_options_section',
+            array(
+                'id' => self::COOL_TOKEN_TTL,
+                'value' => get_option( self::COOL_TOKEN_TTL, 86400 ),
             )
         );
         add_settings_field (
