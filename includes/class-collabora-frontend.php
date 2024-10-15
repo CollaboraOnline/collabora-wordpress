@@ -29,7 +29,7 @@ class CollaboraFrontend {
         }
         switch ( $mode ) {
         case "view":
-            if ( current_user_can( 'view_post', $id ) ) {
+            if ( current_user_can( 'read_post', $id ) ) {
                 return self::get_view_render( $id, false );
             }
             break;
