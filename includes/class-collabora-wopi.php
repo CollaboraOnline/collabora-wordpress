@@ -65,30 +65,69 @@ class CollaboraWopi {
         );
     }
 
-    static function get( $request ) {
-        $id = (string) $request['id'];
-        $token = (string) $request['access_token'];
+    static function file_error( string $reason ) {
+        return new WP_REST_Response(
+            $reason,
+            500,
+            array(
+                'Content-Type' => 'text/plain'
+            )
+        );
+    }
 
+    // Returns an array. 'error' is set to true in case of error. If
+    // successful the JWT is in 'jwt_payload'. Otherwise it returns a
+    // `WP_REST_Response` in 'response'
+    static function auth( $token, $id ) {
         $jwt_payload = CoolUtils::verify_token_for_id( $token, $id );
         if ( $jwt_payload == null ) {
-            return self::permission_denied( 'Authentication failed.' );
+            return array(
+                'error' => true,
+                'response' => self::permission_denied( 'Authentication failed.' ),
+            );
         }
 
         $user = wp_set_current_user( $jwt_payload->uid );
         if ( !$user->exists() ) {
-            return self::permission_denied( 'Unknown user.' );
+            return array(
+                'error' => true,
+                'response' => self::permission_denied( 'Unknown user.' ),
+            );
         }
 
-        $post = get_post ($id);
+        $post = get_post( $id );
         // If the post_type isn't an attachment, it is considered not found.
         if ( $post->post_type !== 'attachment' ) {
-            return self::not_found( 'File doesn\'t exist.' );
+            return array(
+                'error' => true,
+                'response' => self::not_found( 'File doesn\'t exist.' ),
+            );
+        }
+
+        return array(
+            'error' => false,
+            'jwt_payload' => $jwt_payload,
+        );
+    }
+
+    static function get( $request ) {
+        $id = (string) $request['id'];
+        $token = (string) $request['access_token'];
+
+        $auth = self::auth( $token, $id );
+        if ( $auth['error'] ) {
+            return $auth['response'];
+        }
+        $jwt_payload = $auth['jwt_payload'];
+        if ( $jwt_payload == null ) {
+            return self::permission_denied( 'Authentication failed.' );
         }
 
         $can_write = $jwt_payload->wri && current_user_can( 'edit_post', $id );
-        $file = get_attached_file($id);
+        $file = get_attached_file( $id );
         $is_administrator = isset($user->roles['administrator']) && $user->roles['administrator'] === true;
 
+        $user = wp_get_current_user();
         $mtime = date_create_immutable_from_format('U', filemtime( $file ) );
         $payload = [
             'BaseFileName' => basename( $file ),
@@ -118,22 +157,13 @@ class CollaboraWopi {
         $id = (string) $request['id'];
         $token = (string) $request['access_token'];
 
-        $jwt_payload = CoolUtils::verify_token_for_id( $token, $id );
+        $auth = self::auth( $token, $id );
+        if ( $auth['error'] ) {
+            return $auth['response'];
+        }
+        $jwt_payload = $auth['jwt_payload'];
         if ( $jwt_payload == null ) {
-            return self::permissionDenied( 'Authentication failed.' );
-        }
-
-        $user = wp_set_current_user( $jwt_payload->uid );
-        if ( !$user->exists() ) {
-            return self::permissionDenied( 'Unknown user.' );
-        }
-
-        $can_write = $jwt_payload->wri;
-
-        $post = get_post( $id );
-        // If the post_type isn't an attachment, it is considered not found.
-        if ( $post->post_type !== 'attachment' ) {
-            return self::notFound( 'File doesn\'t exist.' );
+            return self::permission_denied( 'Authentication failed.' );
         }
 
         $file = get_attached_file( $id );
@@ -160,15 +190,46 @@ class CollaboraWopi {
     }
 
     static function put_content( $request ) {
-        $code = 200;
-        $response = "Winter is coming";
+        $id = (string) $request['id'];
+        $token = (string) $request['access_token'];
+
+        $auth = self::auth( $token, $id );
+        if ( $auth['error'] ) {
+            return $auth['response'];
+        }
+        $jwt_payload = $auth['jwt_payload'];
+        if ( ! $jwt_payload ) {
+            return self::permission_denied( 'Authentication failed.' );
+        }
+
+        $can_write = $jwt_payload->wri && current_user_can( 'edit_post', $id );
+        if ( !$can_write ) {
+            return self::permission_denied( 'Permission denied.' );
+        }
+
+        $data = $request->get_body();
+        $file = get_attached_file( $id );
+        if ( !copy( $file, $file . '.' . (string) gettimeofday( true ) ) ) {
+            error_log( "Creating backup copy." . var_export( $wp_filesystem->errors->errors, true ) );
+            return self::file_error( 'Creating backup copy.' );
+        }
+		if ( file_put_contents( $file, $data, LOCK_EX ) === false ) {
+            error_log( "Saving file." );
+            return self::file_error( 'Saving file.' );
+        }
+
+        wp_update_post(
+			array(
+				'ID' => $id,
+			)
+		);
 
         return new WP_REST_Response(
-            $response,
-            $code,
+            'File saved.',
+            200,
             array(
                 'Access-Control-Allow-Origin' => '*',
-                'Content-Type' => 'application/jrd+json; charset=' . get_option( 'blog_charset' ),
+                'Content-Type' => 'text/plain',
             )
         );
     }
