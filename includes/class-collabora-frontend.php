@@ -47,7 +47,16 @@ class CollaboraFrontend {
     }
 
     public static function get_button( string $id ) {
-        return '<p>Button for ' . esc_html( $id ) . '</p>';
+        wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'public/js/previewer.js', COOL_PLUGIN_FILE ), array(), 0, false );
+
+        $filename = get_attached_file( $id );
+        $name = pathinfo( $filename, PATHINFO_BASENAME );
+        // XXX localize
+        return '<p>Attachment "' . esc_html( $name ) . '" <button onclick="previewField(\'' .
+            esc_url( CoolUtils::get_editor_url( $id ) ) . '\');">Edit</button></p>' .
+            '<dialog id="cool-editor__dialog" class="cool-editor__dialog">' .
+            '<iframe class="cool-frame__preview"></iframe>' .
+            '</dialog>';
     }
 
     // XXX sanitize
@@ -102,13 +111,13 @@ class CollaboraFrontend {
         $ttl += gettimeofday( true );
 
         $access_token = CoolUtils::token_for_file_id( $id, $ttl, $can_write );
+        $closebutton = 'false';
 
-        /*
         if ($options) {
             if (isset($options['closebutton']) && $options['closebutton'] == 'true') {
-                $render_array['#closebutton'] = 'true';
+                $closebutton = 'true';
             }
-            }*/
+        }
 
         return self::cool_frame (
             array(
@@ -116,7 +125,7 @@ class CollaboraFrontend {
                 'wopiSrc' => urlencode( $wopi_base . '/wp-json/' . CollaboraWopi::COLLABORA_ROUTE_NS . '/wopi/files/' . $id ),
                 'accessToken' => $access_token,
                 'accessTokenTtl' => $ttl * 1000, // It's in usec. The JWT is in sec.
-                'closebutton' => 'false',
+                'closebutton' => $closebutton,
                 'iFrameStyle' => '',
             )
         );

@@ -70,6 +70,10 @@ class CoolUtils {
         return $jwt;
     }
 
+    public static function get_editor_url( $id ) {
+        // XXX sanitize
+        return plugins_url( 'cool.php', COOL_PLUGIN_FILE ) . '?id=' . $id;
+    }
 }
 
 ?>
