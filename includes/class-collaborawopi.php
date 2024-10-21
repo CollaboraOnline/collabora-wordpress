@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-require_once COOL_PLUGIN_DIR . 'includes/class-cool-utils.php';
+require_once COOL_PLUGIN_DIR . 'includes/class-coolutils.php';
 
 class CollaboraWopi {
     const COLLABORA_ROUTE_NS = 'cool';

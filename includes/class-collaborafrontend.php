@@ -91,7 +91,7 @@ class CollaboraFrontend {
     }
 
     public static function get_view_render( $id, bool $can_write, $options = null ) {
-        require_once COOL_PLUGIN_DIR . 'includes/class-cool-request.php';
+        require_once COOL_PLUGIN_DIR . 'includes/class-coolrequest.php';
 
         $wopi_base = get_option( CollaboraAdmin::COOL_WOPI_BASE );
 

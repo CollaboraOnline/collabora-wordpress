@@ -22,7 +22,7 @@ if ( !empty( $_SERVER['SCRIPT_FILENAME'] ) ) {
 $id = $_GET['id'];
 
 require_once __DIR__ . '/collabora-wordpress.php';
-require_once __DIR__ . '/includes/class-collabora-frontend.php';
+require_once __DIR__ . '/includes/class-collaborafrontend.php';
 
 $base_url = plugins_url( '', COOL_PLUGIN_FILE );
 
