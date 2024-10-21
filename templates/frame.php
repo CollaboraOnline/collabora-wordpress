@@ -10,11 +10,11 @@
  */
 
 $args = wp_parse_args(
-    $args,
-    array(
-        'base_url' => '',
-        'frame' => ''
-    )
+	$args,
+	array(
+		'base_url' => '',
+		'frame'    => '',
+	)
 );
 
 $base_url = esc_url( $args['base_url'] );
@@ -23,11 +23,11 @@ $base_url = esc_url( $args['base_url'] );
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" id="collabora-wordpress-cool-css" href="<?php echo $base_url; ?>/public/css/cool.css" media="all">
-    <script id="collabora-wordpress-cool-js" src="<?php echo $base_url; ?>/public/js/cool.js"></script>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" id="collabora-wordpress-cool-css" href="<?php echo $base_url; ?>/public/css/cool.css" media="all">
+	<script id="collabora-wordpress-cool-js" src="<?php echo $base_url; ?>/public/js/cool.js"></script>
 </head>
 <body>
-    <?php echo balanceTags( $args['frame'] ); ?>
+	<?php echo balanceTags( $args['frame'] ); ?>
 </body>
 </html>

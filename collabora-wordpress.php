@@ -6,9 +6,9 @@
  * @license           MPL-2.0
  *
  * @wordpress-plugin
- * Plugin Name: Collabora Online for Wordpress
+ * Plugin Name: Collabora Online for WordPress
  * Plugin URI: https://github.com/hfiguiere/collabora-wordpress
- * Description: Wordpress connector for Collabora Online, allow you to view or edit collaboratively office documents directly from Wordpress in Collabora Online.
+ * Description: WordPress connector for Collabora Online, allow you to view or edit collaboratively office documents directly from WordPress in Collabora Online.
  * Version: 0.1.0
  * License: MPL-2.0
  * License URI: https://www.mozilla.org/en-US/MPL/2.0/
@@ -32,17 +32,16 @@ define( 'COOL_PLUGIN_FILE', plugin_dir_path( __FILE__ ) . '/' . basename( __FILE
 
 register_activation_hook( __FILE__, array( 'Collabora', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'Collabora', 'plugin_deactivation' ) );
-register_uninstall_hook( __FILE__, array ( 'Collabora', 'plugin_uninstall' ) );
+register_uninstall_hook( __FILE__, array( 'Collabora', 'plugin_uninstall' ) );
 
 require_once COOL_PLUGIN_DIR . 'includes/class-collabora.php';
 if ( is_readable( COOL_PLUGIN_DIR . '/vendor/autoload.php' ) ) {
-    require_once COOL_PLUGIN_DIR . 'vendor/autoload.php';
+	require_once COOL_PLUGIN_DIR . 'vendor/autoload.php';
 }
 
 function run_collabora() {
-    $plugin = new Collabora();
-    $plugin->run();
+	$plugin = new Collabora();
+	$plugin->run();
 }
 
 run_collabora();
-?>

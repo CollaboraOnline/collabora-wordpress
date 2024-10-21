@@ -9,14 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-if ( !empty( $_SERVER['SCRIPT_FILENAME'] ) ) {
+if ( ! empty( $_SERVER['SCRIPT_FILENAME'] ) ) {
 	$path = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
-    if ( empty( $path[0] ) ) {
-        die( 'URL error' );
-    }
+	if ( empty( $path[0] ) ) {
+		die( 'URL error' );
+	}
 	require_once $path[0] . 'wp-load.php';
 } else {
-    die( 'Can\'t load Wordpress.' );
+	die( 'Can\'t load WordPress.' );
 }
 
 $id = $_GET['id'];
@@ -30,10 +30,7 @@ load_template(
 	__DIR__ . '/templates/frame.php',
 	true,
 	array(
-        'frame' => CollaboraFrontend::get_view_render( $id, false, array( 'closebutton' => 'true' ) ),
-        'base_url' => $base_url,
+		'frame'    => CollaboraFrontend::get_view_render( $id, false, array( 'closebutton' => 'true' ) ),
+		'base_url' => $base_url,
 	)
 );
-
-
-?>
