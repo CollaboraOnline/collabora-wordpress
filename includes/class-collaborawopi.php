@@ -1,5 +1,12 @@
 <?php
-/*
+/** COOL WordPress plugin WOPI host.
+ *
+ * Implement the WOPI host using WordPress REST API.
+ *
+ * @package collabora-wordpress
+ */
+
+/**
  * Spdx-License: MPL-2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -9,9 +16,13 @@
 
 require_once COOL_PLUGIN_DIR . 'includes/class-coolutils.php';
 
+/** Class to handle WOPI. */
 class CollaboraWopi {
 	const COLLABORA_ROUTE_NS = 'cool';
 
+	/**
+	 * Route registration hook
+	 */
 	public static function register_routes() {
 		register_rest_route(
 			self::COLLABORA_ROUTE_NS,
@@ -45,7 +56,14 @@ class CollaboraWopi {
 		);
 	}
 
-	static function permission_denied( string $reason ) {
+	/**
+	 * Return a permission denied HTTP 403 error.
+	 *
+	 * @param string $reason The text reason.
+	 *
+	 * @return WP_REST_Response The REST response.
+	 */
+	private static function permission_denied( string $reason ) {
 		return new WP_REST_Response(
 			$reason,
 			403,
@@ -55,7 +73,14 @@ class CollaboraWopi {
 		);
 	}
 
-	static function not_found( string $reason ) {
+	/**
+	 * Return a not found HTTP 404 error.
+	 *
+	 * @param string $reason The text reason.
+	 *
+	 * @return WP_REST_Response The REST response.
+	 */
+	private static function not_found( string $reason ) {
 		return new WP_REST_Response(
 			$reason,
 			404,
@@ -65,7 +90,14 @@ class CollaboraWopi {
 		);
 	}
 
-	static function file_error( string $reason ) {
+	/**
+	 * Return a file HTTP 500 error.
+	 *
+	 * @param string $reason The text reason.
+	 *
+	 * @return WP_REST_Response The REST response.
+	 */
+	private static function file_error( string $reason ) {
 		return new WP_REST_Response(
 			$reason,
 			500,
@@ -75,12 +107,20 @@ class CollaboraWopi {
 		);
 	}
 
-	// Returns an array. 'error' is set to true in case of error. If
-	// successful the JWT is in 'jwt_payload'. Otherwise it returns a
-	// `WP_REST_Response` in 'response'
-	static function auth( $token, $id ) {
+	/**
+	 * Returns an array. 'error' is set to true in case of error. If
+	 * successful the JWT is in 'jwt_payload'. Otherwise it returns a
+	 * `WP_REST_Response` in 'response'.
+	 *
+	 * @param string $token The token.
+	 * @param int    $id The file id.
+	 *
+	 * @return array An array. If 'error' is true then 'response' contains
+	 * the WP_REST_Response.
+	 */
+	private static function auth( string $token, int $id ) {
 		$jwt_payload = CoolUtils::verify_token_for_id( $token, $id );
-		if ( $jwt_payload == null ) {
+		if ( null === $jwt_payload ) {
 			return array(
 				'error'    => true,
 				'response' => self::permission_denied( 'Authentication failed.' ),
@@ -97,7 +137,7 @@ class CollaboraWopi {
 
 		$post = get_post( $id );
 		// If the post_type isn't an attachment, it is considered not found.
-		if ( $post->post_type !== 'attachment' ) {
+		if ( 'attachment' !== $post->post_type ) {
 			return array(
 				'error'    => true,
 				'response' => self::not_found( 'File doesn\'t exist.' ),
@@ -110,8 +150,15 @@ class CollaboraWopi {
 		);
 	}
 
-	static function get( $request ) {
-		$id    = (string) $request['id'];
+	/**
+	 * WOPI get file info
+	 *
+	 * @param array $request The HTTP request.
+	 *
+	 * @return WP_REST_Response The REST Response.
+	 */
+	public static function get( $request ) {
+		$id    = (int) $request['id'];
 		$token = (string) $request['access_token'];
 
 		$auth = self::auth( $token, $id );
@@ -119,13 +166,13 @@ class CollaboraWopi {
 			return $auth['response'];
 		}
 		$jwt_payload = $auth['jwt_payload'];
-		if ( $jwt_payload == null ) {
+		if ( null === $jwt_payload ) {
 			return self::permission_denied( 'Authentication failed.' );
 		}
 
 		$can_write        = $jwt_payload->wri && current_user_can( 'edit_post', $id );
 		$file             = get_attached_file( $id );
-		$is_administrator = isset( $user->roles['administrator'] ) && $user->roles['administrator'] === true;
+		$is_administrator = isset( $user->roles['administrator'] ) && true === $user->roles['administrator'];
 
 		$user    = wp_get_current_user();
 		$mtime   = date_create_immutable_from_format( 'U', filemtime( $file ) );
@@ -153,8 +200,15 @@ class CollaboraWopi {
 		);
 	}
 
-	static function get_content( $request ) {
-		$id    = (string) $request['id'];
+	/**
+	 * WOPI get content
+	 *
+	 * @param array $request The HTTP request.
+	 *
+	 * @return WP_REST_Response The REST Response.
+	 */
+	public static function get_content( $request ) {
+		$id    = (int) $request['id'];
 		$token = (string) $request['access_token'];
 
 		$auth = self::auth( $token, $id );
@@ -162,7 +216,7 @@ class CollaboraWopi {
 			return $auth['response'];
 		}
 		$jwt_payload = $auth['jwt_payload'];
-		if ( $jwt_payload == null ) {
+		if ( null === $jwt_payload ) {
 			return self::permission_denied( 'Authentication failed.' );
 		}
 
@@ -177,6 +231,7 @@ class CollaboraWopi {
 				'Content-Type'                => $mime_type,
 			)
 		);
+
 		/*
 		 * This is the tricky part. We want to return the binary content
 		 * and prevent WP from making it a string
@@ -192,8 +247,15 @@ class CollaboraWopi {
 		return $response;
 	}
 
-	static function put_content( $request ) {
-		$id    = (string) $request['id'];
+	/**
+	 * WOPI put content
+	 *
+	 * @param array $request The HTTP request.
+	 *
+	 * @return WP_REST_Response The REST Response.
+	 */
+	public static function put_content( $request ) {
+		$id    = (int) $request['id'];
 		$token = (string) $request['access_token'];
 
 		$auth = self::auth( $token, $id );
@@ -201,7 +263,7 @@ class CollaboraWopi {
 			return $auth['response'];
 		}
 		$jwt_payload = $auth['jwt_payload'];
-		if ( ! $jwt_payload ) {
+		if ( null === $jwt_payload ) {
 			return self::permission_denied( 'Authentication failed.' );
 		}
 
@@ -237,7 +299,10 @@ class CollaboraWopi {
 		);
 	}
 
-	static function request_parameters() {
+	/**
+	 * Hook for the request parameters.
+	 */
+	public static function request_parameters() {
 		$params = array();
 
 		$params['access_token'] = array(

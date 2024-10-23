@@ -1,5 +1,10 @@
 <?php
-/*
+/** COOL WordPress plugin admin
+ *
+ * @package collabora-wordpress
+ */
+
+/**
  * Spdx-License: MPL-2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -7,20 +12,24 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/** The Collabora admin page */
 class CollaboraAdmin {
 
-	/** option for the COOL server URL */
+	/** Option for the COOL server URL */
 	const COOL_SERVER_OPTION = COOL_PLUGIN_NAME . '-cool_server';
-	/** option for the WOPI server base URL */
+	/** Option for the WOPI server base URL */
 	const COOL_WOPI_BASE = COOL_PLUGIN_NAME . '-wopi_base';
-	/** option to disable the certificate check */
+	/** Option to disable the certificate check */
 	const COOL_DISABLE_CERT_CHECK = COOL_PLUGIN_NAME . '-disable_cert_check';
 	/** The Token TTL */
 	const COOL_TOKEN_TTL = COOL_PLUGIN_NAME . '-token-ttl';
 	/** JWT key secret */
 	const COOL_JWT_KEY = COOL_PLUGIN_NAME . '-jwt-key';
 
-	function option_page_html() {
+	/**
+	 * Option page hook.
+	 */
+	public function option_page_html() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
@@ -39,6 +48,9 @@ class CollaboraAdmin {
 		<?php
 	}
 
+	/**
+	 * Delete the settings. Should be called when uninstalling.
+	 */
 	public function delete_settings() {
 		delete_site_option( self::COOL_SERVER_OPTION );
 		delete_site_option( self::COOL_WOPI_BASE );
@@ -47,6 +59,9 @@ class CollaboraAdmin {
 		delete_site_option( self::COOL_JWT_KEY );
 	}
 
+	/**
+	 * Admin menu hook.
+	 */
 	public function admin_menu() {
 		$hook = add_options_page(
 			__( 'Collabora Online Settings', COOL_PLUGIN_NAME ),
@@ -59,25 +74,44 @@ class CollaboraAdmin {
 		add_action( "load-{$hook}", array( $this, 'load_admin_page' ) );
 	}
 
-	function load_admin_page() {
+	/**
+	 * Load page hook
+	 */
+	public function load_admin_page() {
 	}
 
-	function setting_text( array $args ) {
+	/**
+	 * Text setting hook.
+	 *
+	 * @param array $args Arguments for the hook.
+	 */
+	public function setting_text( array $args ) {
 		?>
 		<input id="<?php echo esc_attr( $args['id'] ); ?>" name="<?php echo esc_attr( $args['id'] ); ?>" value="<?php echo esc_attr( $args['value'] ); ?>" type="text" class="regular-text">
 		<?php
 	}
 
-	function setting_bool( array $args ) {
+	/**
+	 * Boolean setting hook.
+	 *
+	 * @param array $args Arguments for the hook.
+	 */
+	public function setting_bool( array $args ) {
 		?>
 		<input id="<?php echo esc_attr( $args['id'] ); ?>" name="<?php echo esc_attr( $args['id'] ); ?>" <?php checked( $args['value'] ); ?> type="checkbox" value="1">
 		<?php
 	}
 
-	function section_callback() {
-		echo __( 'Configure where to find the Collabora Online server.', COOL_PLUGIN_NAME );
+	/**
+	 * Section setting hook.
+	 */
+	public function section_callback() {
+		echo esc_html( __( 'Configure where to find the Collabora Online server.', COOL_PLUGIN_NAME ) );
 	}
 
+	/**
+	 * Initialise the admin page.
+	 */
 	public function admin_init() {
 		register_setting( 'cool_options_group', self::COOL_SERVER_OPTION );
 		register_setting( 'cool_options_group', self::COOL_WOPI_BASE );

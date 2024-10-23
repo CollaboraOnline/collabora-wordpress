@@ -1,5 +1,10 @@
 <?php
-/*
+/** COOL frame embedded template
+ *
+ * @package collabora-wordpress
+ */
+
+/**
  * Copyright the Collabora Online contributors.
  *
  * SPDX-License-Identifier: MPL-2.0
@@ -17,15 +22,15 @@ $args = wp_parse_args(
 	)
 );
 
-$base_url = esc_url( $args['base_url'] );
-
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<link rel="stylesheet" id="collabora-wordpress-cool-css" href="<?php echo $base_url; ?>/public/css/cool.css" media="all">
-	<script id="collabora-wordpress-cool-js" src="<?php echo $base_url; ?>/public/js/cool.js"></script>
+	<link rel="stylesheet" id="collabora-wordpress-cool-css" href="<?php echo esc_url( $args['base_url'] ); ?>/public/css/cool.css" media="all">
+<?php // phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
+	<script id="collabora-wordpress-cool-js" src="<?php echo esc_url( $args['base_url'] ); ?>/public/js/cool.js"></script>
+<?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
 </head>
 <body>
 	<?php echo balanceTags( $args['frame'] ); ?>

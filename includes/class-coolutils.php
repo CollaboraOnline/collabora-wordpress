@@ -1,5 +1,10 @@
 <?php
-/*
+/** COOL WordPress plugin utilities.
+ *
+ * @package collabora-wordpress
+ */
+
+/**
  * Spdx-License: MPL-2.0
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -10,9 +15,10 @@
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
+/** Some COOL utilities */
 class CoolUtils {
 	/** Obtain the signing key */
-	static function get_key() {
+	private static function get_key() {
 		$key = get_option( CollaboraAdmin::COOL_JWT_KEY );
 		return $key;
 	}
@@ -22,20 +28,23 @@ class CoolUtils {
 	 *  Verification include:
 	 *  - matching $id with fid in the payload
 	 *  - verifying the expiration
+	 *
+	 * @param string $token The token.
+	 * @param int    $id The id of the post.
 	 */
 	public static function verify_token_for_id(
 		#[\SensitiveParameter]
 		string $token,
-		$id
+		int $id
 	) {
 		$key = static::get_key();
-		if ( gettype( $key ) != 'string' ) {
+		if ( gettype( $key ) !== 'string' ) {
 			error_log( 'cool error: JWT key isn\'t set.' );
 			return null;
 		}
 		try {
 			$payload = JWT::decode( $token, new Key( $key, 'HS256' ) );
-			if ( $payload && ( $payload->fid == $id ) && ( $payload->exp >= gettimeofday( true ) ) ) {
+			if ( $payload && ( $payload->fid === $id ) && ( $payload->exp >= gettimeofday( true ) ) ) {
 				return $payload;
 			}
 		} catch ( \Exception $e ) {
@@ -48,6 +57,10 @@ class CoolUtils {
 	 * Create a JWT token for the Media with id $id, a $ttl, and an
 	 * eventual write permission.
 	 *
+	 * @param int  $id The ID of the file.
+	 * @param int  $ttl The TTL of the token in seconds.
+	 * @param bool $can_write Can write the file.
+	 *
 	 * The token will carry the following:
 	 *
 	 * - fid: the post id in WordPress.
@@ -56,7 +69,7 @@ class CoolUtils {
 	 * - exp: the expiration time of the token.
 	 * - wri: if true, then this token has write permissions.
 	 */
-	public static function token_for_file_id( $id, $ttl, $can_write = false ) {
+	public static function token_for_file_id( int $id, int $ttl, $can_write = false ) {
 		$payload = array(
 			'fid' => $id,
 			'uid' => get_current_user_id(),
@@ -69,8 +82,13 @@ class CoolUtils {
 		return $jwt;
 	}
 
+	/**
+	 * Get the editor URL for the post with $id
+	 *
+	 * @param integer $id The ID of the post the file is attached to.
+	 */
 	public static function get_editor_url( $id ) {
-		// XXX sanitize
+		// XXX sanitize.
 		return plugins_url( 'cool.php', COOL_PLUGIN_FILE ) . '?id=' . $id;
 	}
 }

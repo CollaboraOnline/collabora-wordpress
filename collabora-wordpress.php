@@ -1,6 +1,8 @@
 <?php
-/*
- * @package           collabora-wordpres
+/**
+ * Collabora Online for WordPress
+ *
+ * @package           collabora-wordpress
  * @author            Collabora Productivity
  * @copyright         2024 Collabora Productivity
  * @license           MPL-2.0
@@ -27,6 +29,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 define( 'COOL_PLUGIN_NAME', 'collabora-wordpress' );
 define( 'COOL_PLUGIN_VERSION', '0.1.0' );
+define( 'COOL_PLUGIN_VERSION_NUM', 10 );
 define( 'COOL_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'COOL_PLUGIN_FILE', plugin_dir_path( __FILE__ ) . '/' . basename( __FILE__ ) );
 
@@ -39,9 +42,11 @@ if ( is_readable( COOL_PLUGIN_DIR . '/vendor/autoload.php' ) ) {
 	require_once COOL_PLUGIN_DIR . 'vendor/autoload.php';
 }
 
+/**
+ * Run the plugin
+ */
 function run_collabora() {
 	$plugin = new Collabora();
-	$plugin->run();
 }
 
 run_collabora();
