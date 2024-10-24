@@ -9,8 +9,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-.cool-frame {
+html {
+    height: 100%;
+}
 
+.cool-frame {
+    height: 100%;
+    margin: 0;
 }
 
 .cool-frame__preview {
