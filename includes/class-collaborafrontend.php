@@ -133,7 +133,7 @@ class CollaboraFrontend {
 		$wopi_client = $req->get_wopi_client_url();
 		if ( null === $wopi_client ) {
 			return '<p>' .
-				__( 'The Collabora Online server is not available: ', COOL_PLUGIN_NAME ) .
+				__( 'The Collabora Online server is not available: ', 'collabora-wordpress' ) .
 				esc_html( $req->error_string() ) .
 				'</p>';
 		}
