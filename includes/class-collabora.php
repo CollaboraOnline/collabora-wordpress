@@ -91,6 +91,7 @@ class Collabora {
 		$this->plugin_admin = new CollaboraAdmin();
 		add_action( 'admin_menu', array( $this->plugin_admin, 'admin_menu' ) );
 		add_action( 'admin_init', array( $this->plugin_admin, 'admin_init' ) );
+		add_action( 'init', array( CollaboraWopi::class, 'init' ) );
 		add_action( 'rest_api_init', array( CollaboraWopi::class, 'register_routes' ) );
 
 		$this->frontend = new CollaboraFrontend();

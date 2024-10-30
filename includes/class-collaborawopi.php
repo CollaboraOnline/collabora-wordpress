@@ -19,6 +19,14 @@ require_once COOL_PLUGIN_DIR . 'includes/class-coolutils.php';
 /** Class to handle WOPI. */
 class CollaboraWopi {
 	const COLLABORA_ROUTE_NS = 'cool';
+	const REV_POST_TYPE      = 'cool_revision';
+
+	/**
+	 * Init hook. Will register the post type for revision.
+	 */
+	public static function init() {
+		self::register_post_types();
+	}
 
 	/**
 	 * Route registration hook
@@ -248,6 +256,71 @@ class CollaboraWopi {
 	}
 
 	/**
+	 * Register the post type for the revisions
+	 */
+	public static function register_post_types() {
+		register_post_type(
+			self::REV_POST_TYPE,
+			array(
+				'label'            => __( 'Revisions', 'collabora-wordpress' ),
+				'public'           => false,
+				'hierarchical'     => false,
+				'rewrite'          => false,
+				'query_var'        => false,
+				'delete_with_user' => false,
+				'can_export'       => false,
+				'supports'         => array(),
+			)
+		);
+		register_post_meta(
+			self::REV_POST_TYPE,
+			'cool_rev_timestamp',
+			array(
+				'type'              => 'string',
+				'single'            => true,
+				'sanitize_callback' => function ( $value ) {
+					return esc_sql( $value );
+				},
+			)
+		);
+	}
+
+	/**
+	 * Create a new revision
+	 *
+	 * @param int    $attachment_id the ID if the attachment to create the revision for.
+	 * @param string $file_path The path of the file to create a revision for.
+	 *
+	 * @return bool Whether there is success or not.
+	 */
+	private static function create_revision( int $attachment_id, string $file_path ) {
+		$timestamp     = gettimeofday( true );
+		$revision_path = $file_path . '.' . (string) $timestamp;
+		if ( ! copy( $file_path, $revision_path ) ) {
+			return false;
+		}
+
+		$post_id = wp_insert_post(
+			array(
+				'post_type'      => self::REV_POST_TYPE,
+				'ping_status'    => 'closed',
+				'comment_status' => 'closed',
+				'post_parent'    => $attachment_id,
+			),
+			false,
+			true
+		);
+		if ( 0 === $post_id ) {
+			return false;
+		}
+
+		add_post_meta( $post_id, '_wp_attached_file', $revision_path, true );
+		add_post_meta( $post_id, 'cool_rev_timestamp', (string) $timestamp );
+
+		return true;
+	}
+
+	/**
 	 * WOPI put content
 	 *
 	 * @param array $request The HTTP request.
@@ -274,12 +347,12 @@ class CollaboraWopi {
 
 		$data = $request->get_body();
 		$file = get_attached_file( $id );
-		if ( ! copy( $file, $file . '.' . (string) gettimeofday( true ) ) ) {
-			error_log( 'Creating backup copy.' . var_export( $wp_filesystem->errors->errors, true ) );
-			return self::file_error( 'Creating backup copy.' );
+
+		if ( ! self::create_revision( $id, $file ) ) {
+			return self::file_error( 'Creating revision.' );
 		}
+
 		if ( file_put_contents( $file, $data, LOCK_EX ) === false ) {
-			error_log( 'Saving file.' );
 			return self::file_error( 'Saving file.' );
 		}
 

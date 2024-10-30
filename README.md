@@ -51,6 +51,13 @@ upload_max_filesize = 30M
 
 These set the limits to a maximum of 30M. You can change as appropriate.
 
+## Internals
+
+The plugin creates a new post type `cool_revision` to store the revisions of files associated to the
+attachment. Its parent is set to the attachment post. And there are two pieces of metadata
+associated to it: `_wp_attached_file` and `cool_rev_timestamp`. The former allow the standard
+`get_attached_file()` call. The latter is the timestamp of the revision.
+
 ## License
 
 This plugin is published under the MPL-2.0 license.
