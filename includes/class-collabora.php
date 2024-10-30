@@ -33,6 +33,20 @@ class Collabora {
 	protected $version;
 
 	/**
+	 * The admin section of the plugin.
+	 *
+	 * @var CollaboraAdmin $plugin_admin The administrative interfce.
+	 */
+	protected $plugin_admin;
+
+	/**
+	 * The fronted of the plugin.
+	 *
+	 * @var CollaboraFrontend $frontend The frontend
+	 */
+	protected $frontend;
+
+	/**
 	 * Plugin constructor
 	 */
 	public function __construct() {

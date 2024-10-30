@@ -144,7 +144,7 @@ class CollaboraFrontend {
 		}
 		$ttl += gettimeofday( true );
 
-		$access_token = CoolUtils::token_for_file_id( $id, $ttl, $can_write );
+		$access_token = CoolUtils::token_for_file_id( $id, (int) $ttl, $can_write );
 		$closebutton  = 'false';
 
 		if ( $options ) {
