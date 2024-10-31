@@ -62,7 +62,7 @@ class CoolRequest {
 	 *
 	 * @param string $server the server to request the discovery from.
 	 *
-	 * Return `false` in case of error.
+	 * Return `null` in case of error.
 	 */
 	private static function get_discovery( $server ) {
 		$discovery_url  = $server . '/hosting/discovery';
@@ -119,7 +119,7 @@ class CoolRequest {
 		}
 
 		$discovery = static::get_discovery( $wopi_client_server );
-		if ( false === $discovery ) {
+		if ( null === $discovery ) {
 			$this->error_code = 203;
 			return;
 		}
