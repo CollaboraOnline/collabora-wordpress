@@ -28,10 +28,15 @@ class CollaboraFrontend {
 	/**
 	 * Shortcode implementation
 	 *
-	 * @param array $atts Attributes.
-	 * @param any   $content The content.
+	 * @param array  $atts Attributes.
+	 * @param any    $content The content.
+	 * @param string $name The short code name. We expect 'cool'.
 	 */
-	public function cool_shortcode( $atts = array(), $content = null ) {
+	public function cool_shortcode( $atts, $content, $name ) {
+		if ( 'cool' !== $name ) {
+			die( 'Incorrect short code' );
+		}
+
 		$atts = array_change_key_case( (array) $atts, CASE_LOWER );
 		if ( ! isset( $atts['id'] ) ) {
 			return '<p>Error: file id is missing</p>';
