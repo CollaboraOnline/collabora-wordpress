@@ -46,4 +46,5 @@ html {
 
 .cool-editor__body {
     margin: 0;
+    height: 100%;
 }

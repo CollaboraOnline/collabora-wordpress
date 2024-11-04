@@ -34,7 +34,7 @@ $args = wp_parse_args(
 <?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
 <?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
 </head>
-<body class="cool-frame">
+<body class="cool-editor__body">
 	<?php echo balanceTags( $args['frame'] ); ?>
 </body>
 </html>

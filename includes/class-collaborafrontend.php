@@ -21,7 +21,6 @@ class CollaboraFrontend {
 
 	/** Wp_enqueue_script hook. */
 	public function enqueue_scripts() {
-		wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-js', plugins_url( 'public/js/cool.js', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
 		wp_enqueue_style( COOL_PLUGIN_NAME . '-cool-css', plugins_url( 'public/css/cool.css', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
 	}
 
@@ -49,16 +48,14 @@ class CollaboraFrontend {
 		switch ( $mode ) {
 			case 'view':
 				if ( current_user_can( 'read_post', $id ) ) {
-					return self::get_view_render( $id, false );
+					return self::get_button( $id, false );
 				}
 				break;
 			case 'edit':
 				if ( current_user_can( 'edit_post', $id ) ) {
-					return self::get_view_render( $id, true );
+					return self::get_button( $id, true );
 				}
 				break;
-			case 'button':
-				return self::get_button( $id );
 			default:
 				return '<p>Invalid mode: ' . esc_html( $mode ) . '</p>';
 		}
@@ -70,14 +67,21 @@ class CollaboraFrontend {
 	 *
 	 * @param string $id The post id of the document.
 	 */
-	public static function get_button( string $id ) {
+	public static function get_button( string $id, bool $can_write ) {
 		wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'public/js/previewer.js', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
 
 		$filename = get_attached_file( $id );
 		$name     = pathinfo( $filename, PATHINFO_BASENAME );
+		if ( true === $can_write ) {
+			$label = __( 'Edit', 'collabora-wordpress' );
+		} else {
+			$label = __( 'View', 'collabora-wordpress' );
+		}
+		// translators: %s is the name of the attachment.
+		$attachment = sprintf( __( 'Attachment "%s"', 'collabora-wordpress' ), $name );
 		// XXX localize.
-		return '<p>Attachment "' . esc_html( $name ) . '" <button onclick="previewField(\'' .
-			esc_url( CoolUtils::get_editor_url( $id ) ) . '\');">Edit</button></p>' .
+		return '<p>' . esc_html( $attachment ) . ' <button onclick="previewField(\'' .
+			esc_url( CoolUtils::get_editor_url( $id ) ) . '\');">' . $label . '</button></p>' .
 			'<dialog id="cool-editor__dialog" class="cool-editor__dialog">' .
 			'<iframe class="cool-frame__preview"></iframe>' .
 			'</dialog>';
@@ -91,6 +95,8 @@ class CollaboraFrontend {
 	 * @return string Markup to display.
 	 */
 	public static function cool_frame( array $params ) {
+		wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-js', plugins_url( 'public/js/cool.js', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
+
 		$closebutton = 'true' === $params['closebutton'] ? 'true' : 'false';
 		$wopi_src    = $params['wopiSrc'];
 		$wopi_client = $params['wopiClient'];
