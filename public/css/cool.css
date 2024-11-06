@@ -32,16 +32,31 @@ html {
 }
 
 .cool-editor__dialog {
-    resize: both;
+    --cool-outer-padding: 10px;
+    --cool-right-margin: (100wv - var(--wp--style--global--content-size)) / 2;
     position: fixed;
-    top: 250px;
-    width: 100%;
-    height: calc(100% - 250px);
+    top: calc(var(--wp-admin--admin-bar--height) + var(--cool-outer-padding));
+    width: calc(100% - var(--cool-right-margin));
+    height: calc(100% - var(--wp-admin--admin-bar--height) - var(--cool-outer-padding) * 2);
     /* seems to be a reasonable value to be above of it all */
     z-index: 501;
     box-sizing: border-box;
     padding: 0;
-    margin: 0;
+    /* These need to be 'important' as they are overriden by WP. */
+    margin-left: var(--cool-outer-padding) !important;
+    margin-right: var(--cool-outer-padding) !important;
+    margin-block-start: 0;
+}
+
+dialog.cool-editor__dialog.alignfull {
+    /* These need to be 'important' as they are overriden by WP 2022 them as important. */
+    margin-left: var(--cool-outer-padding) !important;
+    margin-right: var(--cool-outer-padding) !important;
+    width: calc(100% - var(--cool-right-margin)) !important;
+    /* TwentyTwenty override this */
+    position: fixed;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
 }
 
 .cool-editor__body {

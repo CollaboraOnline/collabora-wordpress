@@ -82,7 +82,7 @@ class CollaboraFrontend {
 		// XXX localize.
 		return '<p>' . esc_html( $attachment ) . ' <button onclick="previewField(\'' .
 			esc_url( CoolUtils::get_editor_url( $id ) ) . '\');">' . $label . '</button></p>' .
-			'<dialog id="cool-editor__dialog" class="cool-editor__dialog">' .
+			'<dialog id="cool-editor__dialog" class="cool-editor__dialog alignfull">' .
 			'<iframe class="cool-frame__preview"></iframe>' .
 			'</dialog>';
 	}
