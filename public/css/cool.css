@@ -57,6 +57,8 @@ dialog.cool-editor__dialog.alignfull {
     position: fixed;
     margin-bottom: 0 !important;
     margin-top: 0 !important;
+    /* Neve theme override this */
+    padding: 0;
 }
 
 .cool-editor__body {
