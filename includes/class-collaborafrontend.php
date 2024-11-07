@@ -66,6 +66,7 @@ class CollaboraFrontend {
 	 * Output the button for the short code button mode
 	 *
 	 * @param string $id The post id of the document.
+	 * @param bool   $can_write Whether the use can (or want) to write the file.
 	 */
 	public static function get_button( string $id, bool $can_write ) {
 		wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'public/js/previewer.js', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
