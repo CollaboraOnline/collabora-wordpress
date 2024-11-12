@@ -95,7 +95,7 @@ class Collabora {
 		add_action( 'rest_api_init', array( CollaboraWopi::class, 'register_routes' ) );
 
 		$this->frontend = new CollaboraFrontend();
-		add_action( 'init', array( $this->frontend, 'shortcodes_init' ) );
+		add_action( 'init', array( $this->frontend, 'init' ) );
 		add_action( 'wp_enqueue_scripts', array( $this->frontend, 'enqueue_scripts' ) );
 	}
 }

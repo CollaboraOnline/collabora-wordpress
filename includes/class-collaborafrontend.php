@@ -4,6 +4,9 @@
  * @package collabora-wordpress
  */
 
+/* Block. This will register the block automatically. */
+require_once COOL_PLUGIN_DIR . 'cool-block/cool-block.php';
+
 /**
  * Spdx-License: MPL-2.0
  *
@@ -14,8 +17,8 @@
 
 /** The Collabora frontend */
 class CollaboraFrontend {
-	/** Initialise the shortcodes */
-	public function shortcodes_init() {
+	/** Initialise the shortcodes and block editor. */
+	public function init() {
 		add_shortcode( 'cool', array( $this, 'cool_shortcode' ) );
 
 		add_filter( 'teeny_mce_buttons', array( $this, 'cool_shortcode_button' ) );
