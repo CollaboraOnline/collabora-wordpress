@@ -17,11 +17,47 @@ class CollaboraFrontend {
 	/** Initialise the shortcodes */
 	public function shortcodes_init() {
 		add_shortcode( 'cool', array( $this, 'cool_shortcode' ) );
+
+		add_filter( 'teeny_mce_buttons', array( $this, 'cool_shortcode_button' ) );
+		add_filter( 'mce_buttons', array( $this, 'cool_shortcode_button' ) );
+		add_filter( 'mce_external_plugins', array( $this, 'cool_tinymce_js' ) );
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'cool_tinymce_css' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'cool_tinymce_css' ) );
 	}
 
 	/** Wp_enqueue_script hook. */
 	public function enqueue_scripts() {
 		wp_enqueue_style( COOL_PLUGIN_NAME . '-cool-css', plugins_url( 'public/css/cool.css', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
+	}
+
+	/**
+	 * Queue the style for tinymce.
+	 */
+	public function cool_tinymce_css() {
+		wp_enqueue_style( COOL_PLUGIN_NAME . '-cool-tinymce', plugins_url( 'editor/cool-tinymce.css', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
+	}
+
+	/**
+	 * Load the TinyMCE plugin hook.
+	 *
+	 * @param array $plugins The plugins array.
+	 */
+	public function cool_tinymce_js( array $plugins ) {
+		$plugins['cool-shortcode-button'] = plugins_url( 'editor/cool-tinymce.js', COOL_PLUGIN_FILE );
+
+		return $plugins;
+	}
+
+	/**
+	 * Add the TinyMCE button hook.
+	 *
+	 * @param array $buttons The buttons array.
+	 */
+	public function cool_shortcode_button( array $buttons ) {
+		array_push( $buttons, 'cool-shortcode-button' );
+
+		return $buttons;
 	}
 
 	/**
