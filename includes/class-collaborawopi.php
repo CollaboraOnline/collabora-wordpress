@@ -145,7 +145,7 @@ class CollaboraWopi {
 
 		$post = get_post( $id );
 		// If the post_type isn't an attachment, it is considered not found.
-		if ( 'attachment' !== $post->post_type ) {
+		if ( $post && ( 'attachment' !== $post->post_type ) ) {
 			return array(
 				'error'    => true,
 				'response' => self::not_found( 'File doesn\'t exist.' ),
@@ -178,8 +178,11 @@ class CollaboraWopi {
 			return self::permission_denied( 'Authentication failed.' );
 		}
 
-		$can_write        = $jwt_payload->wri && current_user_can( 'edit_post', $id );
-		$file             = get_attached_file( $id );
+		$can_write = $jwt_payload->wri && current_user_can( 'edit_post', $id );
+		$file      = get_attached_file( $id );
+		if ( ! $file ) {
+			return self::file_error( 'File not found.' );
+		}
 		$is_administrator = isset( $user->roles['administrator'] ) && true === $user->roles['administrator'];
 
 		$user    = wp_get_current_user();
