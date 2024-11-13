@@ -15,11 +15,10 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-
-
 if ( empty( $attributes['id'] ) ) {
 	exit; // The id is required.
 }
+
 $doc_id = $attributes['id'];
 
 if ( ! empty( $attributes['mode'] ) ) {

@@ -6,7 +6,6 @@
 	"title": "COOL Block",
 	"category": "media",
 	"description": "Add document collaboration with Collabora Online.",
-	"example": {},
 	"supports": {
 		"color": {
 			"background": false,
@@ -29,6 +28,5 @@
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
-	"viewScript": "file:./view.js",
 	"render": "file:./render.php"
 }
