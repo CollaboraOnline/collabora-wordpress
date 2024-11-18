@@ -105,14 +105,14 @@ class CollaboraFrontend {
 	 * Output the button for the short code button mode
 	 *
 	 * @param string $id The post id of the document.
-	 * @param bool   $can_write Whether the use can (or want) to write the file.
+	 * @param bool   $want_write Whether the user want to write the file.
 	 */
-	public static function get_button( string $id, bool $can_write ) {
+	public static function get_button( string $id, bool $want_write ) {
 		wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'public/js/previewer.js', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
 
 		$filename = get_attached_file( $id );
 		$name     = pathinfo( $filename, PATHINFO_BASENAME );
-		if ( true === $can_write ) {
+		if ( true === $want_write ) {
 			$label = __( 'Edit', 'collabora-wordpress' );
 		} else {
 			$label = __( 'View', 'collabora-wordpress' );
@@ -121,7 +121,7 @@ class CollaboraFrontend {
 		$attachment = sprintf( __( 'Attachment "%s"', 'collabora-wordpress' ), $name );
 		// XXX localize.
 		return '<p>' . esc_html( $attachment ) . ' <button onclick="previewField(\'' .
-			esc_url( CoolUtils::get_editor_url( $id ) ) . '\');">' . $label . '</button></p>' .
+			esc_url( CoolUtils::get_editor_url( $id, $want_write ) ) . '\');">' . $label . '</button></p>' .
 			'<dialog id="cool-editor__dialog" class="cool-editor__dialog alignfull">' .
 			'<iframe class="cool-frame__preview"></iframe>' .
 			'</dialog>';
@@ -170,12 +170,12 @@ class CollaboraFrontend {
 	 * Output the a view for a COOL frame
 	 *
 	 * @param int        $id The document id.
-	 * @param bool       $can_write Whether we want write permission (editor vs view).
+	 * @param bool       $want_write Whether we want write permission (editor vs view).
 	 * @param null|array $options COOL frame options.
 	 *
 	 * @return string Markup to display.
 	 */
-	public static function get_view_render( int $id, bool $can_write, $options = null ) {
+	public static function get_view_render( int $id, bool $want_write, $options = null ) {
 		require_once COOL_PLUGIN_DIR . 'includes/class-coolrequest.php';
 
 		$wopi_base = get_option( CollaboraAdmin::COOL_WOPI_BASE );
@@ -195,7 +195,7 @@ class CollaboraFrontend {
 		}
 		$ttl += gettimeofday( true );
 
-		$access_token = CoolUtils::token_for_file_id( $id, (int) $ttl, $can_write );
+		$access_token = CoolUtils::token_for_file_id( $id, (int) $ttl, $want_write );
 		$closebutton  = 'false';
 
 		if ( $options ) {

@@ -28,6 +28,11 @@ if ( ! isset( $_GET['id'] ) ) {
 	die( 'No id passed' );
 }
 
+$want_write = false;
+if ( isset( $_GET['write'] ) ) {
+	$want_write = 'true' === $_GET['write'];
+}
+
 $file_id = absint( wp_unslash( $_GET['id'] ) );
 
 require_once __DIR__ . '/collabora-wordpress.php';
@@ -39,7 +44,7 @@ load_template(
 	__DIR__ . '/templates/frame.php',
 	true,
 	array(
-		'frame'    => CollaboraFrontend::get_view_render( $file_id, false, array( 'closebutton' => 'true' ) ),
+		'frame'    => CollaboraFrontend::get_view_render( $file_id, $want_write, array( 'closebutton' => 'true' ) ),
 		'base_url' => $base_url,
 	)
 );
