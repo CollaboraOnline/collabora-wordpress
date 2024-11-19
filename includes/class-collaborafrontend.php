@@ -77,13 +77,23 @@ class CollaboraFrontend {
 
 		$atts = array_change_key_case( (array) $atts, CASE_LOWER );
 		if ( ! isset( $atts['id'] ) ) {
-			return '<p>Error: file id is missing</p>';
+			return '<p>' . __( 'Error: file id is missing', 'collabora-wordpress' ) . '</p>';
 		}
 		$id   = $atts['id'];
 		$mode = 'view';
 		if ( isset( $atts['mode'] ) ) {
 			$mode = $atts['mode'];
 		}
+		return self::get_button_markup( $id, $mode );
+	}
+
+	/**
+	 * Get the button markup
+	 *
+	 * @param string $id The post id of the document.
+	 * @param string $mode The mode.
+	 */
+	public static function get_button_markup( string $id, string $mode ) {
 		switch ( $mode ) {
 			case 'view':
 				if ( current_user_can( 'read_post', $id ) ) {
@@ -96,9 +106,11 @@ class CollaboraFrontend {
 				}
 				break;
 			default:
-				return '<p>Invalid mode: ' . esc_html( $mode ) . '</p>';
+				// translators: %s is the mode.
+				$message = sprintf( __( 'Invalid mode: %s', 'collabora-wordpress' ), $mode );
+				return '<p>' . esc_html( $message ) . '</p>';
 		}
-		return '<p>Unauthorized</p>';
+		return '<p>' . esc_html( __( 'You don\'t have permission to view the attached file.', 'collabora-wordpress' ) ) . '</p>';
 	}
 
 	/**
@@ -107,7 +119,7 @@ class CollaboraFrontend {
 	 * @param string $id The post id of the document.
 	 * @param bool   $want_write Whether the user want to write the file.
 	 */
-	public static function get_button( string $id, bool $want_write ) {
+	private static function get_button( string $id, bool $want_write ) {
 		wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'public/js/previewer.js', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
 
 		$filename = get_attached_file( $id );

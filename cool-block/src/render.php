@@ -28,5 +28,5 @@ if ( ! empty( $attributes['mode'] ) ) {
 }
 ?>
 <p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php echo CollaboraFrontend::get_button( $doc_id, 'edit' === $cool_mode ); ?>
+	<?php echo CollaboraFrontend::get_button_markup( $doc_id, $cool_mode ); ?>
 </p>
