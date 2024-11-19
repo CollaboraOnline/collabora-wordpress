@@ -38,7 +38,7 @@ function requestDocument( callback ) {
 	} );
 	coolRequester.on( 'select', function () {
 		const selected = coolRequester.state().get( 'selection' ).first();
-		callback( selected.id );
+		callback( selected.id, selected.attributes.filename );
 	} );
 	coolRequester.open();
 }
@@ -52,7 +52,7 @@ function requestDocument( callback ) {
  * @return {Element} Element to render.
  */
 export default function Edit( { attributes, setAttributes } ) {
-	const { id, mode } = attributes;
+	const { id, filename, mode } = attributes;
 	let action = 'View';
 	if ( mode === 'edit' ) {
 		action = 'Edit';
@@ -79,8 +79,11 @@ export default function Edit( { attributes, setAttributes } ) {
 							<Button
 								variant="primary"
 								onClick={ () => {
-									requestDocument( ( value ) =>
-										setAttributes( { id: value.toString() } )
+									requestDocument( ( selId, selFilename ) =>
+										setAttributes( {
+											id: selId.toString(),
+											filename: selFilename,
+										} )
 									);
 								} }
 							>
@@ -97,7 +100,9 @@ export default function Edit( { attributes, setAttributes } ) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<p { ...useBlockProps() }>{ action + ' COOL document=' + id }</p>
+			<p
+				{ ...useBlockProps() }
+			>{ `${ action } document "${ filename }".` }</p>
 		</>
 	);
 }

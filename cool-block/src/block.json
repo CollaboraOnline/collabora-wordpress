@@ -22,6 +22,9 @@
 		},
 		"mode": {
 			"type": "string"
+		},
+		"filename": {
+			"type": "string"
 		}
 	},
 	"textdomain": "collabora-wordpress",
