@@ -258,7 +258,11 @@ class CollaboraWopi {
 		add_filter(
 			'rest_pre_serve_request',
 			function () use ( $file ) {
+				// phpcs:disable WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+				// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo file_get_contents( $file );
+				// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+				// phpcs:enable WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 				return true;
 			}
 		);
