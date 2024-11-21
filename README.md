@@ -8,7 +8,6 @@ What you need is:
 - Collabora Online. The latter can run on any server that is
   accessible and that can access the Wordpress server.
 
-
 ## Configuration
 
 Once the plugin is installed you can set the configuration using the
@@ -57,6 +56,18 @@ The plugin creates a new post type `cool_revision` to store the revisions of fil
 attachment. Its parent is set to the attachment post. And there are two pieces of metadata
 associated to it: `_wp_attached_file` and `cool_rev_timestamp`. The former allow the standard
 `get_attached_file()` call. The latter is the timestamp of the revision.
+
+## Development
+
+You need PHP `composer`.
+
+### Setup
+
+`composer install` will install the project dependencies.
+
+### Building
+
+`composer build` is used to build the JavaScript need for the Gutenberg block.
 
 ## License
 

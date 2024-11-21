@@ -23,6 +23,13 @@
         }
     },
     "require-dev": {
-        "wp-coding-standards/wpcs": "^3.0"
+        "wp-coding-standards/wpcs": "^3.0",
+        "wp-cli/wp-cli-bundle": "*"
+    },
+    "scripts": {
+        "build": "cd cool-block && npm run build",
+        "pot": "./vendor/bin/wp i18n make-pot --skip-js . languages/collabora-wordpress.pot",
+        "lint:php": "@php ./vendor/bin/phpcs --standard=WordPress includes/ cool.php templates/frame.php",
+        "lint:js": "cd cool-block && npm run lint:js"
     }
 }
