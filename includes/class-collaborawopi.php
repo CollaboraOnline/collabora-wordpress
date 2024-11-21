@@ -194,13 +194,21 @@ class CollaboraWopi {
 			'UserId'           => $jwt_payload->uid,
 			'UserFriendlyName' => $user->get( 'display_name' ),
 			'UserExtraInfo'    => array(
-				// 'avatar' => $avatarUrl,
 				'mail' => $user->get( 'user_email' ),
 			),
 			'UserCanWrite'     => $can_write,
 			'IsAdminUser'      => $is_administrator,
 			'IsAnonymousUser'  => false, // $user->isAnonymous(),
 		);
+
+		if ( function_exists( 'get_avatar_url' ) ) {
+			// This require adding `https://secure.gravatar.com` to the `img-src` CSP rule.
+			// Otherwise it will display the default icon.
+			$avatar = get_avatar_url( $user->id );
+			if ( false !== $avatar ) {
+				$payload['UserExtraInfo']['avatar'] = $avatar;
+			}
+		}
 
 		return new WP_REST_Response(
 			$payload,
