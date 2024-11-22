@@ -31,7 +31,7 @@ class CollaboraFrontend {
 
 	/** Wp_enqueue_script hook. */
 	public function enqueue_scripts() {
-		wp_enqueue_style( COOL_PLUGIN_NAME . '-cool-css', plugins_url( 'public/css/cool.css', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
+		wp_enqueue_style( COOL_PLUGIN_NAME . '-cool-css', plugins_url( 'assets/css/cool.css', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
 	}
 
 	/**
@@ -120,7 +120,7 @@ class CollaboraFrontend {
 	 * @param bool   $want_write Whether the user want to write the file.
 	 */
 	private static function get_button( string $id, bool $want_write ) {
-		wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'public/js/previewer.js', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
+		wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'assets/js/previewer.js', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
 
 		$filename = get_attached_file( $id );
 		$name     = pathinfo( $filename, PATHINFO_BASENAME );
@@ -147,7 +147,7 @@ class CollaboraFrontend {
 	 * @return string Markup to display.
 	 */
 	public static function cool_frame( array $params ) {
-		wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-js', plugins_url( 'public/js/cool.js', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
+		wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-js', plugins_url( 'assets/js/cool.js', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
 
 		$closebutton = 'true' === $params['closebutton'] ? 'true' : 'false';
 		$wopi_src    = $params['wopiSrc'];
