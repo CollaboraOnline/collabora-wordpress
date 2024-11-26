@@ -15,11 +15,12 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-if ( empty( $attributes['id'] ) ) {
-	exit; // The id is required.
-}
 
-$doc_id = $attributes['id'];
+if ( empty( $attributes['id'] ) ) {
+	$doc_id = 0;
+} else {
+	$doc_id = $attributes['id'];
+}
 
 if ( ! empty( $attributes['mode'] ) ) {
 	$cool_mode = $attributes['mode'];
@@ -28,5 +29,11 @@ if ( ! empty( $attributes['mode'] ) ) {
 }
 ?>
 <p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php echo CollaboraFrontend::get_button_markup( $doc_id, $cool_mode ); ?>
+	<?php
+	if ( 0 !== $doc_id ) {
+		echo CollaboraFrontend::get_button_markup( $doc_id, $cool_mode );
+	} else {
+		echo 'Error, no doc id';
+	}
+	?>
 </p>
