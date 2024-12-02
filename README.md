@@ -65,11 +65,11 @@ associated to it: `_wp_attached_file` and `cool_rev_timestamp`. The former allow
 
 ## Development
 
-You need PHP `composer`.
+You need PHP `composer` and `npm`.
 
 ### Setup
 
-`composer install` will install the project dependencies.
+`composer install` will install the project PHP dependencies.
 
 ### Building
 

@@ -1,0 +1,20 @@
+{
+	"name": "collabora-wordpress",
+	"version": "0.1.0",
+	"description": "Add document collaboration with Collabora Online.",
+	"author": "Collabora Online contributors",
+	"license": "MPL-2.0",
+	"files": [
+		"admin",
+		"assets",
+		"cool-block/build",
+		"editor",
+		"language",
+		"includes",
+		"templates"
+	],
+	"devDependencies": {
+		"@wordpress/scripts": "^30.4.0",
+		"cool-block": "file:cool-block"
+	}
+}
