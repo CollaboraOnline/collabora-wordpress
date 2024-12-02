@@ -53,9 +53,16 @@ function requestDocument( callback ) {
  */
 export default function Edit( { attributes, setAttributes } ) {
 	const { id, filename, mode } = attributes;
-	let action = 'View';
+	let action = wp.i18n.__( 'View' );
 	if ( mode === 'edit' ) {
-		action = 'Edit';
+		action = wp.i18n.__( 'Edit' );
+	}
+
+	let content;
+	if ( typeof filename == "undefined") {
+		content = wp.i18n.__( 'Please select a document.' );
+	} else {
+		content = `${ action } document "${ filename }".`;
 	}
 
 	return (
@@ -102,7 +109,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			</InspectorControls>
 			<p
 				{ ...useBlockProps() }
-			>{ `${ action } document "${ filename }".` }</p>
+			>{ `${content}` }</p>
 		</>
 	);
 }
