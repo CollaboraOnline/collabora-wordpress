@@ -7,11 +7,15 @@
 	"files": [
 		"admin",
 		"assets",
+		"collabora-wordpress.php",
+		"cool-block/cool-block.php",
 		"cool-block/build",
+		"cool.php",
 		"editor",
 		"language",
 		"includes",
-		"templates"
+		"templates",
+		"vendor"
 	],
 	"devDependencies": {
 		"@wordpress/scripts": "^30.4.0",
