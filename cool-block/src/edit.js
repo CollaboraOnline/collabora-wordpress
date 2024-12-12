@@ -15,9 +15,8 @@ import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 
 import {
 	Button,
-	Flex,
-	FlexItem,
 	PanelBody,
+	SelectControl,
 	TextControl,
 } from '@wordpress/components';
 
@@ -59,7 +58,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	}
 
 	let content;
-	if ( typeof filename == "undefined") {
+	if ( typeof filename === 'undefined' ) {
 		content = wp.i18n.__( 'Please select a document.' );
 	} else {
 		content = `${ action } document "${ filename }".`;
@@ -69,47 +68,44 @@ export default function Edit( { attributes, setAttributes } ) {
 		<>
 			<InspectorControls>
 				<PanelBody title={ __( 'Parameters', 'collabora-wordpress' ) }>
-					<Flex>
-						<FlexItem>
-							<TextControl
-								label={ __(
-									'Document',
-									'collabora-wordpress'
-								) }
-								value={ id || '' }
-								onChange={ ( value ) =>
-									setAttributes( { id: value } )
-								}
-							/>
-						</FlexItem>
-						<FlexItem>
-							<Button
-								variant="primary"
-								onClick={ () => {
-									requestDocument( ( selId, selFilename ) =>
-										setAttributes( {
-											id: selId.toString(),
-											filename: selFilename,
-										} )
-									);
-								} }
-							>
-								Select
-							</Button>
-						</FlexItem>
-					</Flex>
 					<TextControl
+						label={ __( 'Document', 'collabora-wordpress' ) }
+						value={ id || '' }
+						onChange={ ( value ) => setAttributes( { id: value } ) }
+					/>
+					<Button
+						variant="primary"
+						onClick={ () => {
+							requestDocument( ( selId, selFilename ) =>
+								setAttributes( {
+									id: selId.toString(),
+									filename: selFilename,
+								} )
+							);
+						} }
+					>
+						Select
+					</Button>
+					<SelectControl
 						label={ __( 'Mode', 'collabora-wordpress' ) }
 						value={ mode || 'view' }
+						options={ [
+							{
+								value: 'view',
+								label: __( 'View', 'collabora-wordpress' ),
+							},
+							{
+								value: 'edit',
+								label: __( 'Edit', 'collabora-wordpress' ),
+							},
+						] }
 						onChange={ ( value ) =>
 							setAttributes( { mode: value } )
 						}
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<p
-				{ ...useBlockProps() }
-			>{ `${content}` }</p>
+			<p { ...useBlockProps() }>{ `${ content }` }</p>
 		</>
 	);
 }
