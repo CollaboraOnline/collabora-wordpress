@@ -9,7 +9,7 @@ What you need is:
   WordPress server.
 
 Collabora Online is an online office suite based on LibreOffice. It is open source, and is meant to
-be hosted on premise. Thos WordPress plugin is designed to use WordPress as the store and
+be hosted on premise. This WordPress plugin is designed to use WordPress as the store and
 collaboration point to use Collabora Online. It will use the user credential of your WordPress
 system to determine access to the documents for collaboration.
 
