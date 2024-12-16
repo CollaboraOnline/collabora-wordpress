@@ -9,7 +9,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: Collabora Online for WordPress
- * Plugin URI: https://github.com/hfiguiere/collabora-wordpress
+ * Plugin URI: https://github.com/CollaboraOnline/collabora-wordpress
  * Description: WordPress connector for Collabora Online, allow you to view or edit collaboratively office documents directly from WordPress in Collabora Online.
  * Version: 0.9.0
  * License: MPL-2.0
