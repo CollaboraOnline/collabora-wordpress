@@ -29,8 +29,8 @@ $args = wp_parse_args(
 	<meta charset="UTF-8" />
 <?php // phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
 <?php // phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
-	<link rel="stylesheet" id="collabora-wordpress-cool-css" href="<?php echo esc_url( $args['base_url'] ); ?>/assets/css/cool.css" media="all">
-	<script id="collabora-wordpress-cool-js" src="<?php echo esc_url( $args['base_url'] ); ?>/assets/js/cool.js"></script>
+	<link rel="stylesheet" id="collabora-wordpress-cool-css" href="<?php echo esc_url( $args['base_url'] ); ?>/public/css/cool.css" media="all">
+	<script id="collabora-wordpress-cool-js" src="<?php echo esc_url( $args['base_url'] ); ?>/public/js/cool.js"></script>
 <?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
 <?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
 </head>
