@@ -11,7 +11,7 @@
 		"cool-block/build",
 		"cool.php",
 		"editor",
-		"language",
+		"languages",
 		"includes",
 		"public",
 		"templates",
