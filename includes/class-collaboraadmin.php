@@ -136,7 +136,7 @@ class CollaboraAdmin {
 			'cool_options_group',
 			self::COOL_JWT_KEY,
 			array(
-				'description' => __( 'JWT secert key to generate tokens', 'collabora-online-wp' ),
+				'description' => __( 'JWT secret key to generate tokens', 'collabora-online-wp' ),
 			)
 		);
 
