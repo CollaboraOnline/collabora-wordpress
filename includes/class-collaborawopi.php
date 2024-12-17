@@ -65,7 +65,7 @@ class CollaboraWopi {
 	}
 
 	/**
-	 * Return a permission denied HTTP 403 error.
+	 * Return a permission denied HTTP 401 error.
 	 *
 	 * @param string $reason The text reason.
 	 *
@@ -74,7 +74,7 @@ class CollaboraWopi {
 	private static function permission_denied( string $reason ) {
 		return new WP_REST_Response(
 			$reason,
-			403,
+			401,
 			array(
 				'Content-Type' => 'text/plain',
 			)
