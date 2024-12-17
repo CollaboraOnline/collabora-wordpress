@@ -6,7 +6,6 @@
 	"license": "MPL-2.0",
 	"files": [
 		"admin",
-		"assets",
 		"collabora-online-wp.php",
 		"cool-block/cool-block.php",
 		"cool-block/build",
@@ -16,7 +15,7 @@
 		"includes",
 		"public",
 		"templates",
-		"vendor"
+		"vendor/firebase/php-jwt"
 	],
 	"devDependencies": {
 		"@wordpress/scripts": "^30.4.0",
