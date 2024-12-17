@@ -28,10 +28,13 @@ if ( ! empty( $attributes['mode'] ) ) {
 	$cool_mode = 'view';
 }
 ?>
-<p <?php echo get_block_wrapper_attributes(); ?>>
+<p <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php
 	if ( 0 !== $doc_id ) {
+		// get_button_markup is itself sanitized in between the static fragments.
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo CollaboraFrontend::get_button_markup( $doc_id, $cool_mode );
+		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	} else {
 		echo 'Error, no doc id';
 	}
