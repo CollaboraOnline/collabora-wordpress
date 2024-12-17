@@ -35,6 +35,12 @@ $args = wp_parse_args(
 <?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
 </head>
 <body class="cool-editor__body">
-	<?php echo balanceTags( $args['frame'] ); ?>
+	<?php
+	// 'frame' is a template parameter. And where we call the template, it's content has
+	// been sanitized.
+	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $args['frame'];
+	// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+	?>
 </body>
 </html>

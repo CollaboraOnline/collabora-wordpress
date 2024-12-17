@@ -157,13 +157,13 @@ class CollaboraFrontend {
 <div class="cool-frame">
   <div style="display: none">
     <form action="" enctype="multipart/form-data" method="post" target="collabora-online-viewer" id="collabora-submit-form">
-      <input name="access_token" value="' . $params['accessToken'] . '" type="hidden" />
-      <input name="access_token_ttl" value="' . $params['accessTokenTtl'] . '" type="hidden" />
+      <input name="access_token" value="' . esc_attr( $params['accessToken'] ) . '" type="hidden" />
+      <input name="access_token_ttl" value="' . esc_attr( $params['accessTokenTtl'] ) . '" type="hidden" />
       <input type="submit" value="" />
     </form>
   </div>
 
-  <iframe id="collabora-online-viewer" name="collabora-online-viewer" class="cool-frame__iframe" style="' . $params['iFrameStyle'] . '" allow="clipboard-read *; clipboard-write *">
+  <iframe id="collabora-online-viewer" name="collabora-online-viewer" class="cool-frame__iframe" style="' . esc_attr( $params['iFrameStyle'] ) . '" allow="clipboard-read *; clipboard-write *">
   </iframe>
   <script type="text/ecmascript">' .
 
@@ -172,7 +172,7 @@ class CollaboraFrontend {
     if (closebutton == 'true') {
         options = { closebutton: true };
     }
-    loadDocument('$wopi_client', '$wopi_src', options);" .
+    loadDocument('" . esc_url( $wopi_client ) . "', '" . esc_attr( $wopi_src ) . "', options);" .
 
 		'  </script>
 </div>';
