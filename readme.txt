@@ -1,4 +1,4 @@
-=== Collabora Online ===
+=== Collabora Online WP ===
 Contributors: hubcp
 Tags: collaboration, pdf, presentation, spreadsheet, document
 Requires at least: 6.6
@@ -8,13 +8,13 @@ Requires PHP: 8.0
 License: MPL-2.0
 License URI: http://mozilla.org/MPL/2.0/
 
-The Collabora Online plugin allow attaching office files to your content for a collaborative editing with other user.
+The Collabora Online WP plugin allow attaching office files to your content for a collaborative editing with other user.
 
 == Description ==
 
-The Collabora Online plugin allow attaching office files to your content for a collaborative editing with other user.
+The Collabora Online WP plugin allow attaching office files to your content for a collaborative editing with other user.
 
-This require in setup Collabora Online.
+This require a working setup of Collabora Online.
 
 For more information about Collabora Online, see https://collaboraonline.com/
 
@@ -27,7 +27,7 @@ Attaching an office document to a post is simple.
 
 = Do I need Collabora Online ? =
 
-Yes. It needs to be up and running. It's the sole existence of that plugin.
+Yes. It needs to be up and running. It is the sole existence of that plugin.
 
 = Which version of Collabora Online shall I use ? =
 

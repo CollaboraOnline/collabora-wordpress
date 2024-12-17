@@ -1,5 +1,5 @@
 {
-	"name": "collabora-wordpress",
+	"name": "collabora-online-wp",
 	"version": "0.1.0",
 	"description": "Add document collaboration with Collabora Online.",
 	"author": "Collabora Online contributors",
@@ -7,7 +7,7 @@
 	"files": [
 		"admin",
 		"assets",
-		"collabora-wordpress.php",
+		"collabora-online-wp.php",
 		"cool-block/cool-block.php",
 		"cool-block/build",
 		"cool.php",

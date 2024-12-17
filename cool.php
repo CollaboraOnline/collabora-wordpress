@@ -1,7 +1,7 @@
 <?php
 /** COOL frame embedded
  *
- * @package collabora-wordpress
+ * @package collabora-online-wp
  */
 
 /**
@@ -35,7 +35,7 @@ if ( isset( $_GET['write'] ) ) {
 
 $file_id = absint( wp_unslash( $_GET['id'] ) );
 
-require_once __DIR__ . '/collabora-wordpress.php';
+require_once __DIR__ . '/collabora-online-wp.php';
 require_once __DIR__ . '/includes/class-collaborafrontend.php';
 
 $base_url = plugins_url( '', COOL_PLUGIN_FILE );

@@ -1,7 +1,7 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "collabora-wordpress/cool-block",
+	"name": "collabora-online-wp/cool-block",
 	"version": "0.1.0",
 	"title": "COOL Block",
 	"category": "media",
@@ -27,7 +27,7 @@
 			"type": "string"
 		}
 	},
-	"textdomain": "collabora-wordpress",
+	"textdomain": "collabora-online-wp",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",

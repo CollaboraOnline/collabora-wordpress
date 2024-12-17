@@ -1,11 +1,11 @@
-# Collabora Online WordPress
+# Collabora Online WP
 
 This plugin allow the integration of Collabora Online with WordPress.
 
 What you need is:
 
 - WordPress. (currently 6.6.x is tested)
-- Collabora Online. The latter can run on any server that is accessible and that can access the
+- Collabora Online. The latter can be run on any server that is accessible and that can access the
   WordPress server.
 
 Collabora Online is an online office suite based on LibreOffice. It is open source, and is meant to

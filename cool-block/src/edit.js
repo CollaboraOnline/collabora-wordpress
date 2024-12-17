@@ -67,9 +67,9 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Parameters', 'collabora-wordpress' ) }>
+				<PanelBody title={ __( 'Parameters', 'collabora-online-wp' ) }>
 					<TextControl
-						label={ __( 'Document', 'collabora-wordpress' ) }
+						label={ __( 'Document', 'collabora-online-wp' ) }
 						value={ id || '' }
 						onChange={ ( value ) => setAttributes( { id: value } ) }
 					/>
@@ -87,16 +87,16 @@ export default function Edit( { attributes, setAttributes } ) {
 						Select
 					</Button>
 					<SelectControl
-						label={ __( 'Mode', 'collabora-wordpress' ) }
+						label={ __( 'Mode', 'collabora-online-wp' ) }
 						value={ mode || 'view' }
 						options={ [
 							{
 								value: 'view',
-								label: __( 'View', 'collabora-wordpress' ),
+								label: __( 'View', 'collabora-online-wp' ),
 							},
 							{
 								value: 'edit',
-								label: __( 'Edit', 'collabora-wordpress' ),
+								label: __( 'Edit', 'collabora-online-wp' ),
 							},
 						] }
 						onChange={ ( value ) =>

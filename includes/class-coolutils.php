@@ -1,7 +1,7 @@
 <?php
 /** COOL WordPress plugin utilities.
  *
- * @package collabora-wordpress
+ * @package collabora-online-wp
  */
 
 /**

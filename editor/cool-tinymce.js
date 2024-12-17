@@ -22,9 +22,9 @@
 			const selected = cool_requester.state().get( 'selection' ).first();
 			const id = selected.id;
 			// XXX fixme when we have block support.
-			// let content = "<!-- wp:collabora-wordpress/cool -->\n";
+			// let content = "<!-- wp:collabora-online-wp/cool -->\n";
 			let content = `[cool id=${id} mode=view]\n`;
-			// content += "<!-- /wp:collabora-wordpress/cool -->\n";
+			// content += "<!-- /wp:collabora-online-wp/cool -->\n";
 			editor.insertContent(content);
 		});
 		cool_requester.open();

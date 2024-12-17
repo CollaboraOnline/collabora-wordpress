@@ -1,7 +1,7 @@
 <?php
 /** COOL WordPress frontend
  *
- * @package collabora-wordpress
+ * @package collabora-online-wp
  */
 
 /* Block. This will register the block automatically. */
@@ -77,7 +77,7 @@ class CollaboraFrontend {
 
 		$atts = array_change_key_case( (array) $atts, CASE_LOWER );
 		if ( ! isset( $atts['id'] ) ) {
-			return '<p>' . __( 'Error: file id is missing', 'collabora-wordpress' ) . '</p>';
+			return '<p>' . __( 'Error: file id is missing', 'collabora-online-wp' ) . '</p>';
 		}
 		$id   = $atts['id'];
 		$mode = 'view';
@@ -107,10 +107,10 @@ class CollaboraFrontend {
 				break;
 			default:
 				// translators: %s is the mode.
-				$message = sprintf( __( 'Invalid mode: %s', 'collabora-wordpress' ), $mode );
+				$message = sprintf( __( 'Invalid mode: %s', 'collabora-online-wp' ), $mode );
 				return '<p>' . esc_html( $message ) . '</p>';
 		}
-		return '<p>' . esc_html( __( 'You don\'t have permission to view the attached file.', 'collabora-wordpress' ) ) . '</p>';
+		return '<p>' . esc_html( __( 'You don\'t have permission to view the attached file.', 'collabora-online-wp' ) ) . '</p>';
 	}
 
 	/**
@@ -125,12 +125,12 @@ class CollaboraFrontend {
 		$filename = get_attached_file( $id );
 		$name     = pathinfo( $filename, PATHINFO_BASENAME );
 		if ( true === $want_write ) {
-			$label = __( 'Edit', 'collabora-wordpress' );
+			$label = __( 'Edit', 'collabora-online-wp' );
 		} else {
-			$label = __( 'View', 'collabora-wordpress' );
+			$label = __( 'View', 'collabora-online-wp' );
 		}
 		// translators: %s is the name of the attachment.
-		$attachment = sprintf( __( 'Attachment "%s"', 'collabora-wordpress' ), $name );
+		$attachment = sprintf( __( 'Attachment "%s"', 'collabora-online-wp' ), $name );
 		// XXX localize.
 		return '<p>' . esc_html( $attachment ) . ' <button onclick="previewField(\'' .
 			esc_url( CoolUtils::get_editor_url( $id, $want_write ) ) . '\');">' . $label . '</button></p>' .
@@ -196,7 +196,7 @@ class CollaboraFrontend {
 		$wopi_client = $req->get_wopi_client_url();
 		if ( null === $wopi_client ) {
 			return '<p>' .
-				__( 'The Collabora Online server is not available: ', 'collabora-wordpress' ) .
+				__( 'The Collabora Online server is not available: ', 'collabora-online-wp' ) .
 				esc_html( $req->error_string() ) .
 				'</p>';
 		}

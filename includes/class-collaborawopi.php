@@ -3,7 +3,7 @@
  *
  * Implement the WOPI host using WordPress REST API.
  *
- * @package collabora-wordpress
+ * @package collabora-online-wp
  */
 
 /**
@@ -277,7 +277,7 @@ class CollaboraWopi {
 		register_post_type(
 			self::REV_POST_TYPE,
 			array(
-				'label'            => __( 'Revisions', 'collabora-wordpress' ),
+				'label'            => __( 'Revisions', 'collabora-online-wp' ),
 				'public'           => false,
 				'hierarchical'     => false,
 				'rewrite'          => false,
