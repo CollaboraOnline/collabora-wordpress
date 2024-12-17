@@ -1,0 +1,144 @@
+# Copyright (C) 2024 
+# This file is distributed under the MPL-2.0.
+msgid ""
+msgstr ""
+"Project-Id-Version: Collabora Online WP 0.9.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/collabora-online-"
+"wp\n"
+"POT-Creation-Date: 2024-12-18T00:01:10+00:00\n"
+"PO-Revision-Date: 2024-12-17 19:02-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Domain: collabora-online-wp\n"
+
+#. Plugin Name of the plugin
+#: collabora-online-wp.php
+msgid "Collabora Online WP"
+msgstr "Collabora Online WP"
+
+#. Plugin URI of the plugin
+#: collabora-online-wp.php
+msgid "https://github.com/CollaboraOnline/collabora-wordpress"
+msgstr "https://github.com/CollaboraOnline/collabora-wordpress"
+
+#. Description of the plugin
+#: collabora-online-wp.php
+msgid ""
+"WordPress connector for Collabora Online, allow you to view or edit "
+"collaboratively office documents directly from WordPress in Collabora Online."
+msgstr ""
+"Connecteur WordPress™ pour Collabora Online, vous permet d'éditer ou de "
+"visualiser de manière collaborative des documents bureautique directement "
+"depuis WordPress™ dans Collabora Online."
+
+#: includes/class-collaboraadmin.php:67
+msgid "Collabora Online Settings"
+msgstr "Preferences de Collabora Online"
+
+#: includes/class-collaboraadmin.php:68
+msgid "Collabora Online"
+msgstr "Collabora Online"
+
+#: includes/class-collaboraadmin.php:109
+msgid "Configure where to find the Collabora Online server."
+msgstr "Configurer où trouver le serveur Collabora Online."
+
+#: includes/class-collaboraadmin.php:123
+msgid ""
+"Disable the certificate check when connecting to the Collabora Online server"
+msgstr ""
+"Désactiver la validation du certificat lors de la connexion au serverur "
+"Collabora Online"
+
+#: includes/class-collaboraadmin.php:131
+msgid "The token TTL in seconds"
+msgstr "Le TTL du jeton en secondes"
+
+#: includes/class-collaboraadmin.php:139
+msgid "JWT secret key to generate tokens"
+msgstr "Clé secrète pour générer les jetons JWT"
+
+#: includes/class-collaboraadmin.php:151
+msgid "Collabora Online server URL"
+msgstr "URL du serveur Collabora Online"
+
+#: includes/class-collaboraadmin.php:162
+msgid "WOPI host URL."
+msgstr "URL du hôte WOPI."
+
+#: includes/class-collaboraadmin.php:173
+msgid "Disable TLS certificate check for COOL (development only)."
+msgstr ""
+"Désactiver la validation du certification TLS for COOL (uniquement pour le "
+"développement)."
+
+#: includes/class-collaboraadmin.php:184
+msgid "Token TTL in seconds."
+msgstr "TTL du jeton en secondes."
+
+#: includes/class-collaboraadmin.php:195
+msgid "JWT key secret to generate token."
+msgstr "Clé secrète pour générer les jetons JWT."
+
+#: includes/class-collaborafrontend.php:80
+msgid "Error: file id is missing"
+msgstr "Erreur: l'identifiant du fichier est absent"
+
+#. translators: %s is the mode.
+#: includes/class-collaborafrontend.php:110
+msgid "Invalid mode: %s"
+msgstr "Mode invalide: %s"
+
+#: includes/class-collaborafrontend.php:113
+msgid "You don't have permission to view the attached file."
+msgstr "Vous n'avez pas la permission de voir le fichier attaché."
+
+#: includes/class-collaborafrontend.php:128 cool-block/build/index.js:1
+#: cool-block/src/edit.js:99
+msgid "Edit"
+msgstr "Éditer"
+
+#: includes/class-collaborafrontend.php:130 cool-block/build/index.js:1
+#: cool-block/src/edit.js:95
+msgid "View"
+msgstr "Visualiser"
+
+#. translators: %s is the name of the attachment.
+#: includes/class-collaborafrontend.php:133
+msgid "Attachment \"%s\""
+msgstr "Attachement \"%s\""
+
+#: includes/class-collaborafrontend.php:199
+msgid "The Collabora Online server is not available: "
+msgstr "Le serveur Collabora Online n'est pas disponible: "
+
+#: includes/class-collaborawopi.php:280
+msgid "Revisions"
+msgstr "Révisions"
+
+#: cool-block/build/index.js:1 cool-block/src/edit.js:70
+msgid "Parameters"
+msgstr "Paramètres"
+
+#: cool-block/build/index.js:1 cool-block/src/edit.js:72
+msgid "Document"
+msgstr "Document"
+
+#: cool-block/build/index.js:1 cool-block/src/edit.js:90
+msgid "Mode"
+msgstr "Mode"
+
+#: cool-block/build/block.json cool-block/src/block.json
+msgctxt "block title"
+msgid "COOL Block"
+msgstr "Block COOL"
+
+#: cool-block/build/block.json cool-block/src/block.json
+msgctxt "block description"
+msgid "Add document collaboration with Collabora Online."
+msgstr "Ajouter la collaboration sur les documents avec Collabora Online."
