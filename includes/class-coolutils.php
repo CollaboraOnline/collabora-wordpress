@@ -12,6 +12,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+require_once COOL_PLUGIN_DIR . 'vendor/firebase/php-jwt/src/JWT.php';
+require_once COOL_PLUGIN_DIR . 'vendor/firebase/php-jwt/src/Key.php';
+
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
