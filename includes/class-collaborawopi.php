@@ -367,9 +367,11 @@ class CollaboraWopi {
 			return self::file_error( 'Creating revision.' );
 		}
 
+		// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
 		if ( file_put_contents( $file, $data, LOCK_EX ) === false ) {
 			return self::file_error( 'Saving file.' );
 		}
+		// phpcs:enable WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
 
 		wp_update_post(
 			array(
