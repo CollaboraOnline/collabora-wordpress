@@ -148,7 +148,7 @@ class CollaboraAdmin {
 		);
 		add_settings_field(
 			self::COOL_SERVER_OPTION,
-			__( 'Collabora Online server URL', 'collabora-online-wp' ),
+			__( 'Collabora Online server URL:', 'collabora-online-wp' ),
 			array( $this, 'setting_text' ),
 			'cool_options_group',
 			'cool_options_section',
@@ -159,7 +159,7 @@ class CollaboraAdmin {
 		);
 		add_settings_field(
 			self::COOL_WOPI_BASE,
-			__( 'WOPI host URL.', 'collabora-online-wp' ),
+			__( 'WOPI host URL:', 'collabora-online-wp' ),
 			array( $this, 'setting_text' ),
 			'cool_options_group',
 			'cool_options_section',
@@ -170,7 +170,7 @@ class CollaboraAdmin {
 		);
 		add_settings_field(
 			self::COOL_DISABLE_CERT_CHECK,
-			__( 'Disable TLS certificate check for COOL (development only).', 'collabora-online-wp' ),
+			__( 'Disable TLS certificate check for COOL (development only):', 'collabora-online-wp' ),
 			array( $this, 'setting_bool' ),
 			'cool_options_group',
 			'cool_options_section',
@@ -181,7 +181,7 @@ class CollaboraAdmin {
 		);
 		add_settings_field(
 			self::COOL_TOKEN_TTL,
-			__( 'Token TTL in seconds.', 'collabora-online-wp' ),
+			__( 'Token TTL in seconds:', 'collabora-online-wp' ),
 			array( $this, 'setting_text' ),
 			'cool_options_group',
 			'cool_options_section',
@@ -192,7 +192,7 @@ class CollaboraAdmin {
 		);
 		add_settings_field(
 			self::COOL_JWT_KEY,
-			__( 'JWT key secret to generate token.', 'collabora-online-wp' ),
+			__( 'JWT key secret to generate token:', 'collabora-online-wp' ),
 			array( $this, 'setting_text' ),
 			'cool_options_group',
 			'cool_options_section',

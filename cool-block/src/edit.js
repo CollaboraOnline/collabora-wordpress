@@ -52,16 +52,16 @@ function requestDocument( callback ) {
  */
 export default function Edit( { attributes, setAttributes } ) {
 	const { id, filename, mode } = attributes;
-	let action = wp.i18n.__( 'View' );
-	if ( mode === 'edit' ) {
-		action = wp.i18n.__( 'Edit' );
-	}
-
 	let content;
 	if ( typeof filename === 'undefined' ) {
 		content = wp.i18n.__( 'Please select a document.' );
 	} else {
-		content = `${ action } document "${ filename }".`;
+		let action = wp.i18n.__( 'View document' );
+		if ( mode === 'edit' ) {
+			action = wp.i18n.__( 'Edit document' );
+		}
+
+		content = `${ action } "${ filename }".`;
 	}
 
 	return (
