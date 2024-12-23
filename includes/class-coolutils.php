@@ -60,9 +60,9 @@ class CoolUtils {
 	 * Create a JWT token for the Media with id $id, a $ttl, and an
 	 * eventual write permission.
 	 *
-	 * @param int  $id The ID of the file.
-	 * @param int  $ttl The TTL of the token in seconds.
-	 * @param bool $want_write Can write the file.
+	 * @param int    $id The ID of the file.
+	 * @param int    $ttl The TTL of the token in seconds.
+	 * @param string $mode The opening mode.
 	 *
 	 * The token will carry the following:
 	 *
@@ -71,13 +71,29 @@ class CoolUtils {
 	 *   whenever.
 	 * - exp: the expiration time of the token.
 	 * - wri: if true, then this token has write permissions.
+	 * - cmt: if true, then this is a comment permission. Requires wri = true.
 	 */
-	public static function token_for_file_id( int $id, int $ttl, $want_write = false ) {
+	public static function token_for_file_id( int $id, int $ttl, $mode = 'view' ) {
+		$wri = false;
+		$cmt = false;
+		switch ( $mode ) {
+			case 'edit':
+				$wri = true;
+				break;
+			case 'review':
+				$wri = true;
+				$cmt = true;
+				break;
+			case 'view':
+			default:
+				break;
+		}
 		$payload = array(
 			'fid' => $id,
 			'uid' => get_current_user_id(),
 			'exp' => $ttl,
-			'wri' => $want_write,
+			'wri' => $wri,
+			'cmt' => $cmt,
 		);
 		$key     = static::get_key();
 		$jwt     = JWT::encode( $payload, $key, 'HS256' );
@@ -89,15 +105,13 @@ class CoolUtils {
 	 * Get the editor URL for the post with $id
 	 *
 	 * @param integer $id The ID of the post the file is attached to.
-	 * @param bool    $want_write Want a write permission. Use permission will override this.
+	 * @param string  $mode The mode to open the file.
 	 */
-	public static function get_editor_url( $id, bool $want_write ) {
-		$query = array(
+	public static function get_editor_url( $id, string $mode ) {
+		$query         = array(
 			'id' => $id,
 		);
-		if ( $want_write ) {
-			$query['write'] = 'true';
-		}
+		$query['mode'] = $mode;
 		return plugins_url( 'cool.php', COOL_PLUGIN_FILE ) . '?' . http_build_query( $query );
 	}
 }
