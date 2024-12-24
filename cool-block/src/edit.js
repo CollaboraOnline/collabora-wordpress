@@ -95,6 +95,10 @@ export default function Edit( { attributes, setAttributes } ) {
 								label: __( 'View', 'collabora-online-wp' ),
 							},
 							{
+								value: 'review',
+								label: __( 'Review', 'collabora-online-wp' ),
+							},
+							{
 								value: 'edit',
 								label: __( 'Edit', 'collabora-online-wp' ),
 							},

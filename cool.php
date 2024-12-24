@@ -28,9 +28,9 @@ if ( ! isset( $_GET['id'] ) ) {
 	die( 'No id passed' );
 }
 
-$want_write = false;
-if ( isset( $_GET['write'] ) ) {
-	$want_write = 'true' === $_GET['write'];
+$cool_mode = 'view';
+if ( isset( $_GET['mode'] ) ) {
+	$cool_mode = sanitize_key( wp_unslash( $_GET['mode'] ) );
 }
 
 $file_id = absint( wp_unslash( $_GET['id'] ) );
@@ -44,7 +44,7 @@ load_template(
 	__DIR__ . '/templates/frame.php',
 	true,
 	array(
-		'frame'    => CollaboraFrontend::get_view_render( $file_id, $want_write, array( 'closebutton' => 'true' ) ),
+		'frame'    => CollaboraFrontend::get_view_render( $file_id, $cool_mode, array( 'closebutton' => 'true' ) ),
 		'base_url' => $base_url,
 	)
 );
