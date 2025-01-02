@@ -22,9 +22,11 @@ $args = wp_parse_args(
 	$args,
 	array(
 		'base_url' => '',
-		'frame'    => '',
+		'frame'    => array(),
 	)
 );
+
+$params = $args['frame'];
 
 ?>
 <!DOCTYPE html>
@@ -39,12 +41,28 @@ $args = wp_parse_args(
 <?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
 </head>
 <body class="cool-editor__body">
-	<?php
-	// 'frame' is a template parameter. And where we call the template, it's content has
-	// been sanitized.
-	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo $args['frame'];
-	// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
-	?>
+
+<div class="cool-frame">
+	<div style="display: none">
+	<form action="" enctype="multipart/form-data" method="post" target="collabora-online-viewer" id="collabora-submit-form">
+		<input name="access_token" value="<?php echo esc_attr( $params['accessToken'] ); ?>" type="hidden" />
+		<input name="access_token_ttl" value="<?php echo esc_attr( $params['accessTokenTtl'] ); ?>" type="hidden" />
+		<input type="submit" value="" />
+	</form>
+	</div>
+
+	<iframe id="collabora-online-viewer" name="collabora-online-viewer" class="cool-frame__iframe" style="<?php echo esc_attr( $params['iFrameStyle'] ); ?>" allow="clipboard-read *; clipboard-write *">
+	</iframe>
+	<script type="text/ecmascript">
+
+	let closebutton = '<?php echo 'true' === $params['closebutton'] ? 'true' : 'false'; ?>';
+	let options = null;
+	if (closebutton == 'true') {
+		options = { closebutton: true };
+	}
+	loadDocument('<?php echo esc_url( $params['wopiClient'] ); ?>', '<?php echo esc_attr( $params['wopiSrc'] ); ?>', options);
+	</script>
+</div>
+
 </body>
 </html>

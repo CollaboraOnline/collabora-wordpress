@@ -189,52 +189,13 @@ class CollaboraFrontend {
 	}
 
 	/**
-	 * Output the COOL frame
-	 *
-	 * @param array $params Parameters for the frame.
-	 *
-	 * @return string Markup to display.
-	 */
-	public static function cool_frame( array $params ) {
-		wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-js', plugins_url( 'public/js/cool.js', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
-
-		$closebutton = 'true' === $params['closebutton'] ? 'true' : 'false';
-		$wopi_src    = $params['wopiSrc'];
-		$wopi_client = $params['wopiClient'];
-
-		return '
-<div class="cool-frame">
-  <div style="display: none">
-    <form action="" enctype="multipart/form-data" method="post" target="collabora-online-viewer" id="collabora-submit-form">
-      <input name="access_token" value="' . esc_attr( $params['accessToken'] ) . '" type="hidden" />
-      <input name="access_token_ttl" value="' . esc_attr( $params['accessTokenTtl'] ) . '" type="hidden" />
-      <input type="submit" value="" />
-    </form>
-  </div>
-
-  <iframe id="collabora-online-viewer" name="collabora-online-viewer" class="cool-frame__iframe" style="' . esc_attr( $params['iFrameStyle'] ) . '" allow="clipboard-read *; clipboard-write *">
-  </iframe>
-  <script type="text/ecmascript">' .
-
-		" let closebutton = '$closebutton';
-    let options = null;
-    if (closebutton == 'true') {
-        options = { closebutton: true };
-    }
-    loadDocument('" . esc_url( $wopi_client ) . "', '" . esc_attr( $wopi_src ) . "', options);" .
-
-		'  </script>
-</div>';
-	}
-
-	/**
 	 * Output the a view for a COOL frame
 	 *
 	 * @param int        $id The document id.
 	 * @param bool       $want_write Whether we want write permission (editor vs view).
 	 * @param null|array $options COOL frame options.
 	 *
-	 * @return string Markup to display.
+	 * @return null|array Properties of the markup.
 	 */
 	public static function get_view_render( int $id, bool $want_write, $options = null ) {
 		require_once COOL_PLUGIN_DIR . 'includes/class-coolrequest.php';
@@ -244,10 +205,7 @@ class CollaboraFrontend {
 		$req         = new CoolRequest();
 		$wopi_client = $req->get_wopi_client_url();
 		if ( null === $wopi_client ) {
-			return '<p>' .
-				__( 'The Collabora Online server is not available: ', 'collabora-online' ) .
-				esc_html( $req->error_string() ) .
-				'</p>';
+			return null;
 		}
 
 		$ttl = 0;
@@ -265,15 +223,13 @@ class CollaboraFrontend {
 			}
 		}
 
-		return self::cool_frame(
-			array(
-				'wopiClient'     => $wopi_client,
-				'wopiSrc'        => rawurlencode( $wopi_base . '/wp-json/' . CollaboraWopi::COLLABORA_ROUTE_NS . '/wopi/files/' . $id ),
-				'accessToken'    => $access_token,
-				'accessTokenTtl' => $ttl * 1000, // It's in usec. The JWT is in sec.
-				'closebutton'    => $closebutton,
-				'iFrameStyle'    => '',
-			)
+		return array(
+			'wopiClient'     => $wopi_client,
+			'wopiSrc'        => rawurlencode( $wopi_base . '/wp-json/' . CollaboraWopi::COLLABORA_ROUTE_NS . '/wopi/files/' . $id ),
+			'accessToken'    => $access_token,
+			'accessTokenTtl' => $ttl * 1000, // It's in usec. The JWT is in sec.
+			'closebutton'    => $closebutton,
+			'iFrameStyle'    => '',
 		);
 	}
 }

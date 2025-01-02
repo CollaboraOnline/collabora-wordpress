@@ -40,11 +40,21 @@ require_once __DIR__ . '/includes/class-collaborafrontend.php';
 
 $base_url = plugins_url( '', COOL_PLUGIN_FILE );
 
+$frame = CollaboraFrontend::get_view_render( $file_id, $want_write, array( 'closebutton' => 'true' ) );
+
+if ( null === $frame ) {
+	die(
+		'<p>' .
+		esc_html( __( 'The Collabora Online server is not available: ', 'collabora-online' ) ) .
+		'</p>'
+	);
+}
+
 load_template(
 	__DIR__ . '/templates/frame.php',
 	true,
 	array(
-		'frame'    => CollaboraFrontend::get_view_render( $file_id, $want_write, array( 'closebutton' => 'true' ) ),
+		'frame'    => $frame,
 		'base_url' => $base_url,
 	)
 );
