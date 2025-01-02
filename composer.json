@@ -28,7 +28,7 @@
     },
     "scripts": {
         "build": "cd cool-block && npm run build",
-        "pot": "./vendor/bin/wp i18n make-pot . languages/collabora-online-wp.pot",
+        "pot": "./vendor/bin/wp i18n make-pot . languages/collabora-online.pot",
         "i18n": [
             "./vendor/bin/wp i18n make-mo languages",
             "./vendor/bin/wp i18n make-json languages --no-purge"

@@ -4,7 +4,7 @@
  * Description:       Add document collaboration with Collabora Online.
  * Author:            Collabora Online contributors.
  * License:           MPL-2.0
- * Text Domain:       collabora-online-wp
+ * Text Domain:       collabora-online
  *
  * @package CreateBlock
  */

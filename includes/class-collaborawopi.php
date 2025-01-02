@@ -277,7 +277,7 @@ class CollaboraWopi {
 		register_post_type(
 			self::REV_POST_TYPE,
 			array(
-				'label'            => __( 'Revisions', 'collabora-online-wp' ),
+				'label'            => __( 'Revisions', 'collabora-online' ),
 				'public'           => false,
 				'hierarchical'     => false,
 				'rewrite'          => false,

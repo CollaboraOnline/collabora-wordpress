@@ -27,7 +27,7 @@
 			"type": "string"
 		}
 	},
-	"textdomain": "collabora-online-wp",
+	"textdomain": "collabora-online",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",

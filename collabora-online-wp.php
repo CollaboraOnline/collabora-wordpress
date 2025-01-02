@@ -14,6 +14,7 @@
  * Version: 0.9.1
  * License: MPL-2.0
  * License URI: https://www.mozilla.org/en-US/MPL/2.0/
+ * Text Domain:       collabora-online
  *
  * Spdx-License: MPL-2.0
  *
