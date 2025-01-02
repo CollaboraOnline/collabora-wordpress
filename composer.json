@@ -33,7 +33,7 @@
             "./vendor/bin/wp i18n make-mo languages",
             "./vendor/bin/wp i18n make-json languages --no-purge"
         ],
-        "lint:php": "@php ./vendor/bin/phpcs --standard=WordPress includes/ cool.php templates/frame.php cool-block/src/render.php",
+        "lint:php": "@php ./vendor/bin/phpcs --standard=WordPress includes/ cool.php templates/ cool-block/src/render.php",
         "lint:js": "cd cool-block && npm run lint:js",
         "plugin-zip": "npx wp-scripts plugin-zip"
     }

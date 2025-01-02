@@ -92,55 +92,100 @@ class CollaboraFrontend {
 	}
 
 	/**
-	 * Get the button markup
+	 * Get the button properties
 	 *
 	 * @param string $id The post id of the document.
 	 * @param string $mode The mode.
+	 *
+	 * @return array The properties.
 	 */
-	public static function get_button_markup( string $id, string $mode ) {
+	public static function get_button_properties( string $id, string $mode ) {
+		$want_write = false;
+		$authorized = false;
+		$message    = null;
+		$label      = null;
+		$attachment = null;
 		switch ( $mode ) {
 			case 'view':
 				if ( current_user_can( 'read_post', $id ) ) {
-					return self::get_button( $id, false );
+					$authorized = true;
+					$want_write = false;
 				}
 				break;
 			case 'edit':
 				if ( current_user_can( 'edit_post', $id ) ) {
-					return self::get_button( $id, true );
+					$authorized = true;
+					$want_write = true;
 				}
 				break;
 			default:
 				// translators: %s is the mode.
 				$message = sprintf( __( 'Invalid mode: %s', 'collabora-online' ), $mode );
-				return '<p>' . esc_html( $message ) . '</p>';
 		}
-		return '<p>' . esc_html( __( 'You don\'t have permission to view the attached file.', 'collabora-online' ) ) . '</p>';
+		if ( $authorized ) {
+			$filename = get_attached_file( $id );
+			$name     = pathinfo( $filename, PATHINFO_BASENAME );
+			// translators: %s is the file name.
+			$attachment = sprintf( __( 'Attachment "%s"', 'collabora-online' ), $name );
+
+			if ( true === $want_write ) {
+				$label = __( 'Edit', 'collabora-online' );
+			} else {
+				$label = __( 'View', 'collabora-online' );
+			}
+		}
+		return array(
+			'want_write' => $want_write,
+			'message'    => $message,
+			'authorized' => $authorized,
+			'label'      => $label,
+			'attachment' => $attachment,
+		);
+	}
+
+	/**
+	 * Get the button markup
+	 *
+	 * @param string $id The post id of the document.
+	 * @param string $mode The mode.
+	 *
+	 * @return string Button markup to display.
+	 */
+	public static function get_button_markup( string $id, string $mode ) {
+		$props = self::get_button_properties( $id, $mode );
+		if ( null !== $props['message'] ) {
+			return '<p>' . esc_html( $message ) . '</p>';
+		}
+		if ( ! $props['authorized'] ) {
+			return sprintf(
+				'<p>%s</p>',
+				esc_html( __( 'You don\'t have permission to view the attached file.', 'collabora-online' ) )
+			);
+		}
+		return self::get_button( $id, $props );
 	}
 
 	/**
 	 * Output the button for the short code button mode
 	 *
 	 * @param string $id The post id of the document.
-	 * @param bool   $want_write Whether the user want to write the file.
+	 * @param array  $props The properties.
+	 *
+	 * @return string Button markup to display.
 	 */
-	private static function get_button( string $id, bool $want_write ) {
+	private static function get_button( string $id, array $props ) {
 		wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'public/js/previewer.js', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
 
-		$filename = get_attached_file( $id );
-		$name     = pathinfo( $filename, PATHINFO_BASENAME );
-		if ( true === $want_write ) {
-			$label = __( 'Edit', 'collabora-online' );
-		} else {
-			$label = __( 'View', 'collabora-online' );
-		}
-		// translators: %s is the name of the attachment.
-		$attachment = sprintf( __( 'Attachment "%s"', 'collabora-online' ), $name );
-		// XXX localize.
-		return '<p>' . esc_html( $attachment ) . ' <button onclick="previewField(\'' .
-			esc_url( CoolUtils::get_editor_url( $id, $want_write ) ) . '\');">' . $label . '</button></p>' .
+		return sprintf(
+			'<p>%s <button onclick="previewField(\'%s\');">%s</button></p>' .
 			'<dialog id="cool-editor__dialog" class="cool-editor__dialog alignfull">' .
 			'<iframe class="cool-frame__preview"></iframe>' .
-			'</dialog>';
+				'</dialog>',
+			// translators: %s is the name of the attachment.
+			esc_html( $props['attachment'] ),
+			esc_url( CoolUtils::get_editor_url( $id, $props['want_write'] ) ),
+			esc_html( $props['label'] )
+		);
 	}
 
 	/**
