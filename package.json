@@ -1,9 +1,10 @@
 {
 	"name": "collabora-online-wp",
-	"version": "0.1.0",
+	"version": "0.9.2",
 	"description": "Add document collaboration with Collabora Online.",
 	"author": "Collabora Online contributors",
 	"license": "MPL-2.0",
+	"textdomain": "collabora-online",
 	"files": [
 		"admin",
 		"collabora-online-wp.php",

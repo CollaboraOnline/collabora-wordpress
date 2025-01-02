@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Collabora Online WP 0.9.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/collabora-online-"
 "wp\n"
-"POT-Creation-Date: 2024-12-18T21:05:14+00:00\n"
-"PO-Revision-Date: 2024-12-18 16:06-0500\n"
+"POT-Creation-Date: 2025-01-02T20:45:12+00:00\n"
+"PO-Revision-Date: 2025-01-02 15:45-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -36,88 +36,88 @@ msgstr ""
 "visualiser de manière collaborative des documents bureautique directement "
 "depuis WordPress™ dans Collabora Online."
 
-#: includes/class-collaboraadmin.php:67
+#: cool.php:48
+msgid "The Collabora Online server is not available: "
+msgstr "Le serveur Collabora Online n'est pas disponible: "
+
+#: includes/class-collaboraadmin.php:71
 msgid "Collabora Online Settings"
 msgstr "Préférences de Collabora Online"
 
-#: includes/class-collaboraadmin.php:68
+#: includes/class-collaboraadmin.php:72
 msgid "Collabora Online"
 msgstr "Collabora Online"
 
-#: includes/class-collaboraadmin.php:109
+#: includes/class-collaboraadmin.php:113
 msgid "Configure where to find the Collabora Online server."
 msgstr "Configurer où trouver le serveur Collabora Online."
 
-#: includes/class-collaboraadmin.php:123
+#: includes/class-collaboraadmin.php:127
 msgid ""
 "Disable the certificate check when connecting to the Collabora Online server"
 msgstr ""
 "Désactiver la validation du certificat lors de la connexion au serveur "
 "Collabora Online"
 
-#: includes/class-collaboraadmin.php:131
+#: includes/class-collaboraadmin.php:135
 msgid "The token TTL in seconds"
 msgstr "Le durée de vie du jeton en secondes"
 
-#: includes/class-collaboraadmin.php:139
+#: includes/class-collaboraadmin.php:143
 msgid "JWT secret key to generate tokens"
 msgstr "Clé secrète pour générer les jetons JWT"
 
-#: includes/class-collaboraadmin.php:151
+#: includes/class-collaboraadmin.php:155
 msgid "Collabora Online server URL:"
 msgstr "URL du serveur Collabora Online:"
 
-#: includes/class-collaboraadmin.php:162
+#: includes/class-collaboraadmin.php:167
 msgid "WOPI host URL:"
 msgstr "URL de l'hôte WOPI:"
 
-#: includes/class-collaboraadmin.php:173
+#: includes/class-collaboraadmin.php:179
 msgid "Disable TLS certificate check for COOL (development only):"
 msgstr ""
 "Désactiver la validation du certificat TLS for COOL (uniquement pour le "
 "développement):"
 
-#: includes/class-collaboraadmin.php:184
+#: includes/class-collaboraadmin.php:190
 msgid "Token TTL in seconds:"
 msgstr "Durée de vie du jeton en secondes:"
 
-#: includes/class-collaboraadmin.php:195
+#: includes/class-collaboraadmin.php:201
 msgid "JWT key secret to generate token:"
 msgstr "Clé secrète pour générer les jetons JWT:"
 
-#: includes/class-collaborafrontend.php:80
+#: includes/class-collaborafrontend.php:84
 msgid "Error: file id is missing"
 msgstr "Erreur: l'identifiant du fichier est absent"
 
 #. translators: %s is the mode.
-#: includes/class-collaborafrontend.php:110
+#: includes/class-collaborafrontend.php:123
 msgid "Invalid mode: %s"
 msgstr "Mode invalide: %s"
 
-#: includes/class-collaborafrontend.php:113
-msgid "You don't have permission to view the attached file."
-msgstr "Vous n'avez pas la permission de voir le fichier attaché."
+#. translators: %s is the file name.
+#: includes/class-collaborafrontend.php:129
+msgid "Attachment \"%s\""
+msgstr "Attachement \"%s\""
 
-#: includes/class-collaborafrontend.php:128 cool-block/build/index.js:1
+#: includes/class-collaborafrontend.php:132 cool-block/build/index.js:1
 #: cool-block/src/edit.js:99
 msgid "Edit"
 msgstr "Éditer"
 
-#: includes/class-collaborafrontend.php:130 cool-block/build/index.js:1
+#: includes/class-collaborafrontend.php:134 cool-block/build/index.js:1
 #: cool-block/src/edit.js:95
 msgid "View"
 msgstr "Visualiser"
 
-#. translators: %s is the name of the attachment.
-#: includes/class-collaborafrontend.php:133
-msgid "Attachment \"%s\""
-msgstr "Attachement \"%s\""
+#: includes/class-collaborafrontend.php:162
+msgid "You don't have permission to view the attached file."
+msgstr "Vous n'avez pas la permission de voir le fichier attaché."
 
-#: includes/class-collaborafrontend.php:199
-msgid "The Collabora Online server is not available: "
-msgstr "Le serveur Collabora Online n'est pas disponible: "
-
-#: includes/class-collaborawopi.php:280
+#: includes/class-collaborawopi.php:284
 msgid "Revisions"
 msgstr "Révisions"
 
