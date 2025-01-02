@@ -43,8 +43,8 @@ require_once COOL_PLUGIN_DIR . 'includes/class-collabora.php';
 /**
  * Run the plugin
  */
-function run_collabora() {
+function collabora_run() {
 	$plugin = new Collabora();
 }
 
-run_collabora();
+collabora_run();

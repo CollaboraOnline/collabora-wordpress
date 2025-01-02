@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function create_block_cool_block_block_init() {
+function collabora_create_cool_block_init() {
 	register_block_type( __DIR__ . '/build' );
 }
-add_action( 'init', 'create_block_cool_block_block_init' );
+add_action( 'init', 'collabora_create_cool_block_init' );
