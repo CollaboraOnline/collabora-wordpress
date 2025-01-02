@@ -14,6 +14,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /** Handle the request to COOL */
 class CoolRequest {
 

@@ -12,6 +12,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 require_once COOL_PLUGIN_DIR . 'vendor/firebase/php-jwt/src/JWT.php';
 require_once COOL_PLUGIN_DIR . 'vendor/firebase/php-jwt/src/Key.php';
 

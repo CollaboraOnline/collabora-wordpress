@@ -12,6 +12,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /** The main plugin */
 class Collabora {
 	/**

@@ -4,9 +4,6 @@
  * @package collabora-online-wp
  */
 
-/* Block. This will register the block automatically. */
-require_once COOL_PLUGIN_DIR . 'cool-block/cool-block.php';
-
 /**
  * Spdx-License: MPL-2.0
  *
@@ -14,6 +11,13 @@ require_once COOL_PLUGIN_DIR . 'cool-block/cool-block.php';
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+/* Block. This will register the block automatically. */
+require_once COOL_PLUGIN_DIR . 'cool-block/cool-block.php';
 
 /** The Collabora frontend */
 class CollaboraFrontend {

@@ -14,6 +14,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 $args = wp_parse_args(
 	$args,
 	array(
