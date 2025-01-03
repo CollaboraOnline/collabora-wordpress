@@ -14,15 +14,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-if ( ! empty( $_SERVER['SCRIPT_FILENAME'] ) ) {
-	$my_path = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );  // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
-	if ( empty( $my_path[0] ) ) {
-		die( 'URL error' );
-	}
-	require_once $my_path[0] . 'wp-load.php';
-} else {
-	die( 'Can\'t load WordPress.' );
-}
+// This is assume the standard plugin installation on WordPress.
+// This file is in `wp-content/plugins/collabora-online-wp`.
+require_once __DIR__ . '/../../../wp-load.php';
 
 if ( ! isset( $_GET['id'] ) ) {
 	die( 'No id passed' );
