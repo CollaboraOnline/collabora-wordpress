@@ -114,33 +114,81 @@ class CollaboraAdmin {
 	}
 
 	/**
+	 * Validate the TTL (must be integer) and if it is invalid return the previous value.
+	 *
+	 * @param string $value The TTL setting value to sanitize.
+	 */
+	public function sanitize_ttl( string $value ) {
+		if ( ! is_numeric( $value ) ) {
+			return get_option( self::COOL_TOKEN_TTL, 86400 );
+		}
+		return strval( intval( $value ) );
+	}
+
+	/**
+	 * Sanitize bool setting value. Will return null (false) if invalid.
+	 *
+	 * @param string|null $value The value.
+	 */
+	public function sanitize_bool( $value ) {
+		if ( is_null( $value ) || '1' === $value ) {
+			return $value;
+		}
+		return null;
+	}
+
+	/**
+	 * "Sanitize" tje JWT key. i.e. pass through
+	 *
+	 * @param string $value The value.
+	 */
+	public function sanitize_jwt_key( string $value ) {
+		return $value;
+	}
+
+	/**
 	 * Initialise the admin page.
 	 */
 	public function admin_init() {
-		register_setting( 'cool_options_group', self::COOL_SERVER_OPTION );
-		register_setting( 'cool_options_group', self::COOL_WOPI_BASE );
+		register_setting(
+			'cool_options_group',
+			self::COOL_SERVER_OPTION,
+			array(
+				'sanitize_callback' => 'sanitize_url',
+			)
+		);
+		register_setting(
+			'cool_options_group',
+			self::COOL_WOPI_BASE,
+			array(
+				'sanitize_callback' => 'sanitize_url',
+			)
+		);
 		register_setting(
 			'cool_options_group',
 			self::COOL_DISABLE_CERT_CHECK,
 			array(
-				'type'        => 'boolean',
-				'description' => __( 'Disable the certificate check when connecting to the Collabora Online server', 'collabora-online' ),
+				'type'              => 'boolean',
+				'description'       => __( 'Disable the certificate check when connecting to the Collabora Online server', 'collabora-online' ),
+				'sanitize_callback' => array( $this, 'sanitize_bool' ),
 			)
 		);
 		register_setting(
 			'cool_options_group',
 			self::COOL_TOKEN_TTL,
 			array(
-				'type'        => 'integer',
-				'description' => __( 'The token TTL in seconds', 'collabora-online' ),
-				'default'     => 86400,
+				'type'              => 'integer',
+				'description'       => __( 'The token TTL in seconds', 'collabora-online' ),
+				'default'           => 86400,
+				'sanitize_callback' => array( $this, 'sanitize_ttl' ),
 			)
 		);
 		register_setting(
 			'cool_options_group',
 			self::COOL_JWT_KEY,
 			array(
-				'description' => __( 'JWT secret key to generate tokens', 'collabora-online' ),
+				'description'       => __( 'JWT secret key to generate tokens', 'collabora-online' ),
+				'sanitize_callback' => array( $this, 'sanitize_jwt_key' ),
 			)
 		);
 
