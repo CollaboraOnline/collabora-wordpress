@@ -43,8 +43,8 @@ class CollaboraAdmin {
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 		<form method="post" action="options.php">
 		<?php
-			settings_fields( 'cool_options_group' );
-			do_settings_sections( 'cool_options_group' );
+			settings_fields( 'collabora_options_group' );
+			do_settings_sections( 'collabora_options_group' );
 			submit_button();
 		?>
 		</form>
@@ -71,7 +71,7 @@ class CollaboraAdmin {
 			__( 'Collabora Online Settings', 'collabora-online' ),
 			__( 'Collabora Online', 'collabora-online' ),
 			'manage_options',
-			'cool_options',
+			'collabora_options',
 			array( $this, 'option_page_html' )
 		);
 
@@ -151,21 +151,21 @@ class CollaboraAdmin {
 	 */
 	public function admin_init() {
 		register_setting(
-			'cool_options_group',
+			'collabora_options_group',
 			self::COLLABORA_SERVER_OPTION,
 			array(
 				'sanitize_callback' => 'sanitize_url',
 			)
 		);
 		register_setting(
-			'cool_options_group',
+			'collabora_options_group',
 			self::COLLABORA_WOPI_BASE,
 			array(
 				'sanitize_callback' => 'sanitize_url',
 			)
 		);
 		register_setting(
-			'cool_options_group',
+			'collabora_options_group',
 			self::COLLABORA_DISABLE_CERT_CHECK,
 			array(
 				'type'              => 'boolean',
@@ -174,7 +174,7 @@ class CollaboraAdmin {
 			)
 		);
 		register_setting(
-			'cool_options_group',
+			'collabora_options_group',
 			self::COLLABORA_TOKEN_TTL,
 			array(
 				'type'              => 'integer',
@@ -184,7 +184,7 @@ class CollaboraAdmin {
 			)
 		);
 		register_setting(
-			'cool_options_group',
+			'collabora_options_group',
 			self::COLLABORA_JWT_KEY,
 			array(
 				'description'       => __( 'JWT secret key to generate tokens', 'collabora-online' ),
@@ -193,17 +193,17 @@ class CollaboraAdmin {
 		);
 
 		add_settings_section(
-			'cool_options_section',
+			'collabora_options_section',
 			'',
 			array( $this, 'section_callback' ),
-			'cool_options_group',
+			'collabora_options_group',
 		);
 		add_settings_field(
 			self::COLLABORA_SERVER_OPTION,
 			__( 'Collabora Online server URL:', 'collabora-online' ),
 			array( $this, 'setting_text' ),
-			'cool_options_group',
-			'cool_options_section',
+			'collabora_options_group',
+			'collabora_options_section',
 			array(
 				'id'    => self::COLLABORA_SERVER_OPTION,
 				'value' => get_option( self::COLLABORA_SERVER_OPTION, 'https://localhost:9980' ),
@@ -213,8 +213,8 @@ class CollaboraAdmin {
 			self::COLLABORA_WOPI_BASE,
 			__( 'WOPI host URL:', 'collabora-online' ),
 			array( $this, 'setting_text' ),
-			'cool_options_group',
-			'cool_options_section',
+			'collabora_options_group',
+			'collabora_options_section',
 			array(
 				'id'    => self::COLLABORA_WOPI_BASE,
 				'value' => get_option( self::COLLABORA_WOPI_BASE, 'https://localhost' ),
@@ -224,8 +224,8 @@ class CollaboraAdmin {
 			self::COLLABORA_DISABLE_CERT_CHECK,
 			__( 'Disable TLS certificate check for COOL (development only):', 'collabora-online' ),
 			array( $this, 'setting_bool' ),
-			'cool_options_group',
-			'cool_options_section',
+			'collabora_options_group',
+			'collabora_options_section',
 			array(
 				'id'    => self::COLLABORA_DISABLE_CERT_CHECK,
 				'value' => get_option( self::COLLABORA_DISABLE_CERT_CHECK, false ),
@@ -235,8 +235,8 @@ class CollaboraAdmin {
 			self::COLLABORA_TOKEN_TTL,
 			__( 'Token TTL in seconds:', 'collabora-online' ),
 			array( $this, 'setting_text' ),
-			'cool_options_group',
-			'cool_options_section',
+			'collabora_options_group',
+			'collabora_options_section',
 			array(
 				'id'    => self::COLLABORA_TOKEN_TTL,
 				'value' => get_option( self::COLLABORA_TOKEN_TTL, 86400 ),
@@ -246,8 +246,8 @@ class CollaboraAdmin {
 			self::COLLABORA_JWT_KEY,
 			__( 'JWT key secret to generate token:', 'collabora-online' ),
 			array( $this, 'setting_text' ),
-			'cool_options_group',
-			'cool_options_section',
+			'collabora_options_group',
+			'collabora_options_section',
 			array(
 				'id'    => self::COLLABORA_JWT_KEY,
 				'value' => get_option( self::COLLABORA_JWT_KEY, '' ),
