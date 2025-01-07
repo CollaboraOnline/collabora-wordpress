@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-require_once COLLABORA_PLUGIN_DIR . 'includes/class-coolutils.php';
+require_once COLLABORA_PLUGIN_DIR . 'includes/class-collaborautils.php';
 
 /** Class to handle WOPI. */
 class CollaboraWopi {
@@ -131,7 +131,7 @@ class CollaboraWopi {
 	 * the WP_REST_Response.
 	 */
 	private static function auth( string $token, int $id ) {
-		$jwt_payload = CoolUtils::verify_token_for_id( $token, $id );
+		$jwt_payload = CollaboraUtils::verify_token_for_id( $token, $id );
 		if ( null === $jwt_payload ) {
 			return array(
 				'error'    => true,

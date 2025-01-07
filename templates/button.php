@@ -33,7 +33,7 @@ wp_enqueue_script( COLLABORA_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'p
 
 <p>
 	<?php echo esc_html( $args['attachment'] ); ?>
-	<button onclick="previewField('<?php echo esc_url( CoolUtils::get_editor_url( $args['id'], $args['want_write'] ) ); ?>');">
+	<button onclick="previewField('<?php echo esc_url( CollaboraUtils::get_editor_url( $args['id'], $args['want_write'] ) ); ?>');">
 	<?php echo esc_html( $args['label'] ); ?>
 
 	</button>

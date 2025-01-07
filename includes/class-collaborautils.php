@@ -23,7 +23,7 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 /** Some COOL utilities */
-class CoolUtils {
+class CollaboraUtils {
 	/** Obtain the signing key */
 	private static function get_key() {
 		$key = get_option( CollaboraAdmin::COLLABORA_JWT_KEY );

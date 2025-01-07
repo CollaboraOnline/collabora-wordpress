@@ -183,7 +183,7 @@ class CollaboraFrontend {
 				'</dialog>',
 			// translators: %s is the name of the attachment.
 			esc_html( $props['attachment'] ),
-			esc_url( CoolUtils::get_editor_url( $id, $props['want_write'] ) ),
+			esc_url( CollaboraUtils::get_editor_url( $id, $props['want_write'] ) ),
 			esc_html( $props['label'] )
 		);
 	}
@@ -198,11 +198,11 @@ class CollaboraFrontend {
 	 * @return null|array Properties of the markup.
 	 */
 	public static function get_view_render( int $id, bool $want_write, $options = null ) {
-		require_once COLLABORA_PLUGIN_DIR . 'includes/class-coolrequest.php';
+		require_once COLLABORA_PLUGIN_DIR . 'includes/class-collaborarequest.php';
 
 		$wopi_base = get_option( CollaboraAdmin::COLLABORA_WOPI_BASE );
 
-		$req         = new CoolRequest();
+		$req         = new CollaboraRequest();
 		$wopi_client = $req->get_wopi_client_url();
 		if ( null === $wopi_client ) {
 			return null;
@@ -214,7 +214,7 @@ class CollaboraFrontend {
 		}
 		$ttl += gettimeofday( true );
 
-		$access_token = CoolUtils::token_for_file_id( $id, (int) $ttl, $want_write );
+		$access_token = CollaboraUtils::token_for_file_id( $id, (int) $ttl, $want_write );
 		$closebutton  = 'false';
 
 		if ( $options ) {

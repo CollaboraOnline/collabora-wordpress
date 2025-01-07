@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /** Handle the request to COOL */
-class CoolRequest {
+class CollaboraRequest {
 
 	/**
 	 * The error code
@@ -47,7 +47,7 @@ class CoolRequest {
 	private $wopi_src;
 
 	/**
-	 * Constructor a new CoolRequest
+	 * Constructor a new CollaboraRequest
 	 *
 	 * @constructor
 	 */
