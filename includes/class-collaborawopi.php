@@ -22,8 +22,8 @@ require_once COLLABORA_PLUGIN_DIR . 'includes/class-collaborautils.php';
 
 /** Class to handle WOPI. */
 class CollaboraWopi {
-	const COLLABORA_ROUTE_NS = 'cool';
-	const REV_POST_TYPE      = 'cool_revision';
+	const COLLABORA_ROUTE_NS = 'collabora';
+	const REV_POST_TYPE      = 'collabora_revision';
 
 	/**
 	 * Init hook. Will register the post type for revision.
@@ -293,7 +293,7 @@ class CollaboraWopi {
 		);
 		register_post_meta(
 			self::REV_POST_TYPE,
-			'cool_rev_timestamp',
+			'collabora_rev_timestamp',
 			array(
 				'type'              => 'string',
 				'single'            => true,
@@ -334,7 +334,7 @@ class CollaboraWopi {
 		}
 
 		add_post_meta( $post_id, '_wp_attached_file', $revision_path, true );
-		add_post_meta( $post_id, 'cool_rev_timestamp', (string) $timestamp );
+		add_post_meta( $post_id, 'collabora_rev_timestamp', (string) $timestamp );
 
 		return true;
 	}
