@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-require_once COOL_PLUGIN_DIR . 'includes/class-coolutils.php';
+require_once COLLABORA_PLUGIN_DIR . 'includes/class-coolutils.php';
 
 /** Class to handle WOPI. */
 class CollaboraWopi {

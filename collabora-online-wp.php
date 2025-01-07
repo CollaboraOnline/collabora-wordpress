@@ -28,17 +28,17 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'COOL_PLUGIN_NAME', 'collabora-online-wp' );
-define( 'COOL_PLUGIN_VERSION', '0.9.3' );
-define( 'COOL_PLUGIN_VERSION_NUM', 93 );
-define( 'COOL_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-define( 'COOL_PLUGIN_FILE', plugin_dir_path( __FILE__ ) . '/' . basename( __FILE__ ) );
+define( 'COLLABORA_PLUGIN_NAME', 'collabora-online-wp' );
+define( 'COLLABORA_PLUGIN_VERSION', '0.9.3' );
+define( 'COLLABORA_PLUGIN_VERSION_NUM', 93 );
+define( 'COLLABORA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'COLLABORA_PLUGIN_FILE', plugin_dir_path( __FILE__ ) . '/' . basename( __FILE__ ) );
 
 register_activation_hook( __FILE__, array( 'Collabora', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'Collabora', 'plugin_deactivation' ) );
 register_uninstall_hook( __FILE__, array( 'Collabora', 'plugin_uninstall' ) );
 
-require_once COOL_PLUGIN_DIR . 'includes/class-collabora.php';
+require_once COLLABORA_PLUGIN_DIR . 'includes/class-collabora.php';
 
 /**
  * Run the plugin

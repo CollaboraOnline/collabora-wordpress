@@ -54,8 +54,8 @@ class Collabora {
 	 * Plugin constructor
 	 */
 	public function __construct() {
-		$this->version     = COOL_PLUGIN_VERSION;
-		$this->plugin_name = COOL_PLUGIN_NAME;
+		$this->version     = COLLABORA_PLUGIN_VERSION;
+		$this->plugin_name = COLLABORA_PLUGIN_NAME;
 		$this->load_deps();
 		$this->init_plugin();
 	}
@@ -83,9 +83,9 @@ class Collabora {
 	 * Load the dependencies
 	 */
 	public function load_deps() {
-		require_once COOL_PLUGIN_DIR . 'includes/class-collaboraadmin.php';
-		require_once COOL_PLUGIN_DIR . 'includes/class-collaborawopi.php';
-		require_once COOL_PLUGIN_DIR . 'includes/class-collaborafrontend.php';
+		require_once COLLABORA_PLUGIN_DIR . 'includes/class-collaboraadmin.php';
+		require_once COLLABORA_PLUGIN_DIR . 'includes/class-collaborawopi.php';
+		require_once COLLABORA_PLUGIN_DIR . 'includes/class-collaborafrontend.php';
 	}
 
 	/**

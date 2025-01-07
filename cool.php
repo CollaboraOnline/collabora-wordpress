@@ -32,7 +32,7 @@ $file_id = absint( wp_unslash( $_GET['id'] ) );
 require_once __DIR__ . '/collabora-online-wp.php';
 require_once __DIR__ . '/includes/class-collaborafrontend.php';
 
-$base_url = plugins_url( '', COOL_PLUGIN_FILE );
+$base_url = plugins_url( '', COLLABORA_PLUGIN_FILE );
 
 $frame = CollaboraFrontend::get_view_render( $file_id, $want_write, array( 'closebutton' => 'true' ) );
 

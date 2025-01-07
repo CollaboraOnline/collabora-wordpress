@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /* Block. This will register the block automatically. */
-require_once COOL_PLUGIN_DIR . 'cool-block/cool-block.php';
+require_once COLLABORA_PLUGIN_DIR . 'cool-block/cool-block.php';
 
 /** The Collabora frontend */
 class CollaboraFrontend {
@@ -35,14 +35,14 @@ class CollaboraFrontend {
 
 	/** Wp_enqueue_script hook. */
 	public function enqueue_scripts() {
-		wp_enqueue_style( COOL_PLUGIN_NAME . '-cool-css', plugins_url( 'public/css/cool.css', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
+		wp_enqueue_style( COLLABORA_PLUGIN_NAME . '-cool-css', plugins_url( 'public/css/cool.css', COLLABORA_PLUGIN_FILE ), array(), COLLABORA_PLUGIN_VERSION_NUM, false );
 	}
 
 	/**
 	 * Queue the style for tinymce.
 	 */
 	public function cool_tinymce_css() {
-		wp_enqueue_style( COOL_PLUGIN_NAME . '-cool-tinymce', plugins_url( 'editor/cool-tinymce.css', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
+		wp_enqueue_style( COLLABORA_PLUGIN_NAME . '-cool-tinymce', plugins_url( 'editor/cool-tinymce.css', COLLABORA_PLUGIN_FILE ), array(), COLLABORA_PLUGIN_VERSION_NUM, false );
 	}
 
 	/**
@@ -51,7 +51,7 @@ class CollaboraFrontend {
 	 * @param array $plugins The plugins array.
 	 */
 	public function cool_tinymce_js( array $plugins ) {
-		$plugins['cool-shortcode-button'] = plugins_url( 'editor/cool-tinymce.js', COOL_PLUGIN_FILE );
+		$plugins['cool-shortcode-button'] = plugins_url( 'editor/cool-tinymce.js', COLLABORA_PLUGIN_FILE );
 
 		return $plugins;
 	}
@@ -174,7 +174,7 @@ class CollaboraFrontend {
 	 * @return string Button markup to display.
 	 */
 	private static function get_button( string $id, array $props ) {
-		wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'public/js/previewer.js', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
+		wp_enqueue_script( COLLABORA_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'public/js/previewer.js', COLLABORA_PLUGIN_FILE ), array(), COLLABORA_PLUGIN_VERSION_NUM, false );
 
 		return sprintf(
 			'<p>%s <button onclick="previewField(\'%s\');">%s</button></p>' .
@@ -198,9 +198,9 @@ class CollaboraFrontend {
 	 * @return null|array Properties of the markup.
 	 */
 	public static function get_view_render( int $id, bool $want_write, $options = null ) {
-		require_once COOL_PLUGIN_DIR . 'includes/class-coolrequest.php';
+		require_once COLLABORA_PLUGIN_DIR . 'includes/class-coolrequest.php';
 
-		$wopi_base = get_option( CollaboraAdmin::COOL_WOPI_BASE );
+		$wopi_base = get_option( CollaboraAdmin::COLLABORA_WOPI_BASE );
 
 		$req         = new CoolRequest();
 		$wopi_client = $req->get_wopi_client_url();

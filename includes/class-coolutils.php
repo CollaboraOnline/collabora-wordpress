@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-require_once COOL_PLUGIN_DIR . 'vendor/firebase/php-jwt/src/JWT.php';
-require_once COOL_PLUGIN_DIR . 'vendor/firebase/php-jwt/src/Key.php';
+require_once COLLABORA_PLUGIN_DIR . 'vendor/firebase/php-jwt/src/JWT.php';
+require_once COLLABORA_PLUGIN_DIR . 'vendor/firebase/php-jwt/src/Key.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -26,7 +26,7 @@ use Firebase\JWT\Key;
 class CoolUtils {
 	/** Obtain the signing key */
 	private static function get_key() {
-		$key = get_option( CollaboraAdmin::COOL_JWT_KEY );
+		$key = get_option( CollaboraAdmin::COLLABORA_JWT_KEY );
 		return $key;
 	}
 
@@ -102,6 +102,6 @@ class CoolUtils {
 		if ( $want_write ) {
 			$query['write'] = 'true';
 		}
-		return plugins_url( 'cool.php', COOL_PLUGIN_FILE ) . '?' . http_build_query( $query );
+		return plugins_url( 'cool.php', COLLABORA_PLUGIN_FILE ) . '?' . http_build_query( $query );
 	}
 }

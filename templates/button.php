@@ -28,7 +28,7 @@ $args = wp_parse_args(
 	)
 );
 
-wp_enqueue_script( COOL_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'public/js/previewer.js', COOL_PLUGIN_FILE ), array(), COOL_PLUGIN_VERSION_NUM, false );
+wp_enqueue_script( COLLABORA_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'public/js/previewer.js', COLLABORA_PLUGIN_FILE ), array(), COLLABORA_PLUGIN_VERSION_NUM, false );
 ?>
 
 <p>

@@ -20,15 +20,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 class CollaboraAdmin {
 
 	/** Option for the COOL server URL */
-	const COOL_SERVER_OPTION = COOL_PLUGIN_NAME . '-cool_server';
+	const COLLABORA_SERVER_OPTION = COLLABORA_PLUGIN_NAME . '-cool_server';
 	/** Option for the WOPI server base URL */
-	const COOL_WOPI_BASE = COOL_PLUGIN_NAME . '-wopi_base';
+	const COLLABORA_WOPI_BASE = COLLABORA_PLUGIN_NAME . '-wopi_base';
 	/** Option to disable the certificate check */
-	const COOL_DISABLE_CERT_CHECK = COOL_PLUGIN_NAME . '-disable_cert_check';
+	const COLLABORA_DISABLE_CERT_CHECK = COLLABORA_PLUGIN_NAME . '-disable_cert_check';
 	/** The Token TTL */
-	const COOL_TOKEN_TTL = COOL_PLUGIN_NAME . '-token-ttl';
+	const COLLABORA_TOKEN_TTL = COLLABORA_PLUGIN_NAME . '-token-ttl';
 	/** JWT key secret */
-	const COOL_JWT_KEY = COOL_PLUGIN_NAME . '-jwt-key';
+	const COLLABORA_JWT_KEY = COLLABORA_PLUGIN_NAME . '-jwt-key';
 
 	/**
 	 * Option page hook.
@@ -56,11 +56,11 @@ class CollaboraAdmin {
 	 * Delete the settings. Should be called when uninstalling.
 	 */
 	public function delete_settings() {
-		delete_site_option( self::COOL_SERVER_OPTION );
-		delete_site_option( self::COOL_WOPI_BASE );
-		delete_site_option( self::COOL_DISABLE_CERT_CHECK );
-		delete_site_option( self::COOL_TOKEN_TTL );
-		delete_site_option( self::COOL_JWT_KEY );
+		delete_site_option( self::COLLABORA_SERVER_OPTION );
+		delete_site_option( self::COLLABORA_WOPI_BASE );
+		delete_site_option( self::COLLABORA_DISABLE_CERT_CHECK );
+		delete_site_option( self::COLLABORA_TOKEN_TTL );
+		delete_site_option( self::COLLABORA_JWT_KEY );
 	}
 
 	/**
@@ -120,7 +120,7 @@ class CollaboraAdmin {
 	 */
 	public function sanitize_ttl( string $value ) {
 		if ( ! is_numeric( $value ) ) {
-			return get_option( self::COOL_TOKEN_TTL, 86400 );
+			return get_option( self::COLLABORA_TOKEN_TTL, 86400 );
 		}
 		return strval( intval( $value ) );
 	}
@@ -152,21 +152,21 @@ class CollaboraAdmin {
 	public function admin_init() {
 		register_setting(
 			'cool_options_group',
-			self::COOL_SERVER_OPTION,
+			self::COLLABORA_SERVER_OPTION,
 			array(
 				'sanitize_callback' => 'sanitize_url',
 			)
 		);
 		register_setting(
 			'cool_options_group',
-			self::COOL_WOPI_BASE,
+			self::COLLABORA_WOPI_BASE,
 			array(
 				'sanitize_callback' => 'sanitize_url',
 			)
 		);
 		register_setting(
 			'cool_options_group',
-			self::COOL_DISABLE_CERT_CHECK,
+			self::COLLABORA_DISABLE_CERT_CHECK,
 			array(
 				'type'              => 'boolean',
 				'description'       => __( 'Disable the certificate check when connecting to the Collabora Online server', 'collabora-online' ),
@@ -175,7 +175,7 @@ class CollaboraAdmin {
 		);
 		register_setting(
 			'cool_options_group',
-			self::COOL_TOKEN_TTL,
+			self::COLLABORA_TOKEN_TTL,
 			array(
 				'type'              => 'integer',
 				'description'       => __( 'The token TTL in seconds', 'collabora-online' ),
@@ -185,7 +185,7 @@ class CollaboraAdmin {
 		);
 		register_setting(
 			'cool_options_group',
-			self::COOL_JWT_KEY,
+			self::COLLABORA_JWT_KEY,
 			array(
 				'description'       => __( 'JWT secret key to generate tokens', 'collabora-online' ),
 				'sanitize_callback' => array( $this, 'sanitize_jwt_key' ),
@@ -199,58 +199,58 @@ class CollaboraAdmin {
 			'cool_options_group',
 		);
 		add_settings_field(
-			self::COOL_SERVER_OPTION,
+			self::COLLABORA_SERVER_OPTION,
 			__( 'Collabora Online server URL:', 'collabora-online' ),
 			array( $this, 'setting_text' ),
 			'cool_options_group',
 			'cool_options_section',
 			array(
-				'id'    => self::COOL_SERVER_OPTION,
-				'value' => get_option( self::COOL_SERVER_OPTION, 'https://localhost:9980' ),
+				'id'    => self::COLLABORA_SERVER_OPTION,
+				'value' => get_option( self::COLLABORA_SERVER_OPTION, 'https://localhost:9980' ),
 			)
 		);
 		add_settings_field(
-			self::COOL_WOPI_BASE,
+			self::COLLABORA_WOPI_BASE,
 			__( 'WOPI host URL:', 'collabora-online' ),
 			array( $this, 'setting_text' ),
 			'cool_options_group',
 			'cool_options_section',
 			array(
-				'id'    => self::COOL_WOPI_BASE,
-				'value' => get_option( self::COOL_WOPI_BASE, 'https://localhost' ),
+				'id'    => self::COLLABORA_WOPI_BASE,
+				'value' => get_option( self::COLLABORA_WOPI_BASE, 'https://localhost' ),
 			)
 		);
 		add_settings_field(
-			self::COOL_DISABLE_CERT_CHECK,
+			self::COLLABORA_DISABLE_CERT_CHECK,
 			__( 'Disable TLS certificate check for COOL (development only):', 'collabora-online' ),
 			array( $this, 'setting_bool' ),
 			'cool_options_group',
 			'cool_options_section',
 			array(
-				'id'    => self::COOL_DISABLE_CERT_CHECK,
-				'value' => get_option( self::COOL_DISABLE_CERT_CHECK, false ),
+				'id'    => self::COLLABORA_DISABLE_CERT_CHECK,
+				'value' => get_option( self::COLLABORA_DISABLE_CERT_CHECK, false ),
 			)
 		);
 		add_settings_field(
-			self::COOL_TOKEN_TTL,
+			self::COLLABORA_TOKEN_TTL,
 			__( 'Token TTL in seconds:', 'collabora-online' ),
 			array( $this, 'setting_text' ),
 			'cool_options_group',
 			'cool_options_section',
 			array(
-				'id'    => self::COOL_TOKEN_TTL,
-				'value' => get_option( self::COOL_TOKEN_TTL, 86400 ),
+				'id'    => self::COLLABORA_TOKEN_TTL,
+				'value' => get_option( self::COLLABORA_TOKEN_TTL, 86400 ),
 			)
 		);
 		add_settings_field(
-			self::COOL_JWT_KEY,
+			self::COLLABORA_JWT_KEY,
 			__( 'JWT key secret to generate token:', 'collabora-online' ),
 			array( $this, 'setting_text' ),
 			'cool_options_group',
 			'cool_options_section',
 			array(
-				'id'    => self::COOL_JWT_KEY,
-				'value' => get_option( self::COOL_JWT_KEY, '' ),
+				'id'    => self::COLLABORA_JWT_KEY,
+				'value' => get_option( self::COLLABORA_JWT_KEY, '' ),
 			)
 		);
 	}

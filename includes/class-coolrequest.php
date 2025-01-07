@@ -70,7 +70,7 @@ class CoolRequest {
 	 */
 	private static function get_discovery( $server ) {
 		$discovery_url  = $server . '/hosting/discovery';
-		$disable_checks = (bool) get_option( CollaboraAdmin::COOL_DISABLE_CERT_CHECK );
+		$disable_checks = (bool) get_option( CollaboraAdmin::COLLABORA_DISABLE_CERT_CHECK );
 
 		$options = array();
 		if ( true === $disable_checks ) {
@@ -105,7 +105,7 @@ class CoolRequest {
 	/** Return the WOPI client URL */
 	public function get_wopi_client_url() {
 		$host_scheme        = isset( $_SERVER['HTTPS'] ) ? 'https' : 'http';
-		$wopi_client_server = get_option( CollaboraAdmin::COOL_SERVER_OPTION );
+		$wopi_client_server = get_option( CollaboraAdmin::COLLABORA_SERVER_OPTION );
 		if ( ! $wopi_client_server ) {
 			$this->error_code = 201;
 			return;
