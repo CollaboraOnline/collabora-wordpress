@@ -182,8 +182,8 @@ class CollaboraFrontend {
 
 		return sprintf(
 			'<p>%s <button onclick="previewField(\'%s\');">%s</button></p>' .
-			'<dialog id="cool-editor__dialog" class="cool-editor__dialog alignfull">' .
-			'<iframe class="cool-frame__preview"></iframe>' .
+			'<dialog id="collabora-editor__dialog" class="collabora-editor__dialog alignfull">' .
+			'<iframe class="collabora-frame__preview"></iframe>' .
 				'</dialog>',
 			// translators: %s is the name of the attachment.
 			esc_html( $props['attachment'] ),

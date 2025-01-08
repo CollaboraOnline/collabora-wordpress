@@ -38,6 +38,6 @@ wp_enqueue_script( COLLABORA_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'p
 
 	</button>
 </p>
-<dialog id="cool-editor__dialog" class="cool-editor__dialog alignfull">
-	<iframe class="cool-frame__preview"></iframe>
+<dialog id="collabora-editor__dialog" class="collabora-editor__dialog alignfull">
+	<iframe class="collabora-frame__preview"></iframe>
 </dialog>

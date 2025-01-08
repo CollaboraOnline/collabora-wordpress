@@ -10,15 +10,15 @@
  */
 
 function previewField(coolUrl) {
-    let iframe = document.querySelector("#cool-editor__dialog > .cool-frame__preview");
+    let iframe = document.querySelector("#collabora-editor__dialog > .collabora-frame__preview");
     iframe.src = coolUrl;
-    document.querySelector("#cool-editor__dialog").show();
+    document.querySelector("#collabora-editor__dialog").show();
 }
 
 function closePreview() {
-    let iframe = document.querySelector("#cool-editor__dialog > .cool-frame__preview");
+    let iframe = document.querySelector("#collabora-editor__dialog > .collabora-frame__preview");
     iframe.src = "about:blank";
-    document.querySelector('#cool-editor__dialog').close();
+    document.querySelector('#collabora-editor__dialog').close();
 }
 
 (function () {

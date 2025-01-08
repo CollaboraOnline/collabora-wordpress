@@ -40,9 +40,9 @@ $params = $args['frame'];
 <?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
 <?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
 </head>
-<body class="cool-editor__body">
+<body class="collabora-editor__body">
 
-<div class="cool-frame">
+<div class="collabora-frame">
 	<div style="display: none">
 	<form action="" enctype="multipart/form-data" method="post" target="collabora-online-viewer" id="collabora-submit-form">
 		<input name="access_token" value="<?php echo esc_attr( $params['accessToken'] ); ?>" type="hidden" />
@@ -51,7 +51,7 @@ $params = $args['frame'];
 	</form>
 	</div>
 
-	<iframe id="collabora-online-viewer" name="collabora-online-viewer" class="cool-frame__iframe" style="<?php echo esc_attr( $params['iFrameStyle'] ); ?>" allow="clipboard-read *; clipboard-write *">
+	<iframe id="collabora-online-viewer" name="collabora-online-viewer" class="collabora-frame__iframe" style="<?php echo esc_attr( $params['iFrameStyle'] ); ?>" allow="clipboard-read *; clipboard-write *">
 	</iframe>
 	<script type="text/ecmascript">
 
