@@ -55,7 +55,7 @@ class CollaboraFrontend {
 	 * @param array $plugins The plugins array.
 	 */
 	public function cool_tinymce_js( array $plugins ) {
-		$plugins['cool-shortcode-button'] = plugins_url( 'editor/cool-tinymce.js', COLLABORA_PLUGIN_FILE );
+		$plugins['collabora-shortcode-button'] = plugins_url( 'editor/cool-tinymce.js', COLLABORA_PLUGIN_FILE );
 
 		return $plugins;
 	}
@@ -66,7 +66,7 @@ class CollaboraFrontend {
 	 * @param array $buttons The buttons array.
 	 */
 	public function cool_shortcode_button( array $buttons ) {
-		array_push( $buttons, 'cool-shortcode-button' );
+		array_push( $buttons, 'collabora-shortcode-button' );
 
 		return $buttons;
 	}

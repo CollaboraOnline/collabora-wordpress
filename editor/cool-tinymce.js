@@ -32,7 +32,7 @@
 
 	let cool_plugin = function (editor) {
 		editor.addButton(
-			'cool-shortcode-button',
+			'collabora-shortcode-button',
 			{
 				tooltip: wp.i18n.__('Add Collabora Online document'),
 				onclick: cool_button_click.bind(null, editor),
@@ -40,5 +40,5 @@
 		);
 	};
 
-	tinymce.PluginManager.add('cool-shortcode-button', cool_plugin);
+	tinymce.PluginManager.add('collabora-shortcode-button', cool_plugin);
 })();
