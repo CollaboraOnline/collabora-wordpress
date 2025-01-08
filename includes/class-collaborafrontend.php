@@ -21,9 +21,13 @@ require_once COLLABORA_PLUGIN_DIR . 'cool-block/cool-block.php';
 
 /** The Collabora frontend */
 class CollaboraFrontend {
+
+	/** The shortcode */
+	const SHORTCODE = 'collabora_online';
+
 	/** Initialise the shortcodes and block editor. */
 	public function init() {
-		add_shortcode( 'cool', array( $this, 'cool_shortcode' ) );
+		add_shortcode( self::SHORTCODE, array( $this, 'cool_shortcode' ) );
 
 		add_filter( 'teeny_mce_buttons', array( $this, 'cool_shortcode_button' ) );
 		add_filter( 'mce_buttons', array( $this, 'cool_shortcode_button' ) );
@@ -75,7 +79,7 @@ class CollaboraFrontend {
 	 * @param string $name The short code name. We expect 'cool'.
 	 */
 	public function cool_shortcode( $atts, $content, $name ) {
-		if ( 'cool' !== $name ) {
+		if ( self::SHORTCODE !== $name ) {
 			die( 'Incorrect short code' );
 		}
 

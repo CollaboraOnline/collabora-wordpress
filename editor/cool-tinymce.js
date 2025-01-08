@@ -23,7 +23,7 @@
 			const id = selected.id;
 			// XXX fixme when we have block support.
 			// let content = "<!-- wp:collabora-online-wp/cool -->\n";
-			let content = `[cool id=${id} mode=view]\n`;
+			let content = `[collabora_online id=${id} mode=view]\n`;
 			// content += "<!-- /wp:collabora-online-wp/cool -->\n";
 			editor.insertContent(content);
 		});
