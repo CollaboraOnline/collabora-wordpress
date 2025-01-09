@@ -89,9 +89,22 @@ class Collabora {
 	}
 
 	/**
+	 * Load the translations.
+	 */
+	public static function load_i18n() {
+		load_plugin_textdomain(
+			'collabora-online',
+			false,
+			COOL_PLUGIN_DIR . '/languages/'
+		);
+	}
+
+	/**
 	 * Plugin initialisation
 	 */
 	public function init_plugin() {
+		add_action( 'init', array( self::class, 'load_i18n' ) );
+
 		$this->plugin_admin = new CollaboraAdmin();
 		add_action( 'admin_menu', array( $this->plugin_admin, 'admin_menu' ) );
 		add_action( 'admin_init', array( $this->plugin_admin, 'admin_init' ) );

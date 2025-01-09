@@ -182,8 +182,9 @@ class CollaboraWopi {
 			return self::permission_denied( 'Authentication failed.' );
 		}
 
-		$can_write = $jwt_payload->wri && current_user_can( 'edit_post', $id );
-		$file      = get_attached_file( $id );
+		$can_write        = $jwt_payload->wri && current_user_can( 'edit_post', $id );
+		$can_only_comment = $jwt_payload->cmt && current_user_can( 'edit_post', $id );
+		$file             = get_attached_file( $id );
 		if ( ! $file ) {
 			return self::file_error( 'File not found.' );
 		}
@@ -192,17 +193,18 @@ class CollaboraWopi {
 		$user    = wp_get_current_user();
 		$mtime   = date_create_immutable_from_format( 'U', filemtime( $file ) );
 		$payload = array(
-			'BaseFileName'     => basename( $file ),
-			'Size'             => filesize( $file ),
-			'LastModifiedTime' => $mtime->format( 'c' ),
-			'UserId'           => $jwt_payload->uid,
-			'UserFriendlyName' => $user->get( 'display_name' ),
-			'UserExtraInfo'    => array(
+			'BaseFileName'       => basename( $file ),
+			'Size'               => filesize( $file ),
+			'LastModifiedTime'   => $mtime->format( 'c' ),
+			'UserId'             => $jwt_payload->uid,
+			'UserFriendlyName'   => $user->get( 'display_name' ),
+			'UserExtraInfo'      => array(
 				'mail' => $user->get( 'user_email' ),
 			),
-			'UserCanWrite'     => $can_write,
-			'IsAdminUser'      => $is_administrator,
-			'IsAnonymousUser'  => false, // $user->isAnonymous(),
+			'UserCanWrite'       => $can_write,
+			'UserCanOnlyComment' => $can_only_comment,
+			'IsAdminUser'        => $is_administrator,
+			'IsAnonymousUser'    => false, // $user->isAnonymous(),
 		);
 
 		if ( function_exists( 'get_avatar_url' ) ) {

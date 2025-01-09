@@ -116,6 +116,12 @@ class CollaboraFrontend {
 					$want_write = false;
 				}
 				break;
+			case 'review':
+				if ( current_user_can( 'edit_post', $id ) ) {
+					$authorized = true;
+					$want_write = true;
+				}
+				break;
 			case 'edit':
 				if ( current_user_can( 'edit_post', $id ) ) {
 					$authorized = true;
@@ -132,10 +138,16 @@ class CollaboraFrontend {
 			// translators: %s is the file name.
 			$attachment = sprintf( __( 'Attachment "%s"', 'collabora-online' ), $name );
 
-			if ( true === $want_write ) {
-				$label = __( 'Edit', 'collabora-online' );
-			} else {
-				$label = __( 'View', 'collabora-online' );
+			switch ( $mode ) {
+				case 'edit':
+					$label = __( 'Edit', 'collabora-online' );
+					break;
+				case 'review':
+					$label = __( 'Review', 'collabora-online' );
+					break;
+				case 'view':
+					$label = __( 'View', 'collabora-online' );
+					break;
 			}
 		}
 		return array(
@@ -196,12 +208,12 @@ class CollaboraFrontend {
 	 * Output the a view for a COOL frame
 	 *
 	 * @param int        $id The document id.
-	 * @param bool       $want_write Whether we want write permission (editor vs view).
+	 * @param string     $mode Editor mode.
 	 * @param null|array $options COOL frame options.
 	 *
 	 * @return null|array Properties of the markup.
 	 */
-	public static function get_view_render( int $id, bool $want_write, $options = null ) {
+	public static function get_view_render( int $id, string $mode, $options = null ) {
 		require_once COLLABORA_PLUGIN_DIR . 'includes/class-collaborarequest.php';
 
 		$wopi_base = get_option( CollaboraAdmin::COLLABORA_WOPI_BASE );
@@ -218,7 +230,7 @@ class CollaboraFrontend {
 		}
 		$ttl += gettimeofday( true );
 
-		$access_token = CollaboraUtils::token_for_file_id( $id, (int) $ttl, $want_write );
+		$access_token = CollaboraUtils::token_for_file_id( $id, (int) $ttl, $mode );
 		$closebutton  = 'false';
 
 		if ( $options ) {
