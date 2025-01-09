@@ -29,6 +29,8 @@ if ( isset( $_GET['write'] ) ) {
 
 $file_id = absint( wp_unslash( $_GET['id'] ) );
 
+check_admin_referer( 'collabora-frame-' . $file_id );
+
 require_once __DIR__ . '/collabora-online-wp.php';
 require_once __DIR__ . '/includes/class-collaborafrontend.php';
 

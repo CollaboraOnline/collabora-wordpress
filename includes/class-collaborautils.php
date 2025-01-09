@@ -102,6 +102,7 @@ class CollaboraUtils {
 		if ( $want_write ) {
 			$query['write'] = 'true';
 		}
-		return plugins_url( 'cool.php', COLLABORA_PLUGIN_FILE ) . '?' . http_build_query( $query );
+		$baseurl = plugins_url( 'cool.php', COLLABORA_PLUGIN_FILE ) . '?' . http_build_query( $query );
+		return wp_nonce_url( $baseurl, 'collabora-frame-' . $id );
 	}
 }
