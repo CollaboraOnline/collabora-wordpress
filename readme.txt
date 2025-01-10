@@ -8,20 +8,20 @@ Requires PHP: 8.0
 License: MPL-2.0
 License URI: http://mozilla.org/MPL/2.0/
 
-The Collabora Online WP plugin allow attaching office files to your content for a collaborative editing with other user.
+The Collabora Online WP plugin allows collaborative editing of office files with other users.
 
 == Description ==
 
-The Collabora Online WP plugin allow attaching office files to your content for a collaborative editing with other user.
+The Collabora Online WP plugin allows collaborative editing of office files with other users.
 
-This require a working setup of Collabora Online.
+This requires a working setup of Collabora Online.
 
 For more information about Collabora Online, see https://collaboraonline.com/
 
 Attaching an office document to a post is simple.
 
 1. Upload the document using the media manager
-2. Insert the `cool` shortcode or insert a COOL block in the editor.
+2. Insert the `collabora_online` shortcode or insert a COOL block in the editor.
 
 == Frequently Asked Questions ==
 
