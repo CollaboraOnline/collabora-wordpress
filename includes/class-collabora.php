@@ -95,7 +95,7 @@ class Collabora {
 		load_plugin_textdomain(
 			'collabora-online',
 			false,
-			COOL_PLUGIN_DIR . '/languages/'
+			COLLABORA_PLUGIN_DIR . '/languages/'
 		);
 	}
 
