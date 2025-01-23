@@ -38,7 +38,7 @@ if ( ! empty( $attributes['mode'] ) ) {
 				true,
 				array(
 					'id'         => $doc_id,
-					'want_write' => $props['want_write'],
+					'mode'       => $props['mode'],
 					'attachment' => $props['attachment'],
 					'label'      => $props['label'],
 				)

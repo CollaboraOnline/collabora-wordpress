@@ -104,7 +104,6 @@ class CollaboraFrontend {
 	 * @return array The properties.
 	 */
 	public static function get_button_properties( string $id, string $mode ) {
-		$want_write = false;
 		$authorized = false;
 		$message    = null;
 		$label      = null;
@@ -113,19 +112,16 @@ class CollaboraFrontend {
 			case 'view':
 				if ( current_user_can( 'read_post', $id ) ) {
 					$authorized = true;
-					$want_write = false;
 				}
 				break;
 			case 'review':
 				if ( current_user_can( 'edit_post', $id ) ) {
 					$authorized = true;
-					$want_write = true;
 				}
 				break;
 			case 'edit':
 				if ( current_user_can( 'edit_post', $id ) ) {
 					$authorized = true;
-					$want_write = true;
 				}
 				break;
 			default:
@@ -151,7 +147,7 @@ class CollaboraFrontend {
 			}
 		}
 		return array(
-			'want_write' => $want_write,
+			'mode'       => $mode,
 			'message'    => $message,
 			'authorized' => $authorized,
 			'label'      => $label,
@@ -197,9 +193,8 @@ class CollaboraFrontend {
 			'<dialog id="collabora-editor__dialog" class="collabora-editor__dialog alignfull">' .
 			'<iframe class="collabora-frame__preview"></iframe>' .
 				'</dialog>',
-			// translators: %s is the name of the attachment.
 			esc_html( $props['attachment'] ),
-			esc_url( CollaboraUtils::get_editor_url( $id, $props['want_write'] ) ),
+			esc_url( CollaboraUtils::get_editor_url( $id, $props['mode'] ) ),
 			esc_html( $props['label'] )
 		);
 	}
