@@ -2,6 +2,8 @@
 
 This plugin allow the integration of Collabora Online with WordPress.
 
+https://wordpress.org/plugins/collabora-online/
+
 What you need is:
 
 - WordPress. (currently 6.6.x is tested)
