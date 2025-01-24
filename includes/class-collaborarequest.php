@@ -104,6 +104,10 @@ class CollaboraRequest {
 
 	/** Return the WOPI client URL */
 	public function get_wopi_client_url() {
+		if ( ! function_exists( 'simplexml_load_string' ) ) {
+			die( 'SimpleXML support is missing in PHP.' );
+		}
+
 		$host_scheme        = isset( $_SERVER['HTTPS'] ) ? 'https' : 'http';
 		$wopi_client_server = get_option( CollaboraAdmin::COLLABORA_SERVER_OPTION );
 		if ( ! $wopi_client_server ) {

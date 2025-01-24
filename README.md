@@ -56,6 +56,11 @@ upload_max_filesize = 30M
 
 These set the limits to a maximum of 30M. You can change as appropriate.
 
+## PHP requirements
+
+This plugin needs SimpleXML support support in PHP, which is usually standard. See
+https://www.php.net/manual/en/simplexml.installation.php
+
 ## Internals
 
 The plugin creates a new post type `collabora_revision` to store the revisions of files associated
