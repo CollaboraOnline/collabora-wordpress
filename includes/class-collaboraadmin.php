@@ -29,6 +29,8 @@ class CollaboraAdmin {
 	const COLLABORA_TOKEN_TTL = COLLABORA_PLUGIN_NAME . '-token-ttl';
 	/** JWT key secret */
 	const COLLABORA_JWT_KEY = COLLABORA_PLUGIN_NAME . '-jwt-key';
+	/** The user role for reviewing */
+	const COLLABORA_USER_ROLE_REVIEW = COLLABORA_PLUGIN_NAME . '-user_role_review';
 
 	/**
 	 * Option page hook.
@@ -61,6 +63,7 @@ class CollaboraAdmin {
 		delete_site_option( self::COLLABORA_DISABLE_CERT_CHECK );
 		delete_site_option( self::COLLABORA_TOKEN_TTL );
 		delete_site_option( self::COLLABORA_JWT_KEY );
+		delete_site_option( self::COLLABORA_USER_ROLE_REVIEW );
 	}
 
 	/**
@@ -95,6 +98,16 @@ class CollaboraAdmin {
 		<?php
 	}
 
+	/**
+	 * Role setting hook. Will display a drop down with available roles.
+	 *
+	 * @param array $args Arguments for the hook.
+	 */
+	public function setting_role( array $args ) {
+		?>
+		<select id="<?php echo esc_attr( $args['id'] ); ?>" name="<?php echo esc_attr( $args['id'] ); ?>" ><?php wp_dropdown_roles( get_option( $args['id'] ) ); ?></select>
+		<?php
+	}
 	/**
 	 * Boolean setting hook.
 	 *
@@ -138,11 +151,24 @@ class CollaboraAdmin {
 	}
 
 	/**
-	 * "Sanitize" tje JWT key. i.e. pass through
+	 * "Sanitize" the JWT key. i.e. pass through
 	 *
 	 * @param string $value The value.
 	 */
 	public function sanitize_jwt_key( string $value ) {
+		return $value;
+	}
+
+	/**
+	 * "Sanitize" the role. It will return 'contributor' if the role
+	 * doesn't exist.
+	 *
+	 * @param string $value The role value.
+	 */
+	public function sanitize_role( string $value ) {
+		if ( null === wp_roles()->get_role( $value ) ) {
+			return 'contributor';
+		}
 		return $value;
 	}
 
@@ -189,6 +215,15 @@ class CollaboraAdmin {
 			array(
 				'description'       => __( 'JWT secret key to generate tokens', 'collabora-online' ),
 				'sanitize_callback' => array( $this, 'sanitize_jwt_key' ),
+			)
+		);
+
+		register_setting(
+			'collabora_options_group',
+			self::COLLABORA_USER_ROLE_REVIEW,
+			array(
+				'description'       => __( 'Role of users that can review documents', 'collabora-online' ),
+				'sanitize_callback' => array( $this, 'sanitize_role' ),
 			)
 		);
 
@@ -251,6 +286,17 @@ class CollaboraAdmin {
 			array(
 				'id'    => self::COLLABORA_JWT_KEY,
 				'value' => get_option( self::COLLABORA_JWT_KEY, '' ),
+			)
+		);
+		add_settings_field(
+			self::COLLABORA_USER_ROLE_REVIEW,
+			__( 'Role of users that can review:', 'collabora-online' ),
+			array( $this, 'setting_role' ),
+			'collabora_options_group',
+			'collabora_options_section',
+			array(
+				'id'    => self::COLLABORA_USER_ROLE_REVIEW,
+				'value' => get_option( self::COLLABORA_USER_ROLE_REVIEW, 'contributor' ),
 			)
 		);
 	}
