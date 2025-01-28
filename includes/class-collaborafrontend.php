@@ -124,9 +124,6 @@ class CollaboraFrontend {
 					$authorized = true;
 				}
 				break;
-			default:
-				// translators: %s is the mode.
-				$message = sprintf( __( 'Invalid mode: %s', 'collabora-online' ), $mode );
 		}
 		if ( $authorized ) {
 			$filename = get_attached_file( $id );
@@ -145,6 +142,9 @@ class CollaboraFrontend {
 					$label = __( 'View', 'collabora-online' );
 					break;
 			}
+		} else {
+			// translators: %s is just the URL to the login page. Please preserve markup.
+			$message = sprintf( __( 'Please <a href="%s">login</a> to access the attachment.', 'collabora-online' ), wp_login_url( get_permalink() ) );
 		}
 		return array(
 			'mode'       => $mode,
@@ -166,7 +166,7 @@ class CollaboraFrontend {
 	public static function get_button_markup( string $id, string $mode ) {
 		$props = self::get_button_properties( $id, $mode );
 		if ( null !== $props['message'] ) {
-			return '<p>' . esc_html( $message ) . '</p>';
+			return '<p>' . wp_kses_post( $props['message'] ) . '</p>';
 		}
 		if ( ! $props['authorized'] ) {
 			return sprintf(

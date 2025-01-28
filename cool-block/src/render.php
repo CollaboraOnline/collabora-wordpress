@@ -44,7 +44,8 @@ if ( ! empty( $attributes['mode'] ) ) {
 				)
 			);
 		} else {
-			echo 'Incorrect mode';
+			// The message should be HTML safe.
+			echo wp_kses_post( $props['message'] );
 		}
 	} else {
 		echo 'Error, no doc id';
