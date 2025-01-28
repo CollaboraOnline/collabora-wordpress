@@ -183,7 +183,9 @@ class CollaboraWopi {
 		}
 
 		$can_write        = $jwt_payload->wri && current_user_can( 'edit_post', $id );
-		$can_only_comment = $jwt_payload->cmt && current_user_can( 'edit_post', $id );
+		$reviewer_role    = get_option( CollaboraAdmin::COLLABORA_USER_ROLE_REVIEW );
+		$can_review       = $reviewer_role && in_array( $reviewer_role, wp_get_current_user()->roles, true );
+		$can_only_comment = $jwt_payload->cmt && ( $can_review || current_user_can( 'edit_post', $id ) );
 		$file             = get_attached_file( $id );
 		if ( ! $file ) {
 			return self::file_error( 'File not found.' );
@@ -202,7 +204,8 @@ class CollaboraWopi {
 				'mail' => $user->get( 'user_email' ),
 			),
 			'UserCanWrite'       => $can_write,
-			'UserCanOnlyComment' => $can_only_comment,
+			// We only se this to true if it can AND not also have write permissions.
+			'UserCanOnlyComment' => ! $can_write && $can_only_comment,
 			'IsAdminUser'        => $is_administrator,
 			'IsAnonymousUser'    => false, // $user->isAnonymous(),
 		);

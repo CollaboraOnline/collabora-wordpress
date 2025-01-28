@@ -115,7 +115,10 @@ class CollaboraFrontend {
 				}
 				break;
 			case 'review':
-				if ( current_user_can( 'edit_post', $id ) ) {
+				$reviewer_role = get_option( CollaboraAdmin::COLLABORA_USER_ROLE_REVIEW );
+				if ( $reviewer_role && in_array( $reviewer_role, wp_get_current_user()->roles, true ) ) {
+					$authorized = true;
+				} elseif ( current_user_can( 'edit_post', $id ) ) {
 					$authorized = true;
 				}
 				break;
