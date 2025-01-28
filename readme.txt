@@ -3,7 +3,7 @@ Contributors: hubcp
 Tags: collaboration, pdf, presentation, spreadsheet, document
 Requires at least: 6.6
 Tested up to: 6.7.1
-Stable tag: 0.9.7
+Stable tag: 0.9.8
 Requires PHP: 8.0
 License: MPL-2.0
 License URI: http://mozilla.org/MPL/2.0/
@@ -41,6 +41,13 @@ If you are already a paid customer for Collabora Online, you can use your existi
 4. Enjoy Collaboration with Collabora Online.
 
 == Changelog ==
+
+= 0.9.8 =
+
+* Added a better message if the user needs to login to access documents.
+* Added a role for reviewers.
+* If user can edit document then open as edit even in reviewer mode.
+* Fix missing review mode in COOL block.
 
 = 0.9.7 =
 
