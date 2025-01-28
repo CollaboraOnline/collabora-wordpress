@@ -59,6 +59,8 @@ export default function Edit( { attributes, setAttributes } ) {
 		let action = wp.i18n.__( 'View document' );
 		if ( mode === 'edit' ) {
 			action = wp.i18n.__( 'Edit document' );
+		} else if ( mode === 'review' ) {
+			action = wp.i18n.__( 'Review document' );
 		}
 
 		content = `${ action } "${ filename }".`;
