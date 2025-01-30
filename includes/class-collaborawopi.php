@@ -364,7 +364,14 @@ class CollaboraWopi {
 			return self::permission_denied( 'Authentication failed.' );
 		}
 
-		$can_write = $jwt_payload->wri && current_user_can( 'edit_post', $id );
+		$can_write = ( $jwt_payload->wri && current_user_can( 'edit_post', $id ) );
+		if ( ! $can_write && $jwt_payload->cmt ) {
+			// Handle comment only mode (review)
+			$reviewer_role = get_option( CollaboraAdmin::COLLABORA_USER_ROLE_REVIEW );
+			$can_review    = $reviewer_role && in_array( $reviewer_role, wp_get_current_user()->roles, true );
+			$can_write     = $can_review || current_user_can( 'edit_post', $id );
+		}
+
 		if ( ! $can_write ) {
 			return self::permission_denied( 'Permission denied.' );
 		}
