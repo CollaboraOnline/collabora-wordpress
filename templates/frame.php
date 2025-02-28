@@ -23,11 +23,14 @@ $args = wp_parse_args(
 	array(
 		'base_url' => '',
 		'frame'    => array(),
+		'docname'  => __( 'Untitled document', 'collabora-online' ),
 	)
 );
 
 $params = $args['frame'];
 
+// translators: '%s' will be replaced by the name of the document.
+$page_title = sprintf( __( 'Collabora Online - %s', 'collabora-online' ), $args['docname'] );
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,6 +42,7 @@ $params = $args['frame'];
 	<script id="collabora-online-wp-cool-js" src="<?php echo esc_url( $args['base_url'] ); ?>/public/js/cool.js"></script>
 <?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet ?>
 <?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
+	<title><?php echo esc_html( $page_title ); ?></title>
 </head>
 <body class="collabora-editor__body">
 

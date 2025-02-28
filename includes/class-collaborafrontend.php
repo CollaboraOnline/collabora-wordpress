@@ -192,13 +192,15 @@ class CollaboraFrontend {
 		wp_enqueue_script( COLLABORA_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'public/js/previewer.js', COLLABORA_PLUGIN_FILE ), array(), COLLABORA_PLUGIN_VERSION_NUM, false );
 
 		return sprintf(
-			'<p>%s <button onclick="previewField(\'%s\');">%s</button></p>' .
+			'<p>%s <button onclick="previewField(\'%s\');">%s</button> <a href="%s">%s</a></p>' .
 			'<dialog id="collabora-editor__dialog" class="collabora-editor__dialog alignfull">' .
 			'<iframe class="collabora-frame__preview"></iframe>' .
 				'</dialog>',
 			esc_html( $props['attachment'] ),
 			esc_url( CollaboraUtils::get_editor_url( $id, $props['mode'] ) ),
-			esc_html( $props['label'] )
+			esc_html( $props['label'] ),
+			esc_url( CollaboraUtils::get_permalink( $id, $props['mode'] ) ),
+			esc_html( '#' ),
 		);
 	}
 
@@ -211,7 +213,7 @@ class CollaboraFrontend {
 	 *
 	 * @return null|array Properties of the markup.
 	 */
-	public static function get_view_render( int $id, string $mode, $options = null ) {
+	private static function get_view_render( int $id, string $mode, $options = null ) {
 		require_once COLLABORA_PLUGIN_DIR . 'includes/class-collaborarequest.php';
 
 		$wopi_base = get_option( CollaboraAdmin::COLLABORA_WOPI_BASE );
@@ -244,6 +246,40 @@ class CollaboraFrontend {
 			'accessTokenTtl' => $ttl * 1000, // It's in usec. The JWT is in sec.
 			'closebutton'    => $closebutton,
 			'iFrameStyle'    => '',
+		);
+	}
+
+
+	/**
+	 * Output the COOL frame
+	 *
+	 * @param int    $id The document id.
+	 * @param string $mode Editor mode.
+	 * @param bool   $closebutton We want a close button.
+	 */
+	public static function output_frame( $id, $mode, $closebutton = false ) {
+		$base_url = plugins_url( '', COLLABORA_PLUGIN_FILE );
+
+		$frame = self::get_view_render( $id, $mode, array( 'closebutton' => $closebutton ? 'true' : 'false' ) );
+
+		if ( null === $frame ) {
+			die(
+				'<p>' .
+					esc_html( __( 'The Collabora Online server is not available: ', 'collabora-online' ) ) .
+				'</p>'
+			);
+		}
+
+		$file = get_attached_file( $id );
+
+		load_template(
+			__DIR__ . '/../templates/frame.php',
+			true,
+			array(
+				'frame'    => $frame,
+				'base_url' => $base_url,
+				'docname'  => basename( $file ),
+			)
 		);
 	}
 }

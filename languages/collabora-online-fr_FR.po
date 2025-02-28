@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Collabora Online WP 0.9.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/collabora-online-"
 "wp\n"
-"POT-Creation-Date: 2025-01-28T20:43:25+00:00\n"
-"PO-Revision-Date: 2025-01-28 15:47-0500\n"
+"POT-Creation-Date: 2025-03-03T22:12:01+00:00\n"
+"PO-Revision-Date: 2025-03-03 17:13-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -35,10 +35,6 @@ msgstr ""
 "Connecteur WordPress™ pour Collabora Online, vous permet d'éditer ou de "
 "visualiser de manière collaborative des documents bureautique directement "
 "depuis WordPress™ dans Collabora Online."
-
-#: cool.php:44
-msgid "The Collabora Online server is not available: "
-msgstr "Le serveur Collabora Online n'est pas disponible: "
 
 #: includes/class-collaboraadmin.php:74
 msgid "Collabora Online Settings"
@@ -130,9 +126,22 @@ msgstr "<a href=\"%s\">Connectez-vous</a> pour avoir accès à l'attachement."
 msgid "You don't have permission to view the attached file."
 msgstr "Vous n'avez pas la permission de voir le fichier attaché."
 
+#: includes/class-collaborafrontend.php:268
+msgid "The Collabora Online server is not available: "
+msgstr "Le serveur Collabora Online n'est pas disponible: "
+
 #: includes/class-collaborawopi.php:289
 msgid "Revisions"
 msgstr "Révisions"
+
+#: templates/frame.php:26
+msgid "Untitled document"
+msgstr "Document sans titre"
+
+#. translators: '%s' will be replaced by the name of the document.
+#: templates/frame.php:33
+msgid "Collabora Online - %s"
+msgstr "Collabora Online - %s"
 
 #: cool-block/build/index.js:1 cool-block/src/edit.js:72
 msgid "Parameters"

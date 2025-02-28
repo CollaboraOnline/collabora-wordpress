@@ -1,5 +1,5 @@
 <?php
-/** COOL frame embedded
+/** COOL document frame permalink
  *
  * @package collabora-online-wp
  */
@@ -29,9 +29,9 @@ if ( isset( $_GET['mode'] ) ) {
 
 $file_id = absint( wp_unslash( $_GET['id'] ) );
 
-check_admin_referer( 'collabora-frame-' . $file_id );
+auth_redirect();
 
 require_once __DIR__ . '/collabora-online-wp.php';
 require_once __DIR__ . '/includes/class-collaborafrontend.php';
 
-CollaboraFrontend::output_frame( $file_id, $cool_mode, true );
+CollaboraFrontend::output_frame( $file_id, $cool_mode, false );

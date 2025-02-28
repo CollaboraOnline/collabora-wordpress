@@ -119,4 +119,18 @@ class CollaboraUtils {
 		$baseurl       = plugins_url( 'cool.php', COLLABORA_PLUGIN_FILE ) . '?' . http_build_query( $query );
 		return wp_nonce_url( $baseurl, 'collabora-frame-' . $id );
 	}
+
+	/**
+	 * Get the permalink for the document post with $id
+	 *
+	 * @param integer $id The ID of the post the file is attached to.
+	 * @param string  $mode The mode to open the file.
+	 */
+	public static function get_permalink( $id, string $mode ) {
+		$query         = array(
+			'id' => $id,
+		);
+		$query['mode'] = $mode;
+		return plugins_url( 'doc.php', COLLABORA_PLUGIN_FILE ) . '?' . http_build_query( $query );
+	}
 }

@@ -37,6 +37,7 @@ wp_enqueue_script( COLLABORA_PLUGIN_NAME . '-cool-previewer-js', plugins_url( 'p
 	<?php echo esc_html( $args['label'] ); ?>
 
 	</button>
+	<a href="<?php echo esc_url( CollaboraUtils::get_permalink( $args['id'], $args['mode'] ) ); ?>">#</a>
 </p>
 <dialog id="collabora-editor__dialog" class="collabora-editor__dialog alignfull">
 	<iframe class="collabora-frame__preview"></iframe>
