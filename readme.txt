@@ -2,8 +2,8 @@
 Contributors: hubcp
 Tags: collaboration, pdf, presentation, spreadsheet, document
 Requires at least: 6.6
-Tested up to: 6.7.1
-Stable tag: 0.9.9
+Tested up to: 6.8.1
+Stable tag: 0.9.10
 Requires PHP: 8.0
 License: MPL-2.0
 License URI: http://mozilla.org/MPL/2.0/
@@ -41,6 +41,12 @@ If you are already a paid customer for Collabora Online, you can use your existi
 4. Enjoy Collaboration with Collabora Online.
 
 == Changelog ==
+
+= 0.9.10 =
+
+* Added a permalink for documents.
+* Better handling of errors in the postmessage interface.
+* Increase compatibility to Wordpress™ 6.8.1
 
 = 0.9.9 =
 
