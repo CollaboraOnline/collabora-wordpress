@@ -38,9 +38,15 @@ function postReady() {
 }
 
 function receiveMessage(hasCloseButton, event) {
-    let msg = JSON.parse(event.data);
-    if (!msg) {
-        return;
+    let msg;
+    try {
+	msg = JSON.parse(event.data);
+	if (!msg) {
+            return;
+	}
+    } catch (error) {
+	console.error(error);
+	return;
     }
 
     switch (msg.MessageId) {

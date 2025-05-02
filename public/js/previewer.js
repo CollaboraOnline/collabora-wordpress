@@ -23,10 +23,16 @@ function closePreview() {
 
 (function () {
     function receiveMessage(event) {
-        let msg = JSON.parse(event.data);
-        if (!msg) {
-            return;
-        }
+	let msg;
+	try {
+            msg = JSON.parse(event.data);
+            if (!msg) {
+		return;
+            }
+	} catch (error) {
+	    console.error(error);
+	    return;
+	}
 
         switch (msg.MessageId) {
         case "App_LoadingStatus":
