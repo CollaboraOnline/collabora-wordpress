@@ -13,6 +13,7 @@
 		"cool-block/package.json",
 		"cool-block/src",
 		"cool.php",
+		"doc.php",
 		"editor",
 		"languages",
 		"includes",
