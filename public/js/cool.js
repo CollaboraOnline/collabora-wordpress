@@ -16,8 +16,9 @@ function loadDocument(wopiClient, wopiSrc, options = null) {
         wopiUrl += '&closebutton=true';
         hasCloseButton = true;
     }
+    let origin = new URL(wopiUrl).origin;
 
-    window.addEventListener("message", receiveMessage.bind(null, hasCloseButton), false);
+    window.addEventListener("message", receiveMessage.bind(null, hasCloseButton, origin), false);
 
     let formElem = document.getElementById("collabora-submit-form");
 
@@ -37,7 +38,10 @@ function postReady() {
     postMessage({ MessageId: "Host_PostmessageReady" });
 }
 
-function receiveMessage(hasCloseButton, event) {
+function receiveMessage(hasCloseButton, origin, event) {
+    if (!event || event.origin != origin) {
+        return;
+    }
     let msg;
     try {
         msg = JSON.parse(event.data);

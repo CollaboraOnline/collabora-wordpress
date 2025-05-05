@@ -9,20 +9,29 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+function getFrame() {
+    return document.querySelector("#collabora-editor__dialog > .collabora-frame__preview");
+}
+
 function previewField(coolUrl) {
-    let iframe = document.querySelector("#collabora-editor__dialog > .collabora-frame__preview");
+    let iframe = getFrame();
     iframe.src = coolUrl;
     document.querySelector("#collabora-editor__dialog").show();
 }
 
 function closePreview() {
-    let iframe = document.querySelector("#collabora-editor__dialog > .collabora-frame__preview");
+    let iframe = getFrame();
     iframe.src = "about:blank";
     document.querySelector('#collabora-editor__dialog').close();
 }
 
 (function () {
+    // This is meant to receive the message from the frame.php iframe.
     function receiveMessage(event) {
+        let origin = new URL(getFrame().src).origin;
+        if (!event || event.origin != origin) {
+            return;
+        }
         let msg;
         try {
             msg = JSON.parse(event.data);
@@ -35,11 +44,6 @@ function closePreview() {
         }
 
         switch (msg.MessageId) {
-        case "App_LoadingStatus":
-            if (msg.Values && msg.Values.Status == "Document_Loaded") {
-                postReady();
-            }
-            break;
         case "UI_Close":
             closePreview();
             break;
