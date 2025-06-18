@@ -28,7 +28,11 @@ function closePreview() {
 (function () {
     // This is meant to receive the message from the frame.php iframe.
     function receiveMessage(event) {
-        let origin = new URL(getFrame().src).origin;
+        let frameSrc = getFrame()?.src;
+        if (!frameSrc) {
+            return;
+        }
+        let origin = new URL(frameSrc).origin;
         if (!event || event.origin != origin) {
             return;
         }
