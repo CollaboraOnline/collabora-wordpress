@@ -194,20 +194,22 @@ class CollaboraWopi {
 
 		$user    = wp_get_current_user();
 		$mtime   = date_create_immutable_from_format( 'U', filemtime( $file ) );
+		$lm_time = $mtime->format( 'c' );
 		$payload = array(
-			'BaseFileName'       => basename( $file ),
-			'Size'               => filesize( $file ),
-			'LastModifiedTime'   => $mtime->format( 'c' ),
-			'UserId'             => $jwt_payload->uid,
-			'UserFriendlyName'   => $user->get( 'display_name' ),
-			'UserExtraInfo'      => array(
+			'BaseFileName'            => basename( $file ),
+			'Size'                    => filesize( $file ),
+			'LastModifiedTime'        => $lm_time,
+			'UserId'                  => $jwt_payload->uid,
+			'UserFriendlyName'        => $user->get( 'display_name' ),
+			'UserExtraInfo'           => array(
 				'mail' => $user->get( 'user_email' ),
 			),
-			'UserCanWrite'       => $can_write,
+			'UserCanWrite'            => $can_write,
+			'UserCanNotWriteRelative' => true,
 			// We only se this to true if it can AND not also have write permissions.
-			'UserCanOnlyComment' => ! $can_write && $can_only_comment,
-			'IsAdminUser'        => $is_administrator,
-			'IsAnonymousUser'    => false, // $user->isAnonymous(),
+			'UserCanOnlyComment'      => ! $can_write && $can_only_comment,
+			'IsAdminUser'             => $is_administrator,
+			'IsAnonymousUser'         => false, // $user->isAnonymous(),
 		);
 
 		if ( function_exists( 'get_avatar_url' ) ) {
@@ -366,7 +368,7 @@ class CollaboraWopi {
 
 		$can_write = ( $jwt_payload->wri && current_user_can( 'edit_post', $id ) );
 		if ( ! $can_write && $jwt_payload->cmt ) {
-			// Handle comment only mode (review)
+			// Handle comment only mode (review).
 			$reviewer_role = get_option( CollaboraAdmin::COLLABORA_USER_ROLE_REVIEW );
 			$can_review    = $reviewer_role && in_array( $reviewer_role, wp_get_current_user()->roles, true );
 			$can_write     = $can_review || current_user_can( 'edit_post', $id );
@@ -378,6 +380,25 @@ class CollaboraWopi {
 
 		$data = $request->get_body();
 		$file = get_attached_file( $id );
+
+		$modtime   = filemtime( $file );
+		$timestamp = $request->get_header( 'X-COOL-WOPI-Timestamp' );
+		if ( $timestamp ) {
+			$timestamp = date_create_immutable_from_format( DateTimeInterface::ISO8601, $timestamp );
+		}
+		if ( ! $timestamp || ( $timestamp->getTimestamp() !== $modtime ) ) {
+			$payload = array(
+				'COOLStatusCode' => 1010,
+			);
+			return new WP_REST_Response(
+				$payload,
+				409,
+				array(
+					'Access-Control-Allow-Origin' => '*',
+					'Content-Type'                => 'application/json; charset=' . get_option( 'blog_charset' ),
+				)
+			);
+		}
 
 		if ( ! self::create_revision( $id, $file ) ) {
 			return self::file_error( 'Creating revision.' );
@@ -395,12 +416,19 @@ class CollaboraWopi {
 			)
 		);
 
+		clearstatcache(); // This is required for filemtime to returnt he actual value.
+		$mtime   = date_create_immutable_from_format( 'U', filemtime( $file ) );
+		$lm_time = $mtime->format( 'c' );
+		$payload = array(
+			'LastModifiedTime' => $lm_time,
+		);
+
 		return new WP_REST_Response(
-			'File saved.',
+			$payload,
 			200,
 			array(
 				'Access-Control-Allow-Origin' => '*',
-				'Content-Type'                => 'text/plain',
+				'Content-Type'                => 'application/json; charset=' . get_option( 'blog_charset' ),
 			)
 		);
 	}
