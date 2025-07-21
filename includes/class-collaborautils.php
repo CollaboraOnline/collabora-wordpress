@@ -46,7 +46,6 @@ class CollaboraUtils {
 	) {
 		$key = static::get_key();
 		if ( gettype( $key ) !== 'string' ) {
-			// error_log( 'cool error: JWT key isn\'t set.' );
 			return null;
 		}
 		try {
@@ -55,7 +54,7 @@ class CollaboraUtils {
 				return $payload;
 			}
 		} catch ( \Exception $e ) {
-			// error_log( 'cool WOPI error: ' . $e->getMessage() );
+			return null;
 		}
 		return null;
 	}

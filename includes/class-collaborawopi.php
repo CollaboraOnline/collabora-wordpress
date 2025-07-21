@@ -194,11 +194,10 @@ class CollaboraWopi {
 
 		$user    = wp_get_current_user();
 		$mtime   = date_create_immutable_from_format( 'U', filemtime( $file ) );
-		$lm_time = $mtime->format( 'c' );
 		$payload = array(
 			'BaseFileName'            => basename( $file ),
 			'Size'                    => filesize( $file ),
-			'LastModifiedTime'        => $lm_time,
+			'LastModifiedTime'        => $mtime->format( 'c' ),
 			'UserId'                  => $jwt_payload->uid,
 			'UserFriendlyName'        => $user->get( 'display_name' ),
 			'UserExtraInfo'           => array(
@@ -418,9 +417,8 @@ class CollaboraWopi {
 
 		clearstatcache(); // This is required for filemtime to returnt he actual value.
 		$mtime   = date_create_immutable_from_format( 'U', filemtime( $file ) );
-		$lm_time = $mtime->format( 'c' );
 		$payload = array(
-			'LastModifiedTime' => $lm_time,
+			'LastModifiedTime' => $mtime->format( 'c' ),
 		);
 
 		return new WP_REST_Response(
