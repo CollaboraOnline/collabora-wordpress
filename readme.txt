@@ -3,7 +3,7 @@ Contributors: hubcp
 Tags: collaboration, pdf, presentation, spreadsheet, document
 Requires at least: 6.6
 Tested up to: 6.8.1
-Stable tag: 0.9.11
+Stable tag: 0.9.12
 Requires PHP: 8.0
 License: MPL-2.0
 License URI: http://mozilla.org/MPL/2.0/
@@ -41,6 +41,11 @@ If you are already a paid customer for Collabora Online, you can use your existi
 4. Enjoy Collaboration with Collabora Online.
 
 == Changelog ==
+
+- 0.9.12 =
+
+* Make the origin checks more robust.
+* Added WOPI support to check against overwriting files. (Issue #16)
 
 = 0.9.11 =
 
