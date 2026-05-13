@@ -4,14 +4,14 @@
  *
  * @package           collabora-online-wp
  * @author            Collabora Productivity
- * @copyright         2024-2025 Collabora Productivity
+ * @copyright         2024-2026 Collabora Productivity
  * @license           MPL-2.0
  *
  * @wordpress-plugin
  * Plugin Name: Collabora Online WP
  * Plugin URI: https://github.com/CollaboraOnline/collabora-wordpress
  * Description: WordPress connector for Collabora Online, allow you to view or edit collaboratively office documents directly from WordPress in Collabora Online.
- * Version: 0.9.12
+ * Version: 0.9.13
  * License: MPL-2.0
  * License URI: https://www.mozilla.org/en-US/MPL/2.0/
  * Text Domain:       collabora-online
@@ -29,8 +29,8 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'COLLABORA_PLUGIN_NAME', 'collabora-online-wp' );
-define( 'COLLABORA_PLUGIN_VERSION', '0.9.12' );
-define( 'COLLABORA_PLUGIN_VERSION_NUM', 912 );
+define( 'COLLABORA_PLUGIN_VERSION', '0.9.13' );
+define( 'COLLABORA_PLUGIN_VERSION_NUM', 913 );
 define( 'COLLABORA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'COLLABORA_PLUGIN_FILE', plugin_dir_path( __FILE__ ) . '/' . basename( __FILE__ ) );
 
